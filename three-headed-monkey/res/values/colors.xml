@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="DetailsViewValueColor">#ffffffff</color>
-    <color name="Positive">#ff31ff22</color>
-    <color name="Negative">#ffff1d13</color>
-</resources>

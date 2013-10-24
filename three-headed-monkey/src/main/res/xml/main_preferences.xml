@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="@string/settings_category_title_help">
+
+        <Preference android:title="Help"
+                    android:summary="Don't know what to do? Our help monkeys are there for you"/>
+
+        <Preference android:title="About"
+                    android:summary="We are awesome"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/settings_category_title_sim_settings">
+
+        <Preference android:title="Sim Card Settings"
+                    android:key="pref_btn_sim_card_settings"
+                    android:summary="Authorize your sim card"/>
+
+        <Preference android:title="Phone Numbers"
+                    android:key="pref_btn_phone_numbers_settings"
+                    android:summary="Choose phone numbers for notifications and control"/>
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
