@@ -50,7 +50,7 @@ dependencies {
   	testCompile 'com.squareup:fest-android:1.0.+'
 }
 
-
+//http://stackoverflow.com/questions/16683944/androidannotations-nothing-generated-empty-activity
 android.applicationVariants.all { variant ->
     aptOutput = file("${project.buildDir}/source/apt_generated/${variant.dirName}")
     println "****************************"
