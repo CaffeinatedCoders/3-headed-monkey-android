@@ -40,8 +40,6 @@ dependencies {
 //==================== Android Annotations =========
     apt "com.googlecode.androidannotations:androidannotations:${androidAnnotationsVersion}"
     compile "com.googlecode.androidannotations:androidannotations-api:${androidAnnotationsVersion}"
-    apt "com.squareup.dagger:dagger-compiler:${daggerVersion}"
-    compile "com.squareup.dagger:dagger:${daggerVersion}"
 //===================================================
 		compile "com.google.code.gson:gson:2.2.4"
 //==================== Robolectric ==================
