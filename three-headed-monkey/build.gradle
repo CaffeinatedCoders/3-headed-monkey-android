@@ -1,0 +1,98 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.github.jcandksolutions.gradle:android-unit-test:1.0.+'
+    }
+}
+
+apply plugin: 'android'
+
+def getVersionCode = { ->
+    def code = project.hasProperty('versionCode') ? versionCode.toInteger() : -1
+    println "VersionCode is set to $code"
+    return code
+}
+
+def getVersionName = { ->
+    def code = getVersionCode
+    def versionName = "0.1.$code"
+    println "VersionName is set to $versionName"
+    return versionName
+}
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "18.1.1"
+
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 18
+        packageName "net.three_headed_monkey"
+        versionCode getVersionCode()
+        versionName getVersionName()
+    }
+
+    buildTypes {
+        debug {
+            versionNameSuffix "-debug"
+        }
+    }
+}
+
+apply plugin: 'android-unit-test'
+
+repositories {
+    mavenCentral()
+}
+
+ext.androidAnnotationsVersion = '2.7.1';
+
+
+configurations {
+    apt
+}
+
+dependencies {
+//==================== Android Annotations =========
+    apt "com.googlecode.androidannotations:androidannotations:${androidAnnotationsVersion}"
+    compile "com.googlecode.androidannotations:androidannotations-api:${androidAnnotationsVersion}"
+//===================================================
+    compile "com.google.code.gson:gson:2.2.4"
+//==================== Robolectric ==================
+    testCompile 'junit:junit:4.10'
+    testCompile 'org.robolectric:robolectric:2.1.+'
+    testCompile 'com.squareup:fest-android:1.0.+'
+}
+
+task jenkins() << {
+    android.buildTypes.each { type ->
+        type.packageNameSuffix = ".jenkins"
+        type.versionNameSuffix = "-jenkins-$type.name"
+    }
+}
+
+//http://stackoverflow.com/questions/16683944/androidannotations-nothing-generated-empty-activity
+android.applicationVariants.all { variant ->
+    aptOutput = file("${project.buildDir}/source/apt_generated/${variant.dirName}")
+    println "****************************"
+    println "variant: ${variant.name}"
+    println "manifest:  ${variant.processResources.manifestFile}"
+    println "aptOutput:  ${aptOutput}"
+    println "****************************"
+
+    variant.javaCompile.doFirst {
+        println "*** compile doFirst ${variant.name}"
+        aptOutput.mkdirs()
+        variant.javaCompile.options.compilerArgs += [
+                '-processorpath', configurations.apt.getAsPath(),
+                '-AandroidManifestFile=' + variant.processResources.manifestFile,
+                '-s', aptOutput
+        ]
+    }
+}
+
+
