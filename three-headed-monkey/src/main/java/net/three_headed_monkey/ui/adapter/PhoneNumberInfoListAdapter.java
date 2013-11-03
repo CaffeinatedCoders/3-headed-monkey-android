@@ -11,9 +11,8 @@ import com.googlecode.androidannotations.annotations.EBean;
 import com.googlecode.androidannotations.annotations.RootContext;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.data.PhoneNumberInfo;
-import net.three_headed_monkey.data.SimCardInfo;
-import net.three_headed_monkey.ui.custom_views.SimCardInfoItemView;
-import net.three_headed_monkey.ui.custom_views.SimCardInfoItemView_;
+import net.three_headed_monkey.ui.custom_views.PhoneNumberInfoItemView;
+import net.three_headed_monkey.ui.custom_views.PhoneNumberInfoItemView_;
 
 import java.util.List;
 
@@ -51,13 +50,13 @@ public class PhoneNumberInfoListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Log.d(this.getClass().toString(), "getView " + position);
-        SimCardInfoItemView simCardInfoItemView;
+        PhoneNumberInfoItemView phoneNumberInfoItemView;
         if(convertView == null){
-            simCardInfoItemView = SimCardInfoItemView_.build(context);
+            phoneNumberInfoItemView = PhoneNumberInfoItemView_.build(context);
         } else {
-            simCardInfoItemView = (SimCardInfoItemView)convertView;
+            phoneNumberInfoItemView = (PhoneNumberInfoItemView)convertView;
         }
-        simCardInfoItemView.bind(getItem(position));
-        return simCardInfoItemView;
+        phoneNumberInfoItemView.bind(getItem(position));
+        return phoneNumberInfoItemView;
     }
 }

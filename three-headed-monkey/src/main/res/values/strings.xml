@@ -13,4 +13,6 @@
     <string name="authorize_card">Authorize SimCard</string>
     <string name="unauthorize_card">Unauthorize SimCard</string>
     <string name="authorized_cards">Authorized Cards</string>
+    <string name="active_phonenumbers">Active Phonenumbers</string>
+    <string name="action_add"></string>
 </resources>

@@ -5,7 +5,7 @@ public class PhoneNumberInfo {
 
     @Override
     public boolean equals(Object o) {
-        if(o==this)
+        if(o == this)
             return true;
         if(!o.getClass().equals(PhoneNumberInfo.class))
             return false;

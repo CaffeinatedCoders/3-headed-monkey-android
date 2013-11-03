@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.SimCardSettingsActivity_" android:label="SimCard Settings"/>
+        <activity android:name=".ui.PhoneNumbersSettingsActivity_" android:label="PhoneNumber Settings"/>
 
     </application>
 </manifest>
