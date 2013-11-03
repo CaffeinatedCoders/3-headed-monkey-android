@@ -53,5 +53,17 @@ public class PhoneNumberSettings {
         return phoneNumberList;
     }
 
+    public synchronized void removeAll() {
+        phoneNumberList.removeAll(phoneNumberList);
+        saveSettings();
+    }
+
+    public synchronized boolean nameExists(String name) {
+        for(PhoneNumberInfo phoneNumberInfo : phoneNumberList) {
+            if(phoneNumberInfo.name.equals(name)) return true;
+        }
+        return false;
+    }
+
 
 }

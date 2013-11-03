@@ -15,4 +15,7 @@
     <string name="authorized_cards">Authorized Cards</string>
     <string name="active_phonenumbers">Active Phonenumbers</string>
     <string name="action_add"></string>
+    <string name="phonenumbers_settings_add_dialog_no_all_values_set">Error: Not all values set!</string>
+    <string name="phonenumbers_settings_add_dialog_invalid_phonenumber">Error: Not a valid phone number!</string>
+    <string name="phonenumbers_settings_add_dialog_invalid_name">Error: This name already exists!</string>
 </resources>

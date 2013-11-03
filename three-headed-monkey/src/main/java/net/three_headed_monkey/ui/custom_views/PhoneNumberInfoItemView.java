@@ -12,12 +12,13 @@ import net.three_headed_monkey.data.SimCardInfo;
 @EViewGroup(R.layout.phone_number_info_item)
 public class PhoneNumberInfoItemView extends RelativeLayout{
     @ViewById
-    protected TextView text_phonenumber;
+    protected TextView text_name, text_phonenumber;
     public PhoneNumberInfoItemView(Context context) {
         super(context);
     }
 
     public void bind(PhoneNumberInfo phoneNumberInfo){
         text_phonenumber.setText(phoneNumberInfo.phoneNumber);
+        text_name.setText(phoneNumberInfo.name);
     }
 }

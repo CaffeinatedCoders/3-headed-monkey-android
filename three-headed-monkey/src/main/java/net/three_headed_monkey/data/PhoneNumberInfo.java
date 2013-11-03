@@ -2,9 +2,11 @@ package net.three_headed_monkey.data;
 
 public class PhoneNumberInfo {
     public String phoneNumber;
+    public String name;
 
-    public PhoneNumberInfo(String phoneNumber) {
+    public PhoneNumberInfo(String phoneNumber, String name) {
         this.phoneNumber = phoneNumber;
+        this.name = name;
     }
 
     @Override

@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
+import android.telephony.PhoneNumberUtils;
 
 import net.three_headed_monkey.R;
 import com.googlecode.androidannotations.annotations.*;
@@ -68,18 +66,45 @@ public class PhoneNumbersSettingsActivity extends Activity {
         alertDialogBuilder.setTitle("Add new phonenumber");
         alertDialogBuilder.setCancelable(false);
         final EditText input = new EditText(this);
-        input.setHint("hint");
-        alertDialogBuilder.setView(input);
+
+        LinearLayout layout = new LinearLayout(getApplicationContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText inputName = new EditText(getApplicationContext());
+        inputName.setHint("Name");
+        layout.addView(inputName);
+
+        final EditText inputNumber = new EditText(getApplicationContext());
+        inputNumber.setHint("Phonenumber");
+        layout.addView(inputNumber);
+
+        alertDialogBuilder.setView(layout);
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(input.getText().toString());
+                String possibleNewPhonenumber = inputNumber.getText().toString();
+                String possibleNewName = inputName.getText().toString();
+                if(possibleNewPhonenumber == null || possibleNewName == null) {
+                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_no_all_values_set, Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+                }
+                if(application.phoneNumberSettings.nameExists(possibleNewName)) {
+                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_invalid_name, Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+                }
+                if(!PhoneNumberUtils.isGlobalPhoneNumber(possibleNewPhonenumber)) {
+                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_invalid_phonenumber, Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+                }
+                else {
+                    PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(possibleNewPhonenumber), possibleNewName);
+                    application.phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
+                }
 
-                application.phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
 
             }
         })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
                 });

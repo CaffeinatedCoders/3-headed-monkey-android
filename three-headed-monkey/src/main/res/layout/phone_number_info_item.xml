@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--<merge xmlns:android="http://schemas.android.com/apk/res/android">-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="5dp">
+
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Serial"
-            android:id="@+id/text_phonenumber" android:layout_alignParentLeft="true" android:layout_centerVertical="true"/>
-</RelativeLayout>
+            android:text="Name"
+            android:id="@+id/text_name" android:layout_alignParentLeft="true" android:layout_centerVertical="true"
+            android:textSize="24dp" android:textColor="@android:color/primary_text_dark"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="Telephonenumber"
+            android:id="@+id/text_phonenumber" android:layout_alignParentRight="true" android:layout_centerVertical="false"
+            android:textSize="18dp" android:textColor="@android:color/secondary_text_dark"/>
+</LinearLayout>
 
 <!--</merge>-->
