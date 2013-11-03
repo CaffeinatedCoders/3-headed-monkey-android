@@ -10,10 +10,7 @@
 
 # generated files
 bin/
-gen/
-aa-gen/
 *~
-out/
 build/
 build.xml
 
