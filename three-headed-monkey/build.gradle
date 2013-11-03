@@ -75,6 +75,23 @@ task jenkins() << {
     }
 }
 
+task createFlashableZip(type: Zip) {
+//    copy {
+//        from "build-files/flashable-zip"
+//        into "build/flashable-zip"
+//    }
+//    copy {
+//        from "build/apk/three-headed-monkey-release-unsigned.apk"
+//        into "build/flashable-zip/system/app"
+//    }
+//    from "build-files/flashable-zip"
+    from "build-files/flashable-zip"
+    from("build/apk/three-headed-monkey-release-unsigned.apk") {
+        into "system/app"
+    }
+    baseName "three-headed-monkey-release"
+}
+
 //http://stackoverflow.com/questions/16683944/androidannotations-nothing-generated-empty-activity
 android.applicationVariants.all { variant ->
     aptOutput = file("${project.buildDir}/source/apt_generated/${variant.dirName}")
