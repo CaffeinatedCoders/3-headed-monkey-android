@@ -9,7 +9,7 @@ import net.three_headed_monkey.R;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 import net.three_headed_monkey.data.SimCardInfo;
 
-@EViewGroup(R.layout.sim_card_info_item)
+@EViewGroup(R.layout.phone_number_info_item)
 public class PhoneNumberInfoItemView extends RelativeLayout{
     @ViewById
     protected TextView text_phonenumber;
