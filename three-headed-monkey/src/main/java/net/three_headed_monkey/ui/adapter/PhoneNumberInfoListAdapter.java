@@ -19,6 +19,7 @@ import java.util.List;
 @EBean
 public class PhoneNumberInfoListAdapter extends BaseAdapter {
 
+
     List<PhoneNumberInfo> phoneNumberInfos;
 
     @App
@@ -45,6 +46,11 @@ public class PhoneNumberInfoListAdapter extends BaseAdapter {
     @Override
     public long getItemId(int i) {
         return i;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
     }
 
     @Override

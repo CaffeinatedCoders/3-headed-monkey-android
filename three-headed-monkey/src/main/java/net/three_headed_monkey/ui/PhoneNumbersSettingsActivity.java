@@ -50,12 +50,10 @@ public class PhoneNumbersSettingsActivity extends Activity {
                 switch (item.getItemId()) {
                     case R.id.action_delete:
                         long[] positions = phonenumbers_list.getCheckedItemIds();
-                        for(long position : positions) {
-                           Log.v("Position", ""+position);
-
+                        for(int currentPositionIndex = 0; positions.length !=0 && currentPositionIndex < positions.length; currentPositionIndex++) {
+                            application.phoneNumberSettings.removePhoneNumber(adapter.getItem((int)positions[currentPositionIndex]));
                         }
-                        Toast.makeText(getApplicationContext(), positions.length, Toast.LENGTH_SHORT).show();
-                        mode.finish(); // Action picked, so close the CAB
+                        mode.finish();
                         return true;
                     default:
                         return false;
