@@ -13,6 +13,8 @@ import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 import net.three_headed_monkey.ui.adapter.PhoneNumberInfoListAdapter;
 
+import java.util.*;
+
 
 @EActivity(R.layout.phonenumbers_settings_activity)
 public class PhoneNumbersSettingsActivity extends Activity {
@@ -46,7 +48,8 @@ public class PhoneNumbersSettingsActivity extends Activity {
                 switch (item.getItemId()) {
                     case R.id.action_delete:
                         long[] positions = phonenumbers_list.getCheckedItemIds();
-                        for (int currentPositionIndex = 0; positions.length != 0 && currentPositionIndex < positions.length; currentPositionIndex++) {
+                        Arrays.sort(positions);
+                        for (int currentPositionIndex = positions.length-1; currentPositionIndex >= 0; currentPositionIndex--) {
                             application.phoneNumberSettings.removePhoneNumber(adapter.getItem((int) positions[currentPositionIndex]));
                         }
                         mode.finish();
@@ -101,7 +104,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
 
     private String addNewPhoneNumber() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Add new phonenumber");
+        alertDialogBuilder.setTitle(R.string.phonenumberssettings_add_dialog_title);
         alertDialogBuilder.setCancelable(false);
         final EditText input = new EditText(this);
 
@@ -109,21 +112,21 @@ public class PhoneNumbersSettingsActivity extends Activity {
         layout.setOrientation(LinearLayout.VERTICAL);
 
         final EditText inputName = new EditText(getApplicationContext());
-        inputName.setHint("Name");
+        inputName.setHint(R.string.phonenumberssettings_add_dialog_inputname_hint);
         layout.addView(inputName);
 
         final EditText inputNumber = new EditText(getApplicationContext());
-        inputNumber.setHint("Phonenumber");
+        inputNumber.setHint(R.string.phonenumberssettings_add_dialog_inputnumber_hint);
         layout.addView(inputNumber);
 
         alertDialogBuilder.setView(layout);
-        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton(R.string.phonenumberssettings_add_dialog_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
 
             }
         })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.phonenumberssettings_add_dialog_no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
@@ -137,13 +140,13 @@ public class PhoneNumbersSettingsActivity extends Activity {
                 String possibleNewPhonenumber = inputNumber.getText().toString();
                 String possibleNewName = inputName.getText().toString();
                 if (possibleNewPhonenumber == null || possibleNewName == null) {
-                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_no_all_values_set, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.phonenumberssettings_add_dialog_error_not_all_values_set, Toast.LENGTH_SHORT).show();
                 }
                 else if (application.phoneNumberSettings.nameExists(possibleNewName)) {
-                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_invalid_name, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.phonenumberssettings_add_dialog_error_name_already_exists, Toast.LENGTH_SHORT).show();
                 }
                 else if (!PhoneNumberUtils.isGlobalPhoneNumber(possibleNewPhonenumber)) {
-                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_invalid_phonenumber, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.phonenumberssettings_add_dialog_error_invalid_phonenumber, Toast.LENGTH_SHORT).show();
                 } else {
                      PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(possibleNewPhonenumber), possibleNewName);
                     application.phoneNumberSettings.addPhoneNumber(phoneNumberInfo);

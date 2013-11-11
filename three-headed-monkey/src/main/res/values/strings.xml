@@ -16,7 +16,12 @@
     <string name="active_phonenumbers">Active Phonenumbers</string>
     <string name="action_add">Add</string>
     <string name="action_delete">Delete</string>
-    <string name="phonenumbers_settings_add_dialog_no_all_values_set">Error: Not all values set!</string>
-    <string name="phonenumbers_settings_add_dialog_invalid_phonenumber">Error: Not a valid phone number!</string>
-    <string name="phonenumbers_settings_add_dialog_invalid_name">Error: This name already exists!</string>
+    <string name="phonenumberssettings_add_dialog_error_not_all_values_set">Error: Some values are empty!</string>
+    <string name="phonenumberssettings_add_dialog_error_invalid_phonenumber">Error: Not a valid phone number!</string>
+    <string name="phonenumberssettings_add_dialog_error_name_already_exists">Error: This name already exists!</string>
+    <string name="phonenumberssettings_add_dialog_title">Add new Number</string>
+    <string name="phonenumberssettings_add_dialog_inputname_hint">Name</string>
+    <string name="phonenumberssettings_add_dialog_inputnumber_hint">Number</string>
+    <string name="phonenumberssettings_add_dialog_yes">Yes</string>
+    <string name="phonenumberssettings_add_dialog_no">No</string>
 </resources>
