@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.*;
 import android.widget.*;
 import android.telephony.PhoneNumberUtils;
 
@@ -16,6 +16,8 @@ import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 import net.three_headed_monkey.ui.adapter.PhoneNumberInfoListAdapter;
 
+import java.util.Set;
+
 @EActivity(R.layout.phonenumbers_settings_activity)
 public class PhoneNumbersSettingsActivity extends Activity {
 
@@ -24,6 +26,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
 
     @ViewById
     ListView phonenumbers_list;
+
 
     @Bean
     PhoneNumberInfoListAdapter adapter;
@@ -35,10 +38,59 @@ public class PhoneNumbersSettingsActivity extends Activity {
     @AfterViews
     void bindAdapter(){
         phonenumbers_list.setAdapter(adapter);
-    }
+        phonenumbers_list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        phonenumbers_list.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                                  long id, boolean checked) {
+                // Here you can do something when items are selected/de-selected,
+                // such as update the title in the CAB
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                // Respond to clicks on the actions in the CAB
+                switch (item.getItemId()) {
+                    case R.id.action_delete:
+                        long[] positions = phonenumbers_list.getCheckedItemIds();
+                        for(long position : positions) {
+                           Log.v("Position", ""+position);
+
+                        }
+                        Toast.makeText(getApplicationContext(), positions.length, Toast.LENGTH_SHORT).show();
+                        mode.finish(); // Action picked, so close the CAB
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                // Inflate the menu for the CAB
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.phonenumbers_settings_activity_context, menu);
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                // Here you can make any necessary updates to the activity when
+                // the CAB is removed. By default, selected items are deselected/unchecked.
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                // Here you can perform updates to the CAB due to
+                // an invalidate() request
+                return false;
+            }
+        });    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -54,8 +106,11 @@ public class PhoneNumbersSettingsActivity extends Activity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_add:
+                Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_no_all_values_set, Toast.LENGTH_SHORT).show();
                 addNewPhoneNumber();
                 return true;
+            case R.id.action_delete:
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -114,5 +169,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
         alertDialog.show();
         return null;
     }
+
+
 
 }
