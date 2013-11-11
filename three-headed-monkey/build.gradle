@@ -29,7 +29,7 @@ android {
     buildToolsVersion "18.1.1"
 
     defaultConfig {
-        minSdkVersion 7
+        minSdkVersion 14
         targetSdkVersion 18
         packageName "net.three_headed_monkey"
         versionCode getVersionCode()
@@ -62,10 +62,18 @@ dependencies {
     compile "com.googlecode.androidannotations:androidannotations-api:${androidAnnotationsVersion}"
 //===================================================
     compile "com.google.code.gson:gson:2.2.4"
+    compile "com.android.support:appcompat-v7:19.0.+"
 //==================== Robolectric ==================
     testCompile 'junit:junit:4.10'
     testCompile 'org.robolectric:robolectric:2.1.+'
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
     testCompile 'com.squareup:fest-android:1.0.+'
+//==================== So android studio sees these! =
+//    instrumentTestCompile 'junit:junit:4.10'
+//    instrumentTestCompile'org.robolectric:robolectric:2.1.+'
+//    instrumentTestCompile 'org.hamcrest:hamcrest-all:1.3'
+//    instrumentTestCompile 'com.squareup:fest-android:1.0.+'
+    instrumentTestCompile 'com.jayway.android.robotium:robotium-solo:4.3.+'
 }
 
 task jenkins() << {
@@ -73,6 +81,14 @@ task jenkins() << {
         type.packageNameSuffix = ".jenkins"
         type.versionNameSuffix = "-jenkins-$type.name"
     }
+}
+
+task createFlashableZip(type: Zip) {
+    from "build-files/flashable-zip"
+    from("build/apk/three-headed-monkey-release-unsigned.apk") {
+        into "system/app"
+    }
+    baseName "three-headed-monkey-release"
 }
 
 //http://stackoverflow.com/questions/16683944/androidannotations-nothing-generated-empty-activity

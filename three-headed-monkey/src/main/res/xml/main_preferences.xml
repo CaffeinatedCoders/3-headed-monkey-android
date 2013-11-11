@@ -9,8 +9,8 @@
         <Preference android:title="Help"
                     android:summary="Don't know what to do? Our help monkeys are there for you"/>
 
-        <Preference android:title="About"
-                    android:summary="We are awesome"/>
+        <Preference android:title="Support"
+                    android:summary="Who you gonna call?"/>
 
     </PreferenceCategory>
 
@@ -24,6 +24,20 @@
         <Preference android:title="Phone Numbers"
                     android:key="pref_btn_phone_numbers_settings"
                     android:summary="Choose phone numbers for notifications and control"/>
+
+        <EditTextPreference android:title="@string/settings_preference_dialer_number"
+            android:key="pref_text_dialer_number"
+            android:summary="@string/settings_preference_dialer_number_summery_param"
+            android:inputType="phone"
+            android:defaultValue="*#4242"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_category_title_about">
+
+        <Preference android:title="@string/settings_preference_version_param"
+            android:key="pref_btn_version" />
 
     </PreferenceCategory>
 
