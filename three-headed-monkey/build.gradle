@@ -66,7 +66,14 @@ dependencies {
 //==================== Robolectric ==================
     testCompile 'junit:junit:4.10'
     testCompile 'org.robolectric:robolectric:2.1.+'
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
     testCompile 'com.squareup:fest-android:1.0.+'
+//==================== So android studio sees these! =
+//    instrumentTestCompile 'junit:junit:4.10'
+//    instrumentTestCompile'org.robolectric:robolectric:2.1.+'
+//    instrumentTestCompile 'org.hamcrest:hamcrest-all:1.3'
+//    instrumentTestCompile 'com.squareup:fest-android:1.0.+'
+    instrumentTestCompile 'com.jayway.android.robotium:robotium-solo:4.3.+'
 }
 
 task jenkins() << {
@@ -77,15 +84,6 @@ task jenkins() << {
 }
 
 task createFlashableZip(type: Zip) {
-//    copy {
-//        from "build-files/flashable-zip"
-//        into "build/flashable-zip"
-//    }
-//    copy {
-//        from "build/apk/three-headed-monkey-release-unsigned.apk"
-//        into "build/flashable-zip/system/app"
-//    }
-//    from "build-files/flashable-zip"
     from "build-files/flashable-zip"
     from("build/apk/three-headed-monkey-release-unsigned.apk") {
         into "system/app"

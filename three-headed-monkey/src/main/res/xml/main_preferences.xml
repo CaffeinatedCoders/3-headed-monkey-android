@@ -25,6 +25,12 @@
                     android:key="pref_btn_phone_numbers_settings"
                     android:summary="Choose phone numbers for notifications and control"/>
 
+        <EditTextPreference android:title="@string/settings_preference_dialer_number"
+            android:key="pref_text_dialer_number"
+            android:summary="@string/settings_preference_dialer_number_summery_param"
+            android:inputType="phone"
+            android:defaultValue="*#4242"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

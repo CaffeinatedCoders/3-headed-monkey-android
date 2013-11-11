@@ -7,6 +7,7 @@
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".ThreeHeadedMonkeyApplication_" android:allowBackup="false">
         <activity android:name=".ui.MainActivity_"
@@ -17,6 +18,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.SimCardSettingsActivity_" android:label="SimCard Settings"/>
+
+        <receiver android:name=".service.DialerCodeReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+         </receiver>
 
     </application>
 </manifest>
