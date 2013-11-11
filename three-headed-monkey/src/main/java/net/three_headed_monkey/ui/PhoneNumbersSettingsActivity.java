@@ -5,18 +5,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.*;
 import android.widget.*;
 import android.telephony.PhoneNumberUtils;
-
 import net.three_headed_monkey.R;
 import com.googlecode.androidannotations.annotations.*;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 import net.three_headed_monkey.ui.adapter.PhoneNumberInfoListAdapter;
 
-import java.util.Set;
 
 @EActivity(R.layout.phonenumbers_settings_activity)
 public class PhoneNumbersSettingsActivity extends Activity {
@@ -26,7 +23,6 @@ public class PhoneNumbersSettingsActivity extends Activity {
 
     @ViewById
     ListView phonenumbers_list;
-
 
     @Bean
     PhoneNumberInfoListAdapter adapter;

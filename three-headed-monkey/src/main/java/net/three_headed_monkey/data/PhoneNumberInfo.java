@@ -4,6 +4,8 @@ public class PhoneNumberInfo {
     public String phoneNumber;
     public String name;
 
+    public PhoneNumberInfo() {}
+
     public PhoneNumberInfo(String phoneNumber, String name) {
         this.phoneNumber = phoneNumber;
         this.name = name;
