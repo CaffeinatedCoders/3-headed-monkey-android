@@ -32,7 +32,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
 
     @Trace
     @AfterViews
-    void bindAdapter(){
+    void bindAdapter() {
         phonenumbers_list.setAdapter(adapter);
         phonenumbers_list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         phonenumbers_list.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
@@ -50,8 +50,8 @@ public class PhoneNumbersSettingsActivity extends Activity {
                 switch (item.getItemId()) {
                     case R.id.action_delete:
                         long[] positions = phonenumbers_list.getCheckedItemIds();
-                        for(int currentPositionIndex = 0; positions.length !=0 && currentPositionIndex < positions.length; currentPositionIndex++) {
-                            application.phoneNumberSettings.removePhoneNumber(adapter.getItem((int)positions[currentPositionIndex]));
+                        for (int currentPositionIndex = 0; positions.length != 0 && currentPositionIndex < positions.length; currentPositionIndex++) {
+                            application.phoneNumberSettings.removePhoneNumber(adapter.getItem((int) positions[currentPositionIndex]));
                         }
                         mode.finish();
                         return true;
@@ -80,7 +80,8 @@ public class PhoneNumbersSettingsActivity extends Activity {
                 // an invalidate() request
                 return false;
             }
-        });    }
+        });
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +112,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
     }
 
     private String addNewPhoneNumber() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Add new phonenumber");
         alertDialogBuilder.setCancelable(false);
         final EditText input = new EditText(this);
@@ -129,41 +130,41 @@ public class PhoneNumbersSettingsActivity extends Activity {
 
         alertDialogBuilder.setView(layout);
         alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int id) {
-                String possibleNewPhonenumber = inputNumber.getText().toString();
-                String possibleNewName = inputName.getText().toString();
-                if(possibleNewPhonenumber == null || possibleNewName == null) {
-                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_no_all_values_set, Toast.LENGTH_SHORT).show();
-                    dialog.cancel();
-                }
-                if(application.phoneNumberSettings.nameExists(possibleNewName)) {
-                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_invalid_name, Toast.LENGTH_SHORT).show();
-                    dialog.cancel();
-                }
-                if(!PhoneNumberUtils.isGlobalPhoneNumber(possibleNewPhonenumber)) {
-                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_invalid_phonenumber, Toast.LENGTH_SHORT).show();
-                    dialog.cancel();
-                }
-                else {
-                    PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(possibleNewPhonenumber), possibleNewName);
-                    application.phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
-                }
-
 
             }
         })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
                     }
                 });
 
-        AlertDialog alertDialog = alertDialogBuilder.create();
+        final AlertDialog alertDialog = alertDialogBuilder.create();
 
         alertDialog.show();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String possibleNewPhonenumber = inputNumber.getText().toString();
+                String possibleNewName = inputName.getText().toString();
+                if (possibleNewPhonenumber == null || possibleNewName == null) {
+                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_no_all_values_set, Toast.LENGTH_SHORT).show();
+                }
+                else if (application.phoneNumberSettings.nameExists(possibleNewName)) {
+                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_invalid_name, Toast.LENGTH_SHORT).show();
+                }
+                else if (!PhoneNumberUtils.isGlobalPhoneNumber(possibleNewPhonenumber)) {
+                    Toast.makeText(getApplicationContext(), R.string.phonenumbers_settings_add_dialog_invalid_phonenumber, Toast.LENGTH_SHORT).show();
+                } else {
+                     PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(possibleNewPhonenumber), possibleNewName);
+                    application.phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
+                    alertDialog.dismiss();
+                }
+            }
+        });
         return null;
     }
-
 
 
 }
