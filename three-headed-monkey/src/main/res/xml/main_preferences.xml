@@ -7,10 +7,12 @@
             android:title="@string/settings_category_title_help">
 
         <Preference android:title="Help"
-                    android:summary="Don't know what to do? Our help monkeys are there for you"/>
+                    android:summary="Don't know what to do? Our help monkeys are there for you"
+                    android:enabled="false"/>
 
         <Preference android:title="Support"
-                    android:summary="Who you gonna call?"/>
+                    android:summary="Who you gonna call?"
+                    android:enabled="false"/>
 
     </PreferenceCategory>
 
@@ -32,6 +34,11 @@
             android:defaultValue="*#4242"/>
 
     </PreferenceCategory>
+
+    <CheckBoxPreference android:title="Hide App Drawer Icon"
+        android:key="pref_bool_hide_launcher"
+        android:summary="Make sure you remember your dialer code before enabling this!"
+        android:defaultValue="false" />
 
     <PreferenceCategory
         android:title="@string/settings_category_title_about">

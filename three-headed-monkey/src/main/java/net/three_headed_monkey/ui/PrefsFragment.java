@@ -1,9 +1,13 @@
 package net.three_headed_monkey.ui;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -29,16 +33,24 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
     @App
     ThreeHeadedMonkeyApplication application;
 
+    Context context;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getActivity();
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.main_preferences);
 //        findPreference("pref_btn_sim_card_settings").setOnPreferenceClickListener(this);
 //        findPreference("pref_btn_phone_numbers_settings").setOnPreferenceClickListener(this);
         for(int x = 0; x < getPreferenceScreen().getPreferenceCount(); x++){
-            PreferenceCategory category = (PreferenceCategory) getPreferenceScreen().getPreference(x);
+            Preference preference = getPreferenceScreen().getPreference(x);
+            if(!(preference instanceof PreferenceCategory)){
+                preference.setOnPreferenceClickListener(this);
+                continue;
+            }
+            PreferenceCategory category = (PreferenceCategory) preference;
             for(int y = 0; y < category.getPreferenceCount(); y++){
                 Preference pref = category.getPreference(y);
                 pref.setOnPreferenceClickListener(this);
@@ -58,8 +70,21 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        updatePreferenceValues();
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals("pref_bool_hide_launcher")){
+            onHideLauncherChanged();
+        } else {
+            updatePreferenceValues();
+        }
+    }
+
+    public void onHideLauncherChanged(){
+        boolean hide_launcher = getPreferenceManager().getDefaultSharedPreferences(context).getBoolean("pref_bool_hide_launcher", false);
+        PackageManager packageManager = application.getPackageManager();
+        String packageName = application.getPackageName();
+        ComponentName componentName = new ComponentName(packageName, LauncherActivity.class.getName());
+        int new_component_state = hide_launcher ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED : PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+        packageManager.setComponentEnabledSetting(componentName, new_component_state, PackageManager.DONT_KILL_APP);
     }
 
     public void updatePreferenceValues(){
@@ -81,7 +106,6 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
     @Override
     public boolean onPreferenceClick(Preference preference) {
         String key = preference.getKey();
-        Toast.makeText(getActivity(), key + " clicked!", Toast.LENGTH_SHORT).show();
 
         if(key == null)
             return false;

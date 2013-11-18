@@ -17,4 +17,5 @@
     <string name="settings_preference_version_param">Version %1$s</string>
     <string name="settings_preference_dialer_number">Dialer Code</string>
     <string name="settings_preference_dialer_number_summery_param">You can start the app by using this number in the dialer:\n%1$s</string>
+    <string name="launcher_label">3 headed monkey</string>
 </resources>
