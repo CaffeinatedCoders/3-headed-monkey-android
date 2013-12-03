@@ -36,7 +36,6 @@ import static org.hamcrest.CoreMatchers.*;
 import net.three_headed_monkey.test_utils.*;
 
 @RunWith(RobolectricGradleTestRunner.class)
-
 public class PhoneNumbersSettingsActivityTest {
     private TextView text_serial_number;
     private TextView text_country_code;
@@ -50,7 +49,7 @@ public class PhoneNumbersSettingsActivityTest {
 
     @Before
     public void setUp(){
-        activity = Robolectric.buildActivity(PhoneNumbersSettingsActivity.class).create().get();
+        activity = Robolectric.buildActivity(PhoneNumbersSettingsActivity_.class).create().get();
         phonenumbers_list = (ListView) activity.findViewById(R.id.phonenumbers_list);
         button_add_phonenumber = (Button) activity.findViewById(R.id.action_add);
     }
