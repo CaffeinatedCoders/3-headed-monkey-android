@@ -2,33 +2,35 @@ package net.three_headed_monkey.ui;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.preference.PreferenceManager;
 
-import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.App;
+import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EFragment;
+import com.googlecode.androidannotations.annotations.UiThread;
 
 import net.three_headed_monkey.R;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
+import net.three_headed_monkey.utils.RootUtils;
+
+import eu.chainfire.libsuperuser.Shell;
 
 @EFragment
 public class PrefsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     Preference pref_btn_version;
     EditTextPreference pref_text_dialer_number;
+    CheckBoxPreference pref_bool_root_settings_backup;
+
+    Boolean su_available = false;
 
     @App
     ThreeHeadedMonkeyApplication application;
@@ -61,12 +63,26 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
 
         pref_btn_version = findPreference("pref_btn_version");
         pref_text_dialer_number = (EditTextPreference) findPreference("pref_text_dialer_number");
+        pref_bool_root_settings_backup = (CheckBoxPreference) findPreference("pref_bool_root_settings_backup");
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        checkForSuAndUpdateSettings();
         updatePreferenceValues();
+    }
+
+    @Background
+    public void checkForSuAndUpdateSettings(){
+        su_available = Shell.SU.available();
+        updateRootSettingsBackupPreferenceEnabled();
+    }
+
+    @UiThread
+    public void updateRootSettingsBackupPreferenceEnabled(){
+        pref_bool_root_settings_backup.setEnabled(su_available);
     }
 
     @Override
@@ -75,7 +91,17 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
             onHideLauncherChanged();
         } else {
             updatePreferenceValues();
+            boolean setting_backup_enabled = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("pref_bool_root_settings_backup", false);
+            if(setting_backup_enabled && su_available){
+                backupPreferencesToSystem();
+            }
         }
+    }
+
+    @Background
+    public void backupPreferencesToSystem(){
+        RootUtils rootUtils = new RootUtils(context);
+        rootUtils.backupSettingsFile();
     }
 
     public void onHideLauncherChanged(){
