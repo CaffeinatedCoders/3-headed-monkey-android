@@ -62,7 +62,7 @@ dependencies {
     compile "com.googlecode.androidannotations:androidannotations-api:${androidAnnotationsVersion}"
 //===================================================
     compile "com.google.code.gson:gson:2.2.4"
-    compile "com.android.support:appcompat-v7:19.0.+"
+//    compile "com.android.support:appcompat-v7:19.0.+"
 //==================== Robolectric ==================
     testCompile 'junit:junit:4.10'
     testCompile 'org.robolectric:robolectric:2.1.+'
