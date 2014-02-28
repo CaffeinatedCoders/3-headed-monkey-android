@@ -1,24 +1,25 @@
 package net.three_headed_monkey.ui;
 
-import android.test.ActivityInstrumentationTestCase2;
 
 import com.jayway.android.robotium.solo.Solo;
 
+import net.three_headed_monkey.BaseActivityInstrumentationTestCase;
 import net.three_headed_monkey.R;
 
 
 
-public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity_> {
+public class MainActivityTest extends BaseActivityInstrumentationTestCase<MainActivity_> {
     Solo solo;
     PrefsFragment prefsFragment;
 
 
     public MainActivityTest() {
-        super("net.three_headed_monkey", MainActivity_.class);
+        super(MainActivity_.class);
     }
 
     @Override
     protected void setUp() throws Exception {
+        super.setUp();
         solo = new Solo(getInstrumentation(), getActivity());
         prefsFragment = (PrefsFragment) getActivity().getFragmentManager().findFragmentById(R.id.preference_fragment);
     }
@@ -36,5 +37,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     @Override
     protected void tearDown() throws Exception {
         solo.finishOpenedActivities();
+        super.tearDown();
     }
 }

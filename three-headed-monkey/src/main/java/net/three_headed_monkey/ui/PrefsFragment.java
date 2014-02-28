@@ -11,6 +11,7 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.googlecode.androidannotations.annotations.App;
 import com.googlecode.androidannotations.annotations.Background;
@@ -25,6 +26,8 @@ import eu.chainfire.libsuperuser.Shell;
 
 @EFragment
 public class PrefsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+
+    public static final String TAG="PrefsFragment";
 
     Preference pref_btn_version;
     EditTextPreference pref_text_dialer_number;
@@ -74,6 +77,12 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
         updatePreferenceValues();
     }
 
+    @Override
+    public void onDestroy() {
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        super.onDestroy();
+    }
+
     @Background
     public void checkForSuAndUpdateSettings(){
         su_available = Shell.SU.available();
@@ -87,6 +96,7 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        Log.d(TAG, "Shared Preferences changed");
         if(key.equals("pref_bool_hide_launcher")){
             onHideLauncherChanged();
         } else {
