@@ -5,6 +5,8 @@ import android.preference.PreferenceManager;
 import com.jayway.android.robotium.solo.Solo;
 
 import net.three_headed_monkey.BaseActivityInstrumentationTestCase;
+import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
+import net.three_headed_monkey.ThreeHeadedMonkeyApplication_;
 import net.three_headed_monkey.ui.MainActivity_;
 
 import java.io.File;
@@ -13,7 +15,7 @@ import java.util.Scanner;
 
 
 public class SettingsBackupTest extends BaseActivityInstrumentationTestCase<MainActivity_> {
-    private static final int WAITING_FOR_BACKGROUND_ROOT_MILLIS = 5000;
+    private static final int WAITING_FOR_BACKGROUND_ROOT_MILLIS = 2000;
 
     private Solo solo;
 
@@ -34,7 +36,7 @@ public class SettingsBackupTest extends BaseActivityInstrumentationTestCase<Main
         super.tearDown();
     }
 
-    public void testSettingsBackupAfterDialerCOdeChange() throws InterruptedException, FileNotFoundException {
+    public void testSettingsBackupAndRestoreAfterDialerCodeChange() throws Exception {
         solo.clickOnText("Dialer Code");
         solo.clearEditText(0);
         solo.enterText(0, "***000###");
@@ -51,5 +53,18 @@ public class SettingsBackupTest extends BaseActivityInstrumentationTestCase<Main
 
         String content = new Scanner(new File(test_settings_backup_file)).useDelimiter("\\Z").next();
         assertTrue(content.contains("***999###"));
+
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean("pref_bool_root_settings_backup", false).commit();
+
+        solo.clickOnText("Dialer Code");
+        solo.clearEditText(0);
+        solo.enterText(0, "***6664242666###");
+        solo.clickOnText("OK");
+
+        ThreeHeadedMonkeyApplication_ application = (ThreeHeadedMonkeyApplication_)getActivity().getApplication();
+        application.restoreSettingsFromBackup();
+
+        String dialer_code = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("pref_text_dialer_number","");
+        assertEquals("***999###", dialer_code);
     }
 }
