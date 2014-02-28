@@ -13,6 +13,17 @@
     <string name="authorize_card">Authorize SimCard</string>
     <string name="unauthorize_card">Unauthorize SimCard</string>
     <string name="authorized_cards">Authorized Cards</string>
+    <string name="active_phonenumbers">Active Phonenumbers</string>
+    <string name="action_add">Add</string>
+    <string name="action_delete">Delete</string>
+    <string name="phonenumberssettings_add_dialog_error_not_all_values_set">Error: Some values are empty!</string>
+    <string name="phonenumberssettings_add_dialog_error_invalid_phonenumber">Error: Not a valid phone number!</string>
+    <string name="phonenumberssettings_add_dialog_error_name_already_exists">Error: This name already exists!</string>
+    <string name="phonenumberssettings_add_dialog_title">Add new Number</string>
+    <string name="phonenumberssettings_add_dialog_inputname_hint">Name</string>
+    <string name="phonenumberssettings_add_dialog_inputnumber_hint">Number</string>
+    <string name="phonenumberssettings_add_dialog_yes">Yes</string>
+    <string name="phonenumberssettings_add_dialog_no">No</string>
     <string name="settings_category_title_about">About</string>
     <string name="settings_preference_version_param">Version %1$s</string>
     <string name="settings_preference_dialer_number">Dialer Code</string>

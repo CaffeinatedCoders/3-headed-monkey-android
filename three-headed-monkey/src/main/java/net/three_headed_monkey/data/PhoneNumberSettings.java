@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,6 +38,7 @@ public class PhoneNumberSettings {
     }
 
     public synchronized void  addPhoneNumber(PhoneNumberInfo phoneNumberInfo){
+        Log.v("Phonenumber", "added " + phoneNumberInfo.phoneNumber);
         phoneNumberList.add(phoneNumberInfo);
         saveSettings();
     }
@@ -49,6 +51,18 @@ public class PhoneNumberSettings {
     public synchronized List<PhoneNumberInfo> getAll(){
         if(phoneNumberList.isEmpty()) loadSettings();
         return phoneNumberList;
+    }
+
+    public synchronized void removeAll() {
+        phoneNumberList.removeAll(phoneNumberList);
+        saveSettings();
+    }
+
+    public synchronized boolean nameExists(String name) {
+        for(PhoneNumberInfo phoneNumberInfo : phoneNumberList) {
+            if(phoneNumberInfo.name.equals(name)) return true;
+        }
+        return false;
     }
 
 
