@@ -38,6 +38,11 @@
     <PreferenceCategory
         android:title="@string/settings_category_title_advanced_settings">
 
+        <CheckBoxPreference android:title="Hide App Drawer Icon"
+            android:key="pref_bool_hide_launcher"
+            android:summary="Make sure you remember your dialer code before enabling this!"
+            android:defaultValue="false" />
+
         <CheckBoxPreference android:title="@string/setting_title_root_settings_backup"
             android:key="pref_bool_root_settings_backup"
             android:summary="Automatically backup settings to system partition.\nRead the documentation before enabling this feature!"
