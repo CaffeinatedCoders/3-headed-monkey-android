@@ -52,6 +52,20 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="Developer Settings"
+        android:key="prefcat_developer_settings">
+
+        <CheckBoxPreference android:title="Don't actually send sms"
+            android:key="pref_bool_nosms"
+            android:summary="Only show a notification instead of sending sms"
+            android:defaultValue="false" />
+
+        <Preference android:title="Trigger Sim Check"
+            android:key="pref_btn_trigger_sim_check" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/settings_category_title_about">
 
         <Preference android:title="@string/settings_preference_version_param"

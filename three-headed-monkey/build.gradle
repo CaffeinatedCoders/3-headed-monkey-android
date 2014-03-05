@@ -4,7 +4,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.+'
+        classpath 'com.android.tools.build:gradle:0.8.+'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.2'
         classpath 'com.github.jcandksolutions.gradle:android-unit-test:1.0.+'
     }
@@ -28,7 +28,7 @@ def getVersionName = { ->
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "18.1.1"
+    buildToolsVersion "19.0.3"
 
     defaultConfig {
         minSdkVersion 14
@@ -60,7 +60,7 @@ dependencies {
     compile "com.googlecode.androidannotations:androidannotations-api:${androidAnnotationsVersion}"
 //===================================================
     compile "com.google.code.gson:gson:2.2.4"
-//    compile "com.android.support:appcompat-v7:19.0.+"
+    compile "com.android.support:support-v4:18.0.+"
 //==================== Robolectric ==================
     testCompile 'junit:junit:4.10'
     testCompile 'org.robolectric:robolectric:2.1.+'

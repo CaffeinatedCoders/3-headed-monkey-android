@@ -2,6 +2,7 @@ package net.three_headed_monkey.ui;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -12,14 +13,17 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.googlecode.androidannotations.annotations.App;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EFragment;
 import com.googlecode.androidannotations.annotations.UiThread;
 
+import net.three_headed_monkey.BuildConfig;
 import net.three_headed_monkey.R;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
+import net.three_headed_monkey.service.SimCardCheckService;
 import net.three_headed_monkey.utils.RootUtils;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -32,6 +36,8 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
     Preference pref_btn_version;
     EditTextPreference pref_text_dialer_number;
     CheckBoxPreference pref_bool_root_settings_backup;
+
+    Preference pref_btn_trigger_sim_check;
 
     Boolean su_available = false;
 
@@ -67,6 +73,13 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
         pref_btn_version = findPreference("pref_btn_version");
         pref_text_dialer_number = (EditTextPreference) findPreference("pref_text_dialer_number");
         pref_bool_root_settings_backup = (CheckBoxPreference) findPreference("pref_bool_root_settings_backup");
+
+        PreferenceCategory developer_category = (PreferenceCategory) findPreference("prefcat_developer_settings");
+        if(!BuildConfig.DEBUG){
+            getPreferenceScreen().removePreference(developer_category);
+        }
+
+        pref_btn_trigger_sim_check = findPreference("pref_btn_trigger_sim_check");
 
     }
 
@@ -151,6 +164,11 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
             return true;
         } else if(key.equals("pref_btn_phone_numbers_settings")) {
             PhoneNumbersSettingsActivity_.intent(getActivity()).start();
+            return true;
+        } else if(key.equals("pref_btn_trigger_sim_check")) {
+            Intent intentservice = new Intent(context, SimCardCheckService.class);
+            context.startService(intentservice);
+            Toast.makeText(context, "Triggered sim check", Toast.LENGTH_SHORT).show();
             return true;
         }
 
