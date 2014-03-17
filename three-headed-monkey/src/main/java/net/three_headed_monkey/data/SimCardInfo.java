@@ -4,9 +4,9 @@ import android.content.Context;
 import android.telephony.TelephonyManager;
 
 public class SimCardInfo {
-    public String serial_number;
-    public String country_iso_code;
-    public String operator_name;
+    public String serial_number = "";
+    public String country_iso_code = "";
+    public String operator_name = "";
 
     private SimCardInfo(){};
     public static SimCardInfo createFromSimCard(Context context) {

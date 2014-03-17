@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PhoneNumberSettings {
@@ -33,6 +34,9 @@ public class PhoneNumberSettings {
         String json = PreferenceManager.getDefaultSharedPreferences(context).getString(SHARED_PREFERENCE_KEY, "");
         Type collectionType = new TypeToken<ArrayList<PhoneNumberInfo>>(){}.getType();
         List<PhoneNumberInfo> phoneNumberInfoList = gson.fromJson(json, collectionType);
+        if(phoneNumberInfoList == null)
+            return;
+        phoneNumberInfoList.removeAll(Collections.singleton(null));
         phoneNumberList.clear();
         if(phoneNumberInfoList != null) phoneNumberList.addAll(phoneNumberInfoList);
     }

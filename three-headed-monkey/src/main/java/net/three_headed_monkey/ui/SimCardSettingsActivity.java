@@ -53,6 +53,7 @@ public class SimCardSettingsActivity extends Activity {
     protected void loadCurrentSimCardInfo() {
         SimCardInfo current_simcard = SimCardInfo.createFromSimCard(this);
         if(current_simcard != null){
+            button_authorize_card.setEnabled(true);
             text_serial_number.setText(current_simcard.serial_number);
             text_operator.setText(current_simcard.operator_name);
             text_country_code.setText(current_simcard.country_iso_code);
@@ -66,6 +67,8 @@ public class SimCardSettingsActivity extends Activity {
                 text_currently_authorized.setTextColor(getResources().getColor(R.color.Negative));
                 button_authorize_card.setText(getString(R.string.authorize_card));
             }
+        } else {
+            button_authorize_card.setEnabled(false);
         }
     }
 
