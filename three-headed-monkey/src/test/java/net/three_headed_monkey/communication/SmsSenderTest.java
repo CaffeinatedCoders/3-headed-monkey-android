@@ -1,6 +1,8 @@
 package net.three_headed_monkey.communication;
 
+import android.content.Intent;
 import android.telephony.SmsManager;
+import android.content.SharedPreferences;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 import org.junit.Before;
@@ -12,10 +14,14 @@ import static org.hamcrest.CoreMatchers.*;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.ShadowSmsManager;
+import org.robolectric.shadows.ShadowPreferenceManager;
 
 import static org.robolectric.Robolectric.shadowOf;
 
+import net.three_headed_monkey.service.SimCardCheckService;
 import net.three_headed_monkey.test_utils.*;
+
+import dalvik.annotation.TestTargetClass;
 
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -29,6 +35,9 @@ public class SmsSenderTest {
         application = (ThreeHeadedMonkeyApplication) Robolectric.application;
         smsSender = SmsSender_.getInstance_(application);
         shadowSmsManager = shadowOf(SmsManager.getDefault());
+        application.phoneNumberSettings.removeAll();
+        SharedPreferences sharedPreferences = ShadowPreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
+        sharedPreferences.edit().putString("pref_text_sms_notification_text", "Default Text").commit();
     }
 
     @Test
@@ -59,6 +68,30 @@ public class SmsSenderTest {
         ShadowSmsManager.TextSmsParams last_msg = shadowSmsManager.getLastSentTextMessageParams();
 
         assertThat(last_msg.getDestinationAddress(), anyOf( equalTo(phoneNumberInfo1.phoneNumber), equalTo(phoneNumberInfo2.phoneNumber) ));
+    }
+
+    @Test
+    public void testSimCardCheckServiceUseRightMessage() {
+        String text = "This is the right message";
+        SharedPreferences sharedPreferences = ShadowPreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
+        sharedPreferences.edit().putString("pref_text_sms_notification_text", text).commit();
+
+        PhoneNumberInfo phoneNumberInfo1 = new PhoneNumberInfo();
+        phoneNumberInfo1.phoneNumber = "+1337";
+        application.phoneNumberSettings.addPhoneNumber(phoneNumberInfo1);
+
+        TestSimCardCheckService simCardCheckService = new TestSimCardCheckService();
+        simCardCheckService.onHandleIntent(null);
+
+        ShadowSmsManager.TextSmsParams last_msg = shadowSmsManager.getLastSentTextMessageParams();
+        assertThat(last_msg.getText(), equalTo(text));
+    }
+
+    private static class TestSimCardCheckService extends SimCardCheckService {
+        @Override
+        public void onHandleIntent(Intent intent) {
+            super.onHandleIntent(intent);
+        }
     }
 
 }

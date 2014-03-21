@@ -23,6 +23,11 @@
                     android:key="pref_btn_sim_card_settings"
                     android:summary="Authorize your sim card"/>
 
+        <EditTextPreference android:title="@string/sms_notification_text_preference_title"
+            android:key="pref_text_sms_notification_text"
+            android:inputType="textMultiLine"
+            android:defaultValue="@string/sms_notification_default_text"/>
+
         <Preference android:title="Phone Numbers"
                     android:key="pref_btn_phone_numbers_settings"
                     android:summary="Choose phone numbers for notifications and control"/>

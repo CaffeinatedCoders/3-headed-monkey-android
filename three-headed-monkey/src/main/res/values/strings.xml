@@ -31,4 +31,6 @@
     <string name="launcher_label">3 headed monkey</string>
     <string name="settings_category_title_advanced_settings">Advanced Settings</string>
     <string name="setting_title_root_settings_backup">Root Settings Backup</string>
+    <string name="sms_notification_text_preference_title">Sms Notification Text</string>
+    <string name="sms_notification_default_text">Sorry, I can\'t come to the phone right now. I\'ll call you back later</string>
 </resources>
