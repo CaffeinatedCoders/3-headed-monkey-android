@@ -13,6 +13,7 @@ buildscript {
 apply plugin: 'android'
 apply plugin: 'android-apt'
 
+
 def getVersionCode = { ->
     def code = project.hasProperty('versionCode') ? versionCode.toInteger() : -1
     println "VersionCode is set to $code"
@@ -67,10 +68,11 @@ dependencies {
     testCompile 'org.hamcrest:hamcrest-all:1.3'
     testCompile 'com.squareup:fest-android:1.0.+'
 //==================== So android studio sees these! =
-//    instrumentTestCompile 'junit:junit:4.10'
-//    instrumentTestCompile'org.robolectric:robolectric:2.1.+'
-//    instrumentTestCompile 'org.hamcrest:hamcrest-all:1.3'
-//    instrumentTestCompile 'com.squareup:fest-android:1.0.+'
+    androidTestCompile 'junit:junit:4.10'
+    androidTestCompile 'org.robolectric:robolectric:2.1.+'
+    androidTestCompile 'org.hamcrest:hamcrest-all:1.3'
+    androidTestCompile 'com.squareup:fest-android:1.0.+'
+//==================== Instrument Tests ==============
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:4.3.+'
 }
 
@@ -99,6 +101,12 @@ task createFlashableZip(type: Zip) {
     baseName "three-headed-monkey-release"
 }
 
-android.applicationVariants.all { variant ->
-    variant.addJavaSourceFoldersToModel file("src/test/java")
-}
+
+project.ext['src.java.dir'] = ['src/test/java']
+project.ext['module.iml.file'] = "three-headed-monkey.iml"
+apply from: 'https://raw.github.com/sababado/gradle-android-add-dir/master/gradle-android-add-dir.gradle'
+
+
+//android.applicationVariants.all { variant ->
+//    variant.addJavaSourceFoldersToModel file("src/test/java")
+//}
