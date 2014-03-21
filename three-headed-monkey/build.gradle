@@ -99,4 +99,6 @@ task createFlashableZip(type: Zip) {
     baseName "three-headed-monkey-release"
 }
 
-
+android.applicationVariants.all { variant ->
+    variant.addJavaSourceFoldersToModel file("src/test/java")
+}
