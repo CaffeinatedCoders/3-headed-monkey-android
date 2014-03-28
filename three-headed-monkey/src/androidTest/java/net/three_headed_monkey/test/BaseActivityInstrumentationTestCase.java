@@ -1,4 +1,4 @@
-package net.three_headed_monkey;
+package net.three_headed_monkey.test;
 
 import android.content.Context;
 import android.content.ContextWrapper;

@@ -1,11 +1,11 @@
-package net.three_headed_monkey.ui;
+package net.three_headed_monkey.test.ui;
 
 
 import com.jayway.android.robotium.solo.Solo;
 
-import net.three_headed_monkey.BaseActivityInstrumentationTestCase;
+import net.three_headed_monkey.test.BaseActivityInstrumentationTestCase;
 import net.three_headed_monkey.R;
-
+import net.three_headed_monkey.ui.*;
 
 
 public class MainActivityTest extends BaseActivityInstrumentationTestCase<MainActivity_> {

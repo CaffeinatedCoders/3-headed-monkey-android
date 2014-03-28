@@ -1,17 +1,15 @@
-package net.three_headed_monkey.data;
+package net.three_headed_monkey.test.data;
 
 import android.preference.PreferenceManager;
 
 import com.jayway.android.robotium.solo.Solo;
 
-import net.three_headed_monkey.BaseActivityInstrumentationTestCase;
-import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
+import net.three_headed_monkey.test.BaseActivityInstrumentationTestCase;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication_;
 import net.three_headed_monkey.test.annotations.NeedsRoot;
 import net.three_headed_monkey.ui.MainActivity_;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 

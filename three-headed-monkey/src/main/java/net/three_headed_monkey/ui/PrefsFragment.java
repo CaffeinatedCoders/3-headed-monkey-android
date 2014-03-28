@@ -34,7 +34,7 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
     public static final String TAG="PrefsFragment";
 
     Preference pref_btn_version;
-    EditTextPreference pref_text_dialer_number;
+    public EditTextPreference pref_text_dialer_number;
     CheckBoxPreference pref_bool_root_settings_backup;
 
     Preference pref_btn_trigger_sim_check;
