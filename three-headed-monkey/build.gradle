@@ -37,6 +37,7 @@ android {
         packageName "net.three_headed_monkey"
         versionCode getVersionCode()
         versionName getVersionName()
+        testInstrumentationRunner "pl.polidea.instrumentation.PolideaInstrumentationTestRunner"
     }
 
     buildTypes {
@@ -74,6 +75,7 @@ dependencies {
 //    androidTestCompile 'com.squareup:fest-android:1.0.+'
 //==================== Instrument Tests ==============
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:4.3.+'
+    androidTestCompile files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
 }
 
 if(project.hasProperty("jenkins")) {
