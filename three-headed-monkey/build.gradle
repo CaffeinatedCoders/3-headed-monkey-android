@@ -37,6 +37,7 @@ android {
         packageName "net.three_headed_monkey"
         versionCode getVersionCode()
         versionName getVersionName()
+        testPackageName "net.three_headed_monkey.test"
         testInstrumentationRunner "pl.polidea.instrumentation.PolideaInstrumentationTestRunner"
     }
 
