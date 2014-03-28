@@ -8,7 +8,7 @@ import android.view.*;
 import android.widget.*;
 import android.telephony.PhoneNumberUtils;
 import net.three_headed_monkey.R;
-import com.googlecode.androidannotations.annotations.*;
+import org.androidannotations.annotations.*;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 import net.three_headed_monkey.ui.adapter.PhoneNumberInfoListAdapter;

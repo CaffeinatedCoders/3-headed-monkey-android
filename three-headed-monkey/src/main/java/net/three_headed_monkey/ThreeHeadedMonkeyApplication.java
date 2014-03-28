@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.googlecode.androidannotations.annotations.EApplication;
+import org.androidannotations.annotations.EApplication;
 import net.three_headed_monkey.data.PhoneNumberSettings;
 import net.three_headed_monkey.data.SimCardSettings;
 import net.three_headed_monkey.utils.PackageUtils;

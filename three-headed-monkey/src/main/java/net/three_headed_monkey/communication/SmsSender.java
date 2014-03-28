@@ -2,10 +2,10 @@ package net.three_headed_monkey.communication;
 
 import android.content.Context;
 import android.telephony.SmsManager;
-import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.App;
-import com.googlecode.androidannotations.annotations.EBean;
-import com.googlecode.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 

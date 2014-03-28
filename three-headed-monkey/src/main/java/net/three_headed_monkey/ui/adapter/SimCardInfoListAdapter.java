@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import com.googlecode.androidannotations.annotations.*;
+import org.androidannotations.annotations.*;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.data.SimCardInfo;
 import net.three_headed_monkey.ui.custom_views.SimCardInfoItemView;

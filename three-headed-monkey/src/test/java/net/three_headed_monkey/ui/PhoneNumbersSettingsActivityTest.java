@@ -3,7 +3,7 @@ package net.three_headed_monkey.ui;
 import android.content.Context;
 import android.widget.Button;
 import android.widget.ListView;
-import com.googlecode.androidannotations.annotations.BeforeTextChange;
+import org.androidannotations.annotations.BeforeTextChange;
 import net.three_headed_monkey.custom_shadows.ShadowTelephonyManager;
 import net.three_headed_monkey.ui.PhoneNumbersSettingsActivity;
 import org.junit.*;
