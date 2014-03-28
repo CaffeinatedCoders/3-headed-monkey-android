@@ -7,6 +7,7 @@ import com.jayway.android.robotium.solo.Solo;
 import net.three_headed_monkey.BaseActivityInstrumentationTestCase;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication_;
+import net.three_headed_monkey.test.annotations.NeedsRoot;
 import net.three_headed_monkey.ui.MainActivity_;
 
 import java.io.File;
@@ -36,6 +37,7 @@ public class SettingsBackupTest extends BaseActivityInstrumentationTestCase<Main
         super.tearDown();
     }
 
+    @NeedsRoot
     public void testSettingsBackupAndRestoreAfterDialerCodeChange() throws Exception {
         solo.clickOnText("Dialer Code");
         solo.clearEditText(0);
