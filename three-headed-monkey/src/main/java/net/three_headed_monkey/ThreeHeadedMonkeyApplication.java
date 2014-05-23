@@ -10,6 +10,7 @@ import net.three_headed_monkey.data.PhoneNumberSettings;
 import net.three_headed_monkey.data.SimCardSettings;
 import net.three_headed_monkey.utils.PackageUtils;
 import net.three_headed_monkey.utils.RootUtils;
+import net.three_headed_monkey.utils.SystemSettings;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -48,6 +49,9 @@ public class ThreeHeadedMonkeyApplication extends Application {
                 Log.e(TAG, e.getMessage());
             }
         }
+
+        SystemSettings systemSettings = new SystemSettings(this);
+        systemSettings.applyAll();
 
     }
 

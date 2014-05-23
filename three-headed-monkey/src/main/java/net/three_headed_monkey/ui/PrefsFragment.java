@@ -25,6 +25,7 @@ import net.three_headed_monkey.R;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.service.SimCardCheckService;
 import net.three_headed_monkey.utils.RootUtils;
+import net.three_headed_monkey.utils.SystemSettings;
 
 import eu.chainfire.libsuperuser.Shell;
 
@@ -46,10 +47,13 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
 
     Context context;
 
+    SystemSettings systemSettings;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
+        systemSettings = new SystemSettings(application);
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.main_preferences);
@@ -111,7 +115,7 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Log.d(TAG, "Shared Preferences changed");
         if(key.equals("pref_bool_hide_launcher")){
-            onHideLauncherChanged();
+            systemSettings.applyLauncherIconHidden();
         } else {
             updatePreferenceValues();
             boolean setting_backup_enabled = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("pref_bool_root_settings_backup", false);
@@ -125,15 +129,6 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
     public void backupPreferencesToSystem(){
         RootUtils rootUtils = new RootUtils(context);
         rootUtils.backupSettingsFile();
-    }
-
-    public void onHideLauncherChanged(){
-        boolean hide_launcher = getPreferenceManager().getDefaultSharedPreferences(context).getBoolean("pref_bool_hide_launcher", false);
-        PackageManager packageManager = application.getPackageManager();
-        String packageName = application.getPackageName();
-        ComponentName componentName = new ComponentName(packageName, LauncherActivity.class.getName());
-        int new_component_state = hide_launcher ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED : PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-        packageManager.setComponentEnabledSetting(componentName, new_component_state, PackageManager.DONT_KILL_APP);
     }
 
     public void updatePreferenceValues(){
