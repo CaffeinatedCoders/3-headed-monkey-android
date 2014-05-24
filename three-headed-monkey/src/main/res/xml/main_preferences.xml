@@ -68,6 +68,9 @@
         <Preference android:title="Trigger Sim Check"
             android:key="pref_btn_trigger_sim_check" />
 
+        <Preference android:title="Open Command Shell"
+            android:key="pref_btn_open_command_shell" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

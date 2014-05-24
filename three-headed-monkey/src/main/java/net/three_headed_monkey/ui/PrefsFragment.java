@@ -165,6 +165,9 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
             context.startService(intentservice);
             Toast.makeText(context, "Triggered sim check", Toast.LENGTH_SHORT).show();
             return true;
+        } else if(key.equals("pref_btn_open_command_shell")) {
+            CommandShellActivity_.intent(getActivity()).start();
+            return true;
         }
 
         return false;

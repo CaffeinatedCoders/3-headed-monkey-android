@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.androidannotations.annotations.EApplication;
+
+import net.three_headed_monkey.commands.CommandPrototypeManager;
 import net.three_headed_monkey.data.PhoneNumberSettings;
 import net.three_headed_monkey.data.SimCardSettings;
 import net.three_headed_monkey.utils.PackageUtils;
@@ -32,12 +34,14 @@ public class ThreeHeadedMonkeyApplication extends Application {
     public static final String TAG="ThreeHeadedMonkeyApplication";
     public SimCardSettings simCardSettings;
     public PhoneNumberSettings phoneNumberSettings;
+    public CommandPrototypeManager commandPrototypeManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
         simCardSettings = new SimCardSettings(this);
         phoneNumberSettings = new PhoneNumberSettings(this);
+        commandPrototypeManager = new CommandPrototypeManager(this);
 
         load();
 

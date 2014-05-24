@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">three-headed-monkey</string>
     <string name="settings_category_title_help">Help</string>
     <string name="settings_category_title_sim_settings">Sim Settings</string>
@@ -33,4 +34,8 @@
     <string name="setting_title_root_settings_backup">Root Settings Backup</string>
     <string name="sms_notification_text_preference_title">Sms Notification Text</string>
     <string name="sms_notification_default_text">Sorry, I can\'t come to the phone right now. I\'ll call you back later</string>
+    <string name="title_activity_command_shell">Command Shell</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

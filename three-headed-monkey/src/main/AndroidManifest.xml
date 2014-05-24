@@ -60,6 +60,15 @@
             android:name="net.three_headed_monkey.service.SimCardCheckService"
             android:exported="false" >
         </service>
+        <service
+            android:name="net.three_headed_monkey.service.CommandExecutorService"
+            android:exported="false" >
+        </service>
+
+        <activity
+            android:name="net.three_headed_monkey.ui.CommandShellActivity_"
+            android:label="@string/title_activity_command_shell" >
+        </activity>
     </application>
 
 </manifest>
