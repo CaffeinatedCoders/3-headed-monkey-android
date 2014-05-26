@@ -1,7 +1,9 @@
 package net.three_headed_monkey.service;
 
 import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
+import android.os.IBinder;
 import android.util.Log;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
@@ -11,20 +13,48 @@ import net.three_headed_monkey.communication.OutgoingCommunication;
 import net.three_headed_monkey.communication.OutgoingCommunicationFactory;
 
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
-public class CommandExecutorService extends IntentService {
+public class CommandExecutorService extends Service {
     public static final String TAG = "CommandExecutorService";
     public static final String INTENT_COMMAND_STRING_PARAM = "SimCardCheckService_INTENT_COMMAND_STRING_PARAM";
     public static final String INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM = "SimCardCheckService_INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM";
+    ThreadPoolExecutor executor;
+
+    private static final int THREAD_POOL_MIN_SIZE = 1;
+    private static final int THREAD_POOL_MAX_SIZE = 7;
+    private static final int THREAD_QUEUE_SIZE = 10;
 
 
     public CommandExecutorService() {
-        super("CommandExecutorService");
+        super();
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public void onCreate() {
+        super.onCreate();
+        BlockingQueue<Runnable> queue = new ArrayBlockingQueue<Runnable>(THREAD_QUEUE_SIZE);
+        executor = new ThreadPoolExecutor(THREAD_POOL_MIN_SIZE, THREAD_POOL_MAX_SIZE, 1, TimeUnit.MINUTES, queue);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if(intent != null) {
+            handleIntent(intent);
+        }
+        return START_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    private void handleIntent(Intent intent) {
         Log.d(TAG, "Command Executor Service triggered");
         if(intent == null)
             return;
@@ -41,9 +71,10 @@ public class CommandExecutorService extends IntentService {
         ThreeHeadedMonkeyApplication_ application = (ThreeHeadedMonkeyApplication_) getApplication();
         List<Command> commands = application.commandPrototypeManager.getCommandsForString(commandStr);
         for(Command command : commands) {
+            command.setCommandString(commandStr);
             if(communication != null)
                 command.setOutgoingCommunication(communication);
-            command.execute(commandStr);
+            executor.execute(command);
         }
     }
 }

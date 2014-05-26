@@ -4,37 +4,34 @@ import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.communication.OutgoingCommunication;
 
 
-public abstract class Command implements Cloneable {
+public abstract class Command implements Cloneable, Runnable {
     protected ThreeHeadedMonkeyApplication application;
 
     private boolean isPrototype;
 
+    protected boolean isConfirmed = false;
+
     protected OutgoingCommunication outgoingCommunication = null;
+
+    protected String commandString = null;
 
     public Command(ThreeHeadedMonkeyApplication application) {
         this.application = application;
         this.isPrototype = true;
     }
 
-
-    /**
-     * Executes the command
-     *
-     * @param confirm if false but the command needs confirmation, a confirmation request will be send to the user instead
-     */
-    public final void execute(String command, boolean confirm) {
+    @Override
+    public void run() {
         if(isPrototype)
             throw new RuntimeException("Can't execute prototype command!");
-        if (needsConfirmation(command) && !confirm) {
+        if(getCommandString() == null)
+            return;
+        if (needsConfirmation(getCommandString()) && !isConfirmed()) {
             //@TODO Confirmation logic
             return;
         }
-        if(respondsToCommand(command))
-            doExecute(command);
-    }
-
-    public final void execute(String command) {
-        execute(command, false);
+        if(respondsToCommand(getCommandString()))
+            doExecute(getCommandString());
     }
 
     @Override
@@ -56,6 +53,23 @@ public abstract class Command implements Cloneable {
     public void setOutgoingCommunication(OutgoingCommunication outgoingCommunication) {
         this.outgoingCommunication = outgoingCommunication;
     }
+
+    public String getCommandString() {
+        return commandString;
+    }
+
+    public void setCommandString(String commandString) {
+        this.commandString = commandString;
+    }
+
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setConfirmed(boolean isConfirmed) {
+        this.isConfirmed = isConfirmed;
+    }
+
 
     public void sendResponse(String text) {
         if(outgoingCommunication == null)
