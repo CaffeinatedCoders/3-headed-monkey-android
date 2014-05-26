@@ -72,9 +72,9 @@ public abstract class Command implements Cloneable, Runnable {
 
 
     public void sendResponse(String text) {
-        if(outgoingCommunication == null)
+        if(getOutgoingCommunication() == null)
             return;
-        outgoingCommunication.sendMessage(text);
+        getOutgoingCommunication().sendMessage(text);
     }
 
     protected abstract void doExecute(String command);

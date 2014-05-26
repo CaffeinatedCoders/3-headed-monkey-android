@@ -7,7 +7,6 @@ import android.os.IBinder;
 import android.util.Log;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
-import net.three_headed_monkey.ThreeHeadedMonkeyApplication_;
 import net.three_headed_monkey.commands.Command;
 import net.three_headed_monkey.communication.OutgoingCommunication;
 import net.three_headed_monkey.communication.OutgoingCommunicationFactory;
@@ -68,7 +67,7 @@ public class CommandExecutorService extends Service {
 
 
         Log.d(TAG, "Command Executor Service called with command string: " + commandStr + " and communication type " + communication_type);
-        ThreeHeadedMonkeyApplication_ application = (ThreeHeadedMonkeyApplication_) getApplication();
+        ThreeHeadedMonkeyApplication application = (ThreeHeadedMonkeyApplication) getApplication();
         List<Command> commands = application.commandPrototypeManager.getCommandsForString(commandStr);
         for(Command command : commands) {
             command.setCommandString(commandStr);

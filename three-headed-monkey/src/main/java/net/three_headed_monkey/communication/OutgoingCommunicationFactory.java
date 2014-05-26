@@ -13,6 +13,8 @@ public class OutgoingCommunicationFactory {
     }
 
     public OutgoingCommunication createByType(String type) {
+        if(type == null)
+            return null;
         OutgoingCommunication communication = null;
         if(type.equals(OUTGOING_COMMUNICATION_TYPE_BROADCAST)){
             communication = new OutgoingBroadcastCommunication(application);
