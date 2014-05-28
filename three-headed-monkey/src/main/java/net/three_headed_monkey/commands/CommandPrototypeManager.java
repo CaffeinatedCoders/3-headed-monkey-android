@@ -42,6 +42,7 @@ public class CommandPrototypeManager {
         commands.add(new LogCommand(application));
         commands.add(new HelpCommand(application));
         commands.add(new GetPhoneStateCommand(application));
+        commands.add(new GetLastLocation(application));
     }
 
 }
