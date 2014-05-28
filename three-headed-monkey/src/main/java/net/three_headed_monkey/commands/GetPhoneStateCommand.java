@@ -25,7 +25,7 @@ public class GetPhoneStateCommand extends Command {
 
     @Override
     protected boolean respondsToCommand(String command) {
-        return command.equals("getPhoneState");
+        return command.toUpperCase().equals("getPhoneState".toUpperCase());
     }
 
     @Override
