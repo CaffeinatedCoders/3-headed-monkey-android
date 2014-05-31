@@ -14,21 +14,23 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
     <application
-        android:name="net.three_headed_monkey.ThreeHeadedMonkeyApplication_"
+        android:name=".ThreeHeadedMonkeyApplication_"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="net.three_headed_monkey.ui.MainActivity_"
+            android:name=".ui.MainActivity_"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="net.three_headed_monkey.ui.SimCardSettingsActivity_"
+            android:name=".ui.SimCardSettingsActivity_"
             android:label="SimCard Settings" />
         <activity
-            android:name="net.three_headed_monkey.ui.LauncherActivity"
+            android:name=".ui.LauncherActivity"
             android:label="@string/launcher_label" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,11 +39,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.three_headed_monkey.ui.PhoneNumbersSettingsActivity_"
+            android:name=".ui.PhoneNumbersSettingsActivity_"
             android:label="PhoneNumber Settings" />
 
         <receiver
-            android:name="net.three_headed_monkey.service.DialerCodeReceiver"
+            android:name=".service.DialerCodeReceiver"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
@@ -50,7 +52,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="net.three_headed_monkey.service.BootReceiver"
+            android:name=".service.BootReceiver"
             android:enabled="true"
             android:exported="false" >
             <intent-filter>
@@ -59,17 +61,21 @@
         </receiver>
 
         <service
-            android:name="net.three_headed_monkey.service.SimCardCheckService"
+            android:name=".service.SimCardCheckService"
             android:exported="false" >
         </service>
         <service
-            android:name="net.three_headed_monkey.service.CommandExecutorService"
+            android:name=".service.CommandExecutorService"
             android:exported="false" >
         </service>
 
         <activity
-            android:name="net.three_headed_monkey.ui.CommandShellActivity_"
+            android:name=".ui.CommandShellActivity_"
             android:label="@string/title_activity_command_shell" >
+        </activity>
+        <activity
+            android:name=".ui.SupportedFeaturesActivity_"
+            android:label="@string/title_activity_supported_features" >
         </activity>
     </application>
 

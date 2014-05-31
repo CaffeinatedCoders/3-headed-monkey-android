@@ -54,6 +54,9 @@
             android:defaultValue="false"
             android:enabled="false" />
 
+        <Preference android:title="Supported Features"
+            android:key="pref_btn_supported_features" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

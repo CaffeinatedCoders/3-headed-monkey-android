@@ -168,6 +168,9 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
         } else if(key.equals("pref_btn_open_command_shell")) {
             CommandShellActivity_.intent(getActivity()).start();
             return true;
+        } else if(key.equals("pref_btn_supported_features")) {
+            SupportedFeaturesActivity_.intent(getActivity()).start();
+            return true;
         }
 
         return false;
