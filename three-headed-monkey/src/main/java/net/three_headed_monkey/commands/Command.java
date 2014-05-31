@@ -70,6 +70,11 @@ public abstract class Command implements Cloneable, Runnable {
         this.isConfirmed = isConfirmed;
     }
 
+    // Should only used for testing
+    public void setPrototype(boolean prototype) {
+        isPrototype = prototype;
+    }
+
 
     public void sendResponse(String text) {
         if(getOutgoingCommunication() == null)
