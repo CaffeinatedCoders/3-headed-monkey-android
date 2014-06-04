@@ -38,6 +38,7 @@ public class CommandExecutorService extends Service {
         super.onCreate();
         BlockingQueue<Runnable> queue = new ArrayBlockingQueue<Runnable>(THREAD_QUEUE_SIZE);
         executor = new ThreadPoolExecutor(THREAD_POOL_MIN_SIZE, THREAD_POOL_MAX_SIZE, 1, TimeUnit.MINUTES, queue);
+//        executor = new ThreadPoolExecutor(THREAD_POOL_MIN_SIZE, THREAD_POOL_MAX_SIZE, 0, TimeUnit.MILLISECONDS, queue);
     }
 
     @Override
@@ -69,6 +70,7 @@ public class CommandExecutorService extends Service {
         Log.d(TAG, "Command Executor Service called with command string: " + commandStr + " and communication type " + communication_type);
         ThreeHeadedMonkeyApplication application = (ThreeHeadedMonkeyApplication) getApplication();
         List<Command> commands = application.commandPrototypeManager.getCommandsForString(commandStr);
+        Log.d(TAG, "Executing " + commands.size() + " commands");
         for(Command command : commands) {
             command.setCommandString(commandStr);
             if(communication != null)

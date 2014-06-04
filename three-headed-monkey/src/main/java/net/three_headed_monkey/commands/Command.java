@@ -1,5 +1,7 @@
 package net.three_headed_monkey.commands;
 
+import android.util.Log;
+
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.communication.OutgoingCommunication;
 
@@ -22,6 +24,7 @@ public abstract class Command implements Cloneable, Runnable {
 
     @Override
     public void run() {
+        Log.d("Command", "Running command: " + this.getClass().getName());
         if(isPrototype)
             throw new RuntimeException("Can't execute prototype command!");
         if(getCommandString() == null)

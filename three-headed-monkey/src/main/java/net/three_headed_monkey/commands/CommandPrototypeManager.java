@@ -43,6 +43,7 @@ public class CommandPrototypeManager {
         commands.add(new HelpCommand(application));
         commands.add(new GetPhoneStateCommand(application));
         commands.add(new GetLastLocation(application));
+        commands.add(new FindGpsLocationCommand(application));
     }
 
 }
