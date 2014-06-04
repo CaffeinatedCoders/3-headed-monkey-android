@@ -46,6 +46,15 @@ android {
             versionNameSuffix "-debug"
         }
     }
+
+    signingConfigs {
+        debug {
+            storeFile file(getRootDir().toString() + "/.debug-keystore")
+            storePassword "changeit"
+            keyPassword "changeit"
+            keyAlias "AndroidDebug"
+        }
+    }
 }
 
 apply plugin: 'android-unit-test'
