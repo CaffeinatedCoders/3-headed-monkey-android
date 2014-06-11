@@ -4,14 +4,18 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.2'
-        classpath 'com.github.jcandksolutions.gradle:android-unit-test:1.0.+'
+        classpath 'com.android.tools.build:gradle:0.11'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.3'
+//        classpath 'com.github.jcandksolutions.gradle:android-unit-test:1.0.+'
+        classpath 'org.robolectric:robolectric-gradle-plugin:0.11.+'
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+'
     }
 }
 
+apply plugin: 'android-sdk-manager'
 apply plugin: 'android'
 apply plugin: 'android-apt'
+apply plugin: 'robolectric'
 
 
 def getVersionCode = { ->
@@ -28,16 +32,23 @@ def getVersionName = { ->
 }
 
 android {
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
-        packageName "net.three_headed_monkey"
+        applicationId "net.three_headed_monkey"
         versionCode getVersionCode()
         versionName getVersionName()
-        testPackageName "net.three_headed_monkey.test"
+        testApplicationId "net.three_headed_monkey.test"
         testInstrumentationRunner "pl.polidea.instrumentation.PolideaInstrumentationTestRunner"
     }
 
@@ -57,7 +68,16 @@ android {
     }
 }
 
-apply plugin: 'android-unit-test'
+robolectric {
+    // configure the set of classes for JUnit tests
+    include '**/*Test.class'
+    exclude '**/test/**/*.class'
+
+    // configure max heap size of the test JVM
+    maxHeapSize = "2048m"
+}
+
+//apply plugin: 'android-unit-test'
 
 repositories {
     mavenCentral()
@@ -74,16 +94,32 @@ dependencies {
     compile "com.google.code.gson:gson:2.2.4"
     compile "com.android.support:support-v4:19.0.+"
 //==================== Robolectric ==================
-    testCompile 'org.hamcrest:hamcrest-all:1.3'
-    testCompile 'junit:junit:4.10'
-    testCompile 'org.robolectric:robolectric:2.1.+'
-    testCompile 'com.squareup:fest-android:1.0.+'
-//==================== So android studio sees these! Comment in on demand =
-    androidTestCompile 'org.hamcrest:hamcrest-all:1.3'
-    androidTestCompile 'junit:junit:4.10'
-    androidTestCompile 'org.robolectric:robolectric:2.1.+'
-
-//    androidTestCompile 'com.squareup:fest-android:1.0.+'
+    androidTestCompile 'org.hamcrest:hamcrest-integration:1.3',
+            'org.hamcrest:hamcrest-core:1.3',
+            'org.hamcrest:hamcrest-library:1.3'
+    androidTestCompile('junit:junit:4.11') {
+        exclude module: 'hamcrest-core'
+    }
+    androidTestCompile('org.robolectric:robolectric:2.3') {
+        exclude module: 'classworlds'
+        exclude module: 'maven-artifact'
+        exclude module: 'maven-artifact-manager'
+        exclude module: 'maven-error-diagnostics'
+        exclude module: 'maven-model'
+        exclude module: 'maven-plugin-registry'
+        exclude module: 'maven-profile'
+        exclude module: 'maven-project'
+        exclude module: 'maven-settings'
+        exclude module: 'nekohtml'
+        exclude module: 'plexus-container-default'
+        exclude module: 'plexus-interpolation'
+        exclude module: 'plexus-utils'
+        exclude module: 'wagon-file'
+        exclude module: 'wagon-http-lightweight'
+        exclude module: 'wagon-http-shared'
+        exclude module: 'wagon-provider-api'
+    }
+    androidTestCompile 'com.squareup:fest-android:1.0.+'
 //==================== Instrument Tests ==============
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:4.3.+'
     androidTestCompile files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
@@ -91,7 +127,7 @@ dependencies {
 
 if(project.hasProperty("jenkins")) {
     android.buildTypes.each { type ->
-        type.packageNameSuffix = ".jenkins"
+        type.applicationIdSuffix = ".jenkins"
         type.versionNameSuffix = "-jenkins-$type.name"
     }
 }
@@ -99,7 +135,7 @@ if(project.hasProperty("jenkins")) {
 apt {
     arguments {
         androidManifestFile variant.processResources.manifestFile
-        resourcePackageName android.defaultConfig.packageName
+        resourcePackageName android.defaultConfig.applicationId
         // You can set optional annotation processing options here, like these commented options:
         // logLevel 'INFO'
         // logFile '/var/log/aa.log'
@@ -124,10 +160,14 @@ apply from: 'https://raw.github.com/sababado/gradle-android-add-dir/master/gradl
 //    variant.addJavaSourceFoldersToModel file("src/test/java")
 //}
 
-apply plugin: 'idea'
 
-idea {
-    module {
-        testOutputDir = file('build/test-classes/debug')
-    }
-}
+//apply plugin: 'idea'
+//
+//idea {
+//    module {
+//        testSourceDirs += file('src/test/java')
+//        testOutputDir = file('build/test-classes/debug')
+//        jdkName = null
+//    }
+//}
+
