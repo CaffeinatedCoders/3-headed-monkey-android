@@ -22,7 +22,9 @@ public class FindGpsLocationCommand extends LooperCommand implements LocationLis
     SecureSettingsUtils secureSettingsUtils;
     Location lastLocation = null;
     int oldLocationMode = -1;
-    public static final int MAX_RESPONSES = 3;
+    public int MAX_RESPONSES = 3;
+    public int TIMEOUT_SECONDS = 5*60;
+//    public int TIMEOUT_SECONDS = 5;
     int responses;
 
     public FindGpsLocationCommand(ThreeHeadedMonkeyApplication application) {
@@ -32,7 +34,7 @@ public class FindGpsLocationCommand extends LooperCommand implements LocationLis
 
     @Override
     public long getTimeoutDelaySeconds() {
-        return 5*60;
+        return TIMEOUT_SECONDS;
     }
 
     @Override

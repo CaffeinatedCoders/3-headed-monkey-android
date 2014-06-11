@@ -8,10 +8,13 @@ import org.robolectric.AndroidManifestExt;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.res.Fs;
+import org.robolectric.shadows.ShadowLog;
 
 public class RobolectricGradleTestRunner extends RobolectricTestRunner {
   public RobolectricGradleTestRunner(final Class<?> testClass) throws InitializationError {
     super(testClass);
+      System.setProperty("robolectric.logging", "logcat.log");
+      ShadowLog.setupLogging();
   }
 
   @Override

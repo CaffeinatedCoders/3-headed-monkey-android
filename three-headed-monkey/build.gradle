@@ -79,9 +79,10 @@ dependencies {
     testCompile 'org.robolectric:robolectric:2.1.+'
     testCompile 'com.squareup:fest-android:1.0.+'
 //==================== So android studio sees these! Comment in on demand =
-//    androidTestCompile 'junit:junit:4.10'
-//    androidTestCompile 'org.robolectric:robolectric:2.1.+'
-//    androidTestCompile 'org.hamcrest:hamcrest-all:1.3'
+    androidTestCompile 'org.hamcrest:hamcrest-all:1.3'
+    androidTestCompile 'junit:junit:4.10'
+    androidTestCompile 'org.robolectric:robolectric:2.1.+'
+
 //    androidTestCompile 'com.squareup:fest-android:1.0.+'
 //==================== Instrument Tests ==============
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:4.3.+'
@@ -122,3 +123,11 @@ apply from: 'https://raw.github.com/sababado/gradle-android-add-dir/master/gradl
 //android.applicationVariants.all { variant ->
 //    variant.addJavaSourceFoldersToModel file("src/test/java")
 //}
+
+apply plugin: 'idea'
+
+idea {
+    module {
+        testOutputDir = file('build/test-classes/debug')
+    }
+}
