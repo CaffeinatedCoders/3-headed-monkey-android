@@ -13,6 +13,7 @@ import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 abstract public class LooperCommand extends Command {
     public static final String TAG = "LooperCommand";
     protected Handler handler;
+    protected Looper looper;
 
     public LooperCommand(ThreeHeadedMonkeyApplication application) {
         super(application);
@@ -29,6 +30,7 @@ abstract public class LooperCommand extends Command {
                     Log.d(TAG, "Looper prepare failed, this should not happen", e);
                 }
 
+                looper = Looper.myLooper();
                 handler = new Handler() {
                     @Override
                     public void handleMessage(Message msg) {
@@ -78,6 +80,6 @@ abstract public class LooperCommand extends Command {
      */
     public void cancelLooper() {
         onBeforeQuit();
-        Looper.myLooper().quit();
+        looper.quit();
     }
 }
