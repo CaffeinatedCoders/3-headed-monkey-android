@@ -22,6 +22,7 @@ public class CommandExecutorService extends Service {
     public static final String TAG = "CommandExecutorService";
     public static final String INTENT_COMMAND_STRING_PARAM = "SimCardCheckService_INTENT_COMMAND_STRING_PARAM";
     public static final String INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM = "SimCardCheckService_INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM";
+    public static final String INTENT_OUTGOING_COMMUNICATION_SENDER_ADDRESS_PARAM = "SimCardCheckService_INTENT_OUTGOING_COMMUNICATION_SENDER_ADDRESS_PARAM";
     ThreadPoolExecutor executor;
 
     private static final int THREAD_POOL_MIN_SIZE = 1;
@@ -63,8 +64,10 @@ public class CommandExecutorService extends Service {
             return;
 
         String communication_type = intent.getStringExtra(INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM);
+        String sender = intent.getStringExtra(INTENT_OUTGOING_COMMUNICATION_SENDER_ADDRESS_PARAM);
+
         OutgoingCommunicationFactory outgoingCommunicationFactory = new OutgoingCommunicationFactory((ThreeHeadedMonkeyApplication)getApplication());
-        OutgoingCommunication communication = outgoingCommunicationFactory.createByType(communication_type);
+        OutgoingCommunication communication = outgoingCommunicationFactory.createByType(communication_type, sender);
 
 
         Log.d(TAG, "Command Executor Service called with command string: " + commandStr + " and communication type " + communication_type);

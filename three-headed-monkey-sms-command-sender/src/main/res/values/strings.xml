@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">three-headed-monkey-sms-command-sender</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_phone_number_desc">Phone Number</string>
+
+    <string-array name="command_names">
+        <item>getPhoneState</item>
+        <item>getLastLocation</item>
+        <item>findGpsLocation</item>
+    </string-array>
+
+</resources>

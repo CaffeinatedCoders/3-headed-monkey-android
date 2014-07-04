@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -67,6 +68,16 @@ public class PhoneNumberSettings {
             if(phoneNumberInfo.name.equals(name)) return true;
         }
         return false;
+    }
+
+    public synchronized List<PhoneNumberInfo> findEntriesForNumber(String phoneNumber) {
+        List<PhoneNumberInfo> erg = new ArrayList<PhoneNumberInfo>();
+        for(PhoneNumberInfo phoneNumberInfo : phoneNumberList) {
+            if(PhoneNumberUtils.compare(phoneNumber, phoneNumberInfo.phoneNumber)) {
+                erg.add(phoneNumberInfo);
+            }
+        }
+        return erg;
     }
 
 

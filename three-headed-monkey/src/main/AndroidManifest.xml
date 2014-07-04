@@ -8,6 +8,8 @@
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -77,6 +79,24 @@
             android:name=".ui.SupportedFeaturesActivity_"
             android:label="@string/title_activity_supported_features" >
         </activity>
+
+        <receiver
+            android:name=".service.DataSmsReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.DATA_SMS_RECEIVED" />
+
+                <data
+                    android:scheme="sms"
+                    android:host="*"
+                    android:port="4273" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.DataSmsReceivedService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
