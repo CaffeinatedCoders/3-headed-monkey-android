@@ -132,8 +132,9 @@ dependencies {
 
 if(project.hasProperty("jenkins")) {
     android.buildTypes.each { type ->
-        type.applicationIdSuffix = ".jenkins"
-        type.versionNameSuffix = "-jenkins-$type.name"
+        //@Todo Commented out until robolectric issue#1150 is resolved
+//        type.applicationIdSuffix = ".jenkins"
+//        type.versionNameSuffix = "-jenkins-$type.name"
     }
 }
 
