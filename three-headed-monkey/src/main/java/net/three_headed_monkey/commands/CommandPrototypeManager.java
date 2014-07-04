@@ -12,7 +12,7 @@ public class CommandPrototypeManager {
 
     public CommandPrototypeManager(ThreeHeadedMonkeyApplication application) {
         this.application = application;
-        initPrototypes();
+//        initPrototypes();
     }
 
     public List<Command> getPrototypeCommandList() {

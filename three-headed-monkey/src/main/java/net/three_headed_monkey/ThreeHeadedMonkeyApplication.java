@@ -42,6 +42,7 @@ public class ThreeHeadedMonkeyApplication extends Application {
         simCardSettings = new SimCardSettings(this);
         phoneNumberSettings = new PhoneNumberSettings(this);
         commandPrototypeManager = new CommandPrototypeManager(this);
+        commandPrototypeManager.initPrototypes();
 
         load();
 

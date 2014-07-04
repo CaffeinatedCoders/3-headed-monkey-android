@@ -8,6 +8,8 @@ import android.test.ServiceTestCase;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.commands.Command;
 import net.three_headed_monkey.commands.CommandPrototypeManager;
+import net.three_headed_monkey.commands.HelpCommand;
+import net.three_headed_monkey.commands.LogCommand;
 import net.three_headed_monkey.communication.OutgoingCommunication;
 import net.three_headed_monkey.service.CommandExecutorService;
 
@@ -28,10 +30,6 @@ public class CommandExecutorServiceTest extends ServiceTestCase<CommandExecutorS
         application = new ThreeHeadedMonkeyApplication();
         setApplication(application);
 //        application.onCreate();
-        application.commandPrototypeManager = new CommandPrototypeManager(application);
-        dummyCommunication = new DummyCommunication(application);
-        application.commandPrototypeManager.initPrototypes();
-        application.commandPrototypeManager.getPrototypeCommandList().add(new DummyCommand(application));
     }
 
     @Override
@@ -43,6 +41,7 @@ public class CommandExecutorServiceTest extends ServiceTestCase<CommandExecutorS
      * Starts the Command executor service with a string, waits some time, and then checks if there is an response
      */
     public void testCompleteCommandLifecycle() {
+        initDummyCommand();
         assertNull(dummyCommunication.lastMessage);
         Intent intent = new Intent();
         intent.putExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM, "TestCommand");
@@ -54,6 +53,18 @@ public class CommandExecutorServiceTest extends ServiceTestCase<CommandExecutorS
         }
         assertNotNull(dummyCommunication.lastMessage);
         assertEquals("I ran!", dummyCommunication.lastMessage);
+    }
+
+    /**
+     * Inits the dummy Command
+     */
+    private void initDummyCommand() {
+        application.commandPrototypeManager = new CommandPrototypeManager(application);
+        dummyCommunication = new DummyCommunication(application);
+//        application.commandPrototypeManager.initPrototypes();
+        application.commandPrototypeManager.getPrototypeCommandList().add(new LogCommand(application));
+        application.commandPrototypeManager.getPrototypeCommandList().add(new DummyCommand(application));
+        application.commandPrototypeManager.getPrototypeCommandList().add(new HelpCommand(application));
     }
 
     class DummyCommunication extends OutgoingCommunication {
