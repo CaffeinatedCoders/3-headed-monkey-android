@@ -66,6 +66,11 @@ android {
             keyAlias "AndroidDebug"
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 robolectric {
