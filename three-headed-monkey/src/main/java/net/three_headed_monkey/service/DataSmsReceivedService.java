@@ -11,6 +11,9 @@ import net.three_headed_monkey.ThreeHeadedMonkeyApplication_;
 import net.three_headed_monkey.communication.OutgoingCommunicationFactory;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 
+import org.apache.commons.codec.binary.Hex;
+
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -35,6 +38,7 @@ public class DataSmsReceivedService extends IntentService {
         for (int i = 0; i < pdus.length; i++) {
             try {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) pdus[i]);
+//                Log.d(TAG, "Received PDU: " + new String(Hex.encodeHex((byte[]) pdus[i])));
                 byte[] data = smsMessage.getUserData();
                 String message = new String(data, "UTF-8");
                 String sender = smsMessage.getOriginatingAddress();
