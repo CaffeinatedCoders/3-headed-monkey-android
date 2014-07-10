@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="DetailsViewValueColor">#ffffffff</color>
     <color name="Positive">#ff31ff22</color>
     <color name="Negative">#ffff1d13</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="alarm_background">#ffb60712</color>
+    <color name="alarm_text">#ff86cee5</color>
+
 </resources>

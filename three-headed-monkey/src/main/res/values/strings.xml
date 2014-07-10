@@ -38,5 +38,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_supported_features">SupportedFeaturesActivity</string>
+    <string name="title_activity_alarm_command_activiry">AlarmCommandActiviry</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="alarm">ALARM</string>
 
 </resources>

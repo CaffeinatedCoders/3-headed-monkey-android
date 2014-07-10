@@ -44,6 +44,7 @@ public class CommandPrototypeManager {
         commands.add(new GetPhoneStateCommand(application));
         commands.add(new GetLastLocation(application));
         commands.add(new FindGpsLocationCommand(application));
+        commands.add(new AlarmCommand(application));
     }
 
 }

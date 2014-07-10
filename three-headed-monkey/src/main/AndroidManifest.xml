@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".ThreeHeadedMonkeyApplication_"
@@ -87,9 +88,9 @@
                 <action android:name="android.intent.action.DATA_SMS_RECEIVED" />
 
                 <data
-                    android:scheme="sms"
                     android:host="*"
-                    android:port="4273" />
+                    android:port="4273"
+                    android:scheme="sms" />
             </intent-filter>
         </receiver>
 
@@ -97,6 +98,12 @@
             android:name=".service.DataSmsReceivedService"
             android:exported="false" >
         </service>
+
+        <activity
+            android:name=".ui.AlarmCommandActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>

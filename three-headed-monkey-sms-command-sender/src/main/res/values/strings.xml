@@ -10,6 +10,7 @@
         <item>getPhoneState</item>
         <item>getLastLocation</item>
         <item>findGpsLocation</item>
+        <item>alarm</item>
     </string-array>
 
 </resources>
