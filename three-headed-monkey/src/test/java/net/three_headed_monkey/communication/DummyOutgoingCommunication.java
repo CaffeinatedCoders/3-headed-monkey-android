@@ -1,7 +1,5 @@
 package net.three_headed_monkey.communication;
 
-import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
-
 public class DummyOutgoingCommunication extends OutgoingCommunication {
     private String lastMessage = null;
 

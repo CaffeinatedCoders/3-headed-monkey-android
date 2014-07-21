@@ -74,6 +74,9 @@
         <Preference android:title="Open Command Shell"
             android:key="pref_btn_open_command_shell" />
 
+        <Preference android:title="Export Location History"
+            android:key="pref_btn_export_location_history" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -83,6 +86,7 @@
             android:key="pref_btn_version" />
 
     </PreferenceCategory>
+
 
 
 </PreferenceScreen>

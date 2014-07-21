@@ -104,6 +104,22 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+
+        <receiver
+            android:name=".service.PassiveLocationUpdatesReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="net.three_headed_monkey.intent.action.PASSIVE_LOCATION_UPDATE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.PassiveLocationUpdatesReceivedService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

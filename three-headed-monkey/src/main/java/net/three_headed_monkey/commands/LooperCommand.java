@@ -1,7 +1,6 @@
 package net.three_headed_monkey.commands;
 
 
-import android.nfc.Tag;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -66,14 +65,18 @@ abstract public class LooperCommand extends Command {
 
     /**
      * Just in case the looper is used for more than callbacks
+     *
      * @param message
      */
     public void handleLooperMessage(Message message) {
 
     }
 
-    public void onBeforeTimeout(){}
-    public void onBeforeQuit(){}
+    public void onBeforeTimeout() {
+    }
+
+    public void onBeforeQuit() {
+    }
 
     /**
      *

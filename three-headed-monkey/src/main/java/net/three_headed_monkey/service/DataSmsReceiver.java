@@ -4,10 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.SmsMessage;
 import android.util.Log;
-
-import net.three_headed_monkey.communication.OutgoingCommunicationFactory;
 
 public class DataSmsReceiver extends BroadcastReceiver {
     public static final String TAG = "DataSmsReceiver";
@@ -22,7 +19,7 @@ public class DataSmsReceiver extends BroadcastReceiver {
         if (bundle == null)
             return;
         Object[] pdus = (Object[]) bundle.get("pdus");
-        if(pdus == null || pdus.length == 0)
+        if (pdus == null || pdus.length == 0)
             return;
 
         Log.d(TAG, "Starting DataSmsReceivedService");

@@ -25,15 +25,15 @@ public abstract class Command implements Cloneable, Runnable {
     @Override
     public void run() {
         Log.d("Command", "Running command: " + this.getClass().getName());
-        if(isPrototype)
+        if (isPrototype)
             throw new RuntimeException("Can't execute prototype command!");
-        if(getCommandString() == null)
+        if (getCommandString() == null)
             return;
         if (needsConfirmation(getCommandString()) && !isConfirmed()) {
             //@TODO Confirmation logic
             return;
         }
-        if(respondsToCommand(getCommandString()))
+        if (respondsToCommand(getCommandString()))
             doExecute(getCommandString());
     }
 
@@ -80,7 +80,7 @@ public abstract class Command implements Cloneable, Runnable {
 
 
     public void sendResponse(String text) {
-        if(getOutgoingCommunication() == null)
+        if (getOutgoingCommunication() == null)
             return;
         getOutgoingCommunication().sendMessage(text);
     }
@@ -89,6 +89,7 @@ public abstract class Command implements Cloneable, Runnable {
 
     /**
      * This method will be mostly called on the prototype to select the right Command object
+     *
      * @param command the command string including parameters
      * @return
      */

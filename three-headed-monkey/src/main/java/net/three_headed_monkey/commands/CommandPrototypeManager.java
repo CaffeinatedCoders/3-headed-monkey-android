@@ -31,7 +31,7 @@ public class CommandPrototypeManager {
 
         for (Command command : commands) {
             if (command.respondsToCommand(commandString))
-                ret.add((Command)command.clone());
+                ret.add((Command) command.clone());
         }
 
         return ret;

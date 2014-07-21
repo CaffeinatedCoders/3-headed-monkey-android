@@ -23,8 +23,8 @@ public class FindGpsLocationCommand extends LooperCommand implements LocationLis
     Location lastLocation = null;
     int oldLocationMode = -1;
     public int MAX_RESPONSES = 3;
-    public int TIMEOUT_SECONDS = 5*60;
-//    public int TIMEOUT_SECONDS = 5;
+    public int TIMEOUT_SECONDS = 5 * 60;
+    //    public int TIMEOUT_SECONDS = 5;
     int responses;
 
     public FindGpsLocationCommand(ThreeHeadedMonkeyApplication application) {
@@ -41,7 +41,7 @@ public class FindGpsLocationCommand extends LooperCommand implements LocationLis
     protected void doExecute(String command) {
         responses = 0;
         secureSettingsUtils = new SecureSettingsUtils(application);
-        if(secureSettingsUtils.locationModeSettingsAvailable()) {
+        if (secureSettingsUtils.locationModeSettingsAvailable()) {
             oldLocationMode = secureSettingsUtils.getLocationMode();
             secureSettingsUtils.setLocationMode(Settings.Secure.LOCATION_MODE_HIGH_ACCURACY);
             Log.d(TAG, "GPS activated");
@@ -60,7 +60,7 @@ public class FindGpsLocationCommand extends LooperCommand implements LocationLis
     @Override
     public void onBeforeQuit() {
         locationManager.removeUpdates(this);
-        if(oldLocationMode != -1) {
+        if (oldLocationMode != -1) {
             secureSettingsUtils.setLocationMode(oldLocationMode);
             Log.d(TAG, "GPS setting restored");
         }
@@ -80,21 +80,21 @@ public class FindGpsLocationCommand extends LooperCommand implements LocationLis
     @Override
     public void onLocationChanged(Location location) {
         Log.d(TAG, "Location Change, accuracy: " + location.getAccuracy());
-        if(location.getAccuracy() > 50)
+        if (location.getAccuracy() > 50)
             return;
-        if(lastLocation != null) {
+        if (lastLocation != null) {
             //Check if either the location or the accuracy has changed less than we want to send a response for
-            if(location.distanceTo(lastLocation) < 5 && Math.abs(lastLocation.getAccuracy() - location.getAccuracy()) < 5 && location.getAccuracy() > 10)
+            if (location.distanceTo(lastLocation) < 5 && Math.abs(lastLocation.getAccuracy() - location.getAccuracy()) < 5 && location.getAccuracy() > 10)
                 return;
         }
 
-        if( location.getAccuracy() > 10) {
-            if(responses+1 >= MAX_RESPONSES)
+        if (location.getAccuracy() > 10) {
+            if (responses + 1 >= MAX_RESPONSES)
                 return;
         }
 
         lastLocation = location;
-        Log.d(TAG, "Sending location change response #" + (responses+1));
+        Log.d(TAG, "Sending location change response #" + (responses + 1));
         String response = "gps:";
         response += "\n  lat: " + location.getLatitude();
         response += "\n  long: " + location.getLongitude();
@@ -104,19 +104,21 @@ public class FindGpsLocationCommand extends LooperCommand implements LocationLis
         sendResponse(response);
         responses++;
 
-        if(responses >= MAX_RESPONSES)
+        if (responses >= MAX_RESPONSES)
             cancelLooper();
     }
 
     @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {}
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+    }
 
     @Override
-    public void onProviderEnabled(String s) {}
+    public void onProviderEnabled(String s) {
+    }
 
     @Override
     public void onProviderDisabled(String s) {
-        if(s.equals(LocationManager.GPS_PROVIDER)){
+        if (s.equals(LocationManager.GPS_PROVIDER)) {
             sendResponse("Gps has been turned off");
             cancelLooper();
         }

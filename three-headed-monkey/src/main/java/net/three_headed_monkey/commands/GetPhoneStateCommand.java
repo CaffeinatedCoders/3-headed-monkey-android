@@ -13,7 +13,7 @@ public class GetPhoneStateCommand extends Command {
 
     @Override
     protected void doExecute(String command) {
-        TelephonyManager tm = (TelephonyManager)application.getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) application.getSystemService(Context.TELEPHONY_SERVICE);
         String text = "";
         text += "deviceId: " + tm.getDeviceId();
         text += "\nsimCountryCode: " + tm.getSimCountryIso();

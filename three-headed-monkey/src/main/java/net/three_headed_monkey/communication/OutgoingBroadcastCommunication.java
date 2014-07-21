@@ -3,7 +3,6 @@ package net.three_headed_monkey.communication;
 
 import android.content.Intent;
 
-
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 
 /**

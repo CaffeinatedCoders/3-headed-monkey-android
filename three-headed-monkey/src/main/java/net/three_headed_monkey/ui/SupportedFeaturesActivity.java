@@ -1,9 +1,6 @@
 package net.three_headed_monkey.ui;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import net.three_headed_monkey.R;
@@ -11,7 +8,6 @@ import net.three_headed_monkey.utils.SecureSettingsUtils;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-import org.w3c.dom.Text;
 
 @EActivity(R.layout.activity_supported_features)
 public class SupportedFeaturesActivity extends Activity {
@@ -23,14 +19,14 @@ public class SupportedFeaturesActivity extends Activity {
         super.onResume();
         SecureSettingsUtils secureSettingsUtils = new SecureSettingsUtils(this);
         boolean secure_settings_available = secureSettingsUtils.testAccess();
-        if(secure_settings_available) {
+        if (secure_settings_available) {
             text_secureSettingsEnabled.setText(getString(R.string.yes));
             text_secureSettingsEnabled.setTextColor(getResources().getColor(R.color.Positive));
         } else {
             text_secureSettingsEnabled.setText(getString(R.string.no));
             text_secureSettingsEnabled.setTextColor(getResources().getColor(R.color.Negative));
         }
-        if(secure_settings_available && secureSettingsUtils.locationModeSettingsAvailable()) {
+        if (secure_settings_available && secureSettingsUtils.locationModeSettingsAvailable()) {
             text_secureSettingsLocationEnabled.setText(getString(R.string.yes));
             text_secureSettingsLocationEnabled.setTextColor(getResources().getColor(R.color.Positive));
         } else {

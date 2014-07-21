@@ -22,9 +22,12 @@ import org.androidannotations.annotations.ViewById;
 @EActivity(R.layout.activity_command_shell)
 public class CommandShellActivity extends Activity {
 
-    @ViewById TextView text_shell;
-    @ViewById EditText edit_command;
-    @ViewById Button button_execute;
+    @ViewById
+    TextView text_shell;
+    @ViewById
+    EditText edit_command;
+    @ViewById
+    Button button_execute;
 
     BroadcastCommunicationReceiver receiver;
 
@@ -44,10 +47,10 @@ public class CommandShellActivity extends Activity {
     }
 
     @Click(R.id.button_execute)
-    public void executeCommand(){
+    public void executeCommand() {
         String commandStr = edit_command.getText().toString();
         commandStr = commandStr.trim();
-        if(commandStr.isEmpty())
+        if (commandStr.isEmpty())
             return;
 
         Intent intent = new Intent(this, CommandExecutorService.class);

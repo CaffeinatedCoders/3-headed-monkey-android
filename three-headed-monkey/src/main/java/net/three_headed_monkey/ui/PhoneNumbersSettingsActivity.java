@@ -4,16 +4,32 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.*;
-import android.widget.*;
 import android.telephony.PhoneNumberUtils;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import net.three_headed_monkey.R;
-import org.androidannotations.annotations.*;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 import net.three_headed_monkey.ui.adapter.PhoneNumberInfoListAdapter;
 
-import java.util.*;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Trace;
+import org.androidannotations.annotations.ViewById;
+
+import java.util.Arrays;
 
 
 @EActivity(R.layout.phonenumbers_settings_activity)
@@ -49,7 +65,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
                     case R.id.action_delete:
                         long[] positions = phonenumbers_list.getCheckedItemIds();
                         Arrays.sort(positions);
-                        for (int currentPositionIndex = positions.length-1; currentPositionIndex >= 0; currentPositionIndex--) {
+                        for (int currentPositionIndex = positions.length - 1; currentPositionIndex >= 0; currentPositionIndex--) {
                             application.phoneNumberSettings.removePhoneNumber(adapter.getItem((int) positions[currentPositionIndex]));
                         }
                         mode.finish();
@@ -141,14 +157,12 @@ public class PhoneNumbersSettingsActivity extends Activity {
                 String possibleNewName = inputName.getText().toString();
                 if (possibleNewPhonenumber == null || possibleNewName == null) {
                     Toast.makeText(getApplicationContext(), R.string.phonenumberssettings_add_dialog_error_not_all_values_set, Toast.LENGTH_SHORT).show();
-                }
-                else if (application.phoneNumberSettings.nameExists(possibleNewName)) {
+                } else if (application.phoneNumberSettings.nameExists(possibleNewName)) {
                     Toast.makeText(getApplicationContext(), R.string.phonenumberssettings_add_dialog_error_name_already_exists, Toast.LENGTH_SHORT).show();
-                }
-                else if (!PhoneNumberUtils.isGlobalPhoneNumber(possibleNewPhonenumber)) {
+                } else if (!PhoneNumberUtils.isGlobalPhoneNumber(possibleNewPhonenumber)) {
                     Toast.makeText(getApplicationContext(), R.string.phonenumberssettings_add_dialog_error_invalid_phonenumber, Toast.LENGTH_SHORT).show();
                 } else {
-                     PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(possibleNewPhonenumber), possibleNewName);
+                    PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(possibleNewPhonenumber), possibleNewName);
                     application.phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
                     alertDialog.dismiss();
                 }

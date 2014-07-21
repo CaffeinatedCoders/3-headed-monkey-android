@@ -7,13 +7,9 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
-import net.three_headed_monkey.ThreeHeadedMonkeyApplication_;
 import net.three_headed_monkey.communication.OutgoingCommunicationFactory;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 
-import org.apache.commons.codec.binary.Hex;
-
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -32,7 +28,7 @@ public class DataSmsReceivedService extends IntentService {
         if (bundle == null)
             return;
         Object[] pdus = (Object[]) bundle.get("pdus");
-        if(pdus == null || pdus.length == 0)
+        if (pdus == null || pdus.length == 0)
             return;
 
         for (int i = 0; i < pdus.length; i++) {
@@ -45,7 +41,7 @@ public class DataSmsReceivedService extends IntentService {
                 Log.d(TAG, "Received data-sms from " + sender + ": " + message);
 
                 List<PhoneNumberInfo> infos = application.phoneNumberSettings.findEntriesForNumber(sender);
-                if(infos.isEmpty()) {
+                if (infos.isEmpty()) {
                     Log.d(TAG, "Datasms sender not authorized to send commands");
                     continue;
                 }

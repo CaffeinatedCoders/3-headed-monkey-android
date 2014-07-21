@@ -20,7 +20,7 @@ public class OutgoingDataSmsCommunication extends OutgoingCommunication {
 
     @Override
     public void sendMessage(String text) {
-        if(text == null || address == null)
+        if (text == null || address == null)
             return;
         SmsManager smsManager = SmsManager.getDefault();
         try {

@@ -4,37 +4,30 @@ import android.media.MediaPlayer;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
+import net.three_headed_monkey.test_utils.TestBase;
 import net.three_headed_monkey.ui.AlarmCommandActivity;
 import net.three_headed_monkey.ui.AlarmCommandActivity_;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.shadows.ShadowApplication;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.robolectric.Robolectric.application;
-import static org.robolectric.Robolectric.shadowOf;
 import static org.robolectric.Robolectric.buildActivity;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
-
 @RunWith(RobolectricGradleTestRunner.class)
-public class AlarmCommandTest {
-
-    ShadowApplication shadowApplication;
+public class AlarmCommandTest extends TestBase {
 
     @Before
-    public void setUp() {
-
-        shadowApplication = shadowOf(application);
-
+    public void setUp() throws Exception {
+        super.setUp();
     }
 
     @Test
     public void commandShouldStartActivity() {
-        AlarmCommand command = new AlarmCommand((ThreeHeadedMonkeyApplication)application);
+        AlarmCommand command = new AlarmCommand((ThreeHeadedMonkeyApplication) application);
         command.setCommandString("alarm");
         command.setPrototype(false);
         command.run();

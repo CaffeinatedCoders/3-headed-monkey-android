@@ -1,7 +1,6 @@
 package net.three_headed_monkey.commands;
 
 
-import net.three_headed_monkey.R;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 
 public class HelpCommand extends Command {
@@ -11,10 +10,10 @@ public class HelpCommand extends Command {
 
     @Override
     protected void doExecute(String commandStr) {
-        if(!respondsToCommand(commandStr))
+        if (!respondsToCommand(commandStr))
             return;
         String text = "Available commands:\n";
-        for(Command command : application.commandPrototypeManager.getPrototypeCommandList()) {
+        for (Command command : application.commandPrototypeManager.getPrototypeCommandList()) {
             text += "  " + command.getShortUsageText() + "\n";
         }
 

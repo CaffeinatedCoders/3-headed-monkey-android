@@ -8,7 +8,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PowerManager;
 
-
 import net.three_headed_monkey.R;
 
 import org.androidannotations.annotations.Background;
@@ -35,7 +34,7 @@ public class AlarmCommandActivity extends Activity {
     @Background
     public void startAlarm() {
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        if(audioManager != null) {
+        if (audioManager != null) {
             audioManager.setStreamVolume(
                     AudioManager.STREAM_MUSIC,
                     audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
@@ -50,7 +49,7 @@ public class AlarmCommandActivity extends Activity {
 
     @Override
     protected void onPause() {
-        if(mediaPlayer != null) {
+        if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
         }

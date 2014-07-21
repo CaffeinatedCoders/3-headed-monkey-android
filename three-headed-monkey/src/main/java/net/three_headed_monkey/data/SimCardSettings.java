@@ -21,58 +21,59 @@ public class SimCardSettings {
     private Context context;
     private List<SimCardInfo> authorized_sim_cards = new ArrayList<SimCardInfo>();
 
-    public SimCardSettings(Context context){
+    public SimCardSettings(Context context) {
         this.context = context;
     }
 
 
-    public List<SimCardInfo> getAll(){
-        if(authorized_sim_cards.isEmpty())
+    public List<SimCardInfo> getAll() {
+        if (authorized_sim_cards.isEmpty())
             load();
         return authorized_sim_cards;
     }
 
-    public void addCurrentSimCard(){
-        if(currentSimCardAuthorized())
+    public void addCurrentSimCard() {
+        if (currentSimCardAuthorized())
             return;
         SimCardInfo current = SimCardInfo.createFromSimCard(context);
-        if(current == null)
+        if (current == null)
             return;
         authorized_sim_cards.add(current);
         save();
     }
 
-    public void removeCurrentSimCard(){
+    public void removeCurrentSimCard() {
         SimCardInfo current = SimCardInfo.createFromSimCard(context);
 
         authorized_sim_cards.remove(current);
         save();
     }
 
-    public void save(){
+    public void save() {
         Gson gson = new Gson();
         String json = gson.toJson(authorized_sim_cards);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         sharedPref.edit().putString(SHARED_PREFERENCE_KEY, json).commit();
     }
 
-    public void load(){
+    public void load() {
         Gson gson = new Gson();
         String json = PreferenceManager.getDefaultSharedPreferences(context).getString(SHARED_PREFERENCE_KEY, "");
         Log.d("SimCardSettings: ", json);
-        Type collectionType = new TypeToken<ArrayList<SimCardInfo>>(){}.getType();
+        Type collectionType = new TypeToken<ArrayList<SimCardInfo>>() {
+        }.getType();
         List<SimCardInfo> cardInfos = gson.fromJson(json, collectionType);
-        if(cardInfos == null)
+        if (cardInfos == null)
             return;
         cardInfos.removeAll(Collections.singleton(null));
         authorized_sim_cards.clear();
-        if(cardInfos != null)
+        if (cardInfos != null)
             authorized_sim_cards.addAll(cardInfos);
     }
 
-    public boolean currentSimCardAuthorized(){
+    public boolean currentSimCardAuthorized() {
         SimCardInfo current = SimCardInfo.createFromSimCard(context);
-        if(current == null)
+        if (current == null)
             return false;
         return authorized_sim_cards.contains(current);
     }

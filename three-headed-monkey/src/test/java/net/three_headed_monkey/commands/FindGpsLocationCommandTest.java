@@ -1,45 +1,34 @@
 package net.three_headed_monkey.commands;
 
-import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.communication.DummyOutgoingCommunication;
 import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
+import net.three_headed_monkey.test_utils.TestBase;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.shadows.ShadowLocationManager;
-import org.robolectric.shadows.ShadowLog;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-import static org.robolectric.Robolectric.application;
-import static org.robolectric.Robolectric.shadowOf;
-
 @RunWith(RobolectricGradleTestRunner.class)
-public class FindGpsLocationCommandTest {
+public class FindGpsLocationCommandTest extends TestBase {
     DummyOutgoingCommunication outgoingCommunication;
     FindGpsLocationCommand command;
 
-    ShadowLocationManager shadowLocationManager;
-    LocationManager locationManager;
-
     @Before
-    public void setUp() {
-        locationManager = (LocationManager)Robolectric.application.getSystemService(Context.LOCATION_SERVICE);
-        shadowLocationManager = shadowOf(locationManager);
+    public void setUp() throws Exception {
+        super.setUp();
         shadowLocationManager.setProviderEnabled(LocationManager.GPS_PROVIDER, true);
         outgoingCommunication = new DummyOutgoingCommunication();
-        command = new FindGpsLocationCommand((ThreeHeadedMonkeyApplication)application);
+        command = new FindGpsLocationCommand((ThreeHeadedMonkeyApplication) application);
         command.TIMEOUT_SECONDS = 10;
         command.setCommandString("findGpsLocation");
         command.setPrototype(false);
@@ -47,7 +36,8 @@ public class FindGpsLocationCommandTest {
 
     }
 
-    @Ignore("Not working because of Robolectric bug") //@TODO: Remove once https://github.com/robolectric/robolectric/pull/1182 has been merged
+    @Ignore("Not working because of Robolectric bug")
+    //@TODO: Remove once https://github.com/robolectric/robolectric/pull/1182 has been merged
     @Test
     public void simpleTestSingleLocationExpected() throws InterruptedException {
         command.MAX_RESPONSES = 1;
@@ -58,7 +48,7 @@ public class FindGpsLocationCommandTest {
 
         Thread thread = new Thread(command);
         thread.start();
-        Thread.sleep(7000,0);
+        Thread.sleep(7000, 0);
         System.out.println(shadowLocationManager.getRequestLocationUpdateListeners().size());
         shadowLocationManager.simulateLocation(location);
 //        Robolectric.runUiThreadTasksIncludingDelayedTasks();
@@ -80,7 +70,7 @@ public class FindGpsLocationCommandTest {
         location.setLatitude(latitude);
         location.setLongitude(longitude);
         location.setAccuracy(accuracy);
-        location.setTime(System.currentTimeMillis()-10000);
+        location.setTime(System.currentTimeMillis() - 10000);
         return location;
     }
 

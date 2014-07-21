@@ -5,11 +5,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import org.androidannotations.annotations.*;
+
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.data.SimCardInfo;
 import net.three_headed_monkey.ui.custom_views.SimCardInfoItemView;
 import net.three_headed_monkey.ui.custom_views.SimCardInfoItemView_;
+
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
 
 import java.util.List;
 
@@ -25,7 +30,7 @@ public class SimCardInfoListAdapter extends BaseAdapter {
     Context context;
 
     @AfterInject
-    void initAdapter(){
+    void initAdapter() {
         simCardInfos = application.simCardSettings.getAll();
     }
 
@@ -48,10 +53,10 @@ public class SimCardInfoListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Log.d(this.getClass().toString(), "getView " + position);
         SimCardInfoItemView simCardInfoItemView;
-        if(convertView == null){
+        if (convertView == null) {
             simCardInfoItemView = SimCardInfoItemView_.build(context);
         } else {
-            simCardInfoItemView = (SimCardInfoItemView)convertView;
+            simCardInfoItemView = (SimCardInfoItemView) convertView;
         }
         simCardInfoItemView.bind(getItem(position));
         return simCardInfoItemView;

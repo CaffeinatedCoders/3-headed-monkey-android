@@ -1,7 +1,7 @@
 package net.three_headed_monkey.custom_shadows;
 
 import android.telephony.TelephonyManager;
-import org.robolectric.Robolectric;
+
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 
@@ -11,11 +11,11 @@ public class ShadowTelephonyManager extends org.robolectric.shadows.ShadowTeleph
     private String simSerialNumber;
     private String subscriberId;
 
-    public void setSimOperatorName(String simOperatorName){
+    public void setSimOperatorName(String simOperatorName) {
         this.simOperatorName = simOperatorName;
     }
 
-    public void setSimSerialNumber(String simSerialNumber){
+    public void setSimSerialNumber(String simSerialNumber) {
         this.simSerialNumber = simSerialNumber;
     }
 
@@ -24,16 +24,18 @@ public class ShadowTelephonyManager extends org.robolectric.shadows.ShadowTeleph
     }
 
     @Implementation
-    public String getSimOperatorName(){
+    public String getSimOperatorName() {
         return simOperatorName;
     }
 
     @Implementation
-    public String getSimSerialNumber(){
+    public String getSimSerialNumber() {
         return simSerialNumber;
     }
 
     @Implementation
-    public String getSubscriberId() { return subscriberId; }
+    public String getSubscriberId() {
+        return subscriberId;
+    }
 
 }

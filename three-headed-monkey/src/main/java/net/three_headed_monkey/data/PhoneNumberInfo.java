@@ -4,7 +4,8 @@ public class PhoneNumberInfo {
     public String phoneNumber;
     public String name;
 
-    public PhoneNumberInfo() {}
+    public PhoneNumberInfo() {
+    }
 
     public PhoneNumberInfo(String phoneNumber, String name) {
         this.phoneNumber = phoneNumber;
@@ -13,11 +14,11 @@ public class PhoneNumberInfo {
 
     @Override
     public boolean equals(Object o) {
-        if(o == this)
+        if (o == this)
             return true;
-        if(!o.getClass().equals(PhoneNumberInfo.class))
+        if (!o.getClass().equals(PhoneNumberInfo.class))
             return false;
-        PhoneNumberInfo phoneNumberInfo = (PhoneNumberInfo)o;
+        PhoneNumberInfo phoneNumberInfo = (PhoneNumberInfo) o;
         return phoneNumberInfo.phoneNumber.equals(phoneNumber);
     }
 }

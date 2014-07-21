@@ -1,34 +1,33 @@
 package net.three_headed_monkey.service;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
 import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
+import net.three_headed_monkey.test_utils.TestBase;
 import net.three_headed_monkey.ui.MainActivity_;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
-import static org.robolectric.Robolectric.shadowOf;
-
 import org.robolectric.Robolectric;
 import org.robolectric.shadows.ShadowActivity;
-import org.robolectric.shadows.ShadowInputDevice;
 import org.robolectric.shadows.ShadowIntent;
 import org.robolectric.shadows.ShadowPreferenceManager;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static org.robolectric.Robolectric.shadowOf;
+
 @RunWith(RobolectricGradleTestRunner.class)
-public class DialerCodeReceiverTest {
+public class DialerCodeReceiverTest extends TestBase {
     private Intent outgoingCallIntent;
 
     @Before
-    public void setUp(){
+    public void setUp() throws Exception {
+        super.setUp();
         SharedPreferences sharedPreferences = ShadowPreferenceManager.getDefaultSharedPreferences(Robolectric.application.getApplicationContext());
         sharedPreferences.edit().putString("pref_text_dialer_number", "***#4242").commit();
 
@@ -45,7 +44,8 @@ public class DialerCodeReceiverTest {
         DialerCodeReceiver dialerCodeReceiver = new DialerCodeReceiver();
         try {
             dialerCodeReceiver.onReceive(activity, outgoingCallIntent);
-        } catch (Exception e){}
+        } catch (Exception e) {
+        }
 
         Intent startedIntent = shadowActivity.getNextStartedActivity();
         assertNotNull(startedIntent);

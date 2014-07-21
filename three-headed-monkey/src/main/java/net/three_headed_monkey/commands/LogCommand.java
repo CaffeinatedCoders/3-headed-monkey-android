@@ -3,7 +3,6 @@ package net.three_headed_monkey.commands;
 import android.util.Log;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
-import net.three_headed_monkey.ThreeHeadedMonkeyApplication_;
 
 /**
  * Simple command for testing purposes which writes some text to logcat

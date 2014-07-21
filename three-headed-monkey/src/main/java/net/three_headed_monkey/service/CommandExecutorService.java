@@ -1,6 +1,5 @@
 package net.three_headed_monkey.service;
 
-import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -44,7 +43,7 @@ public class CommandExecutorService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(intent != null) {
+        if (intent != null) {
             handleIntent(intent);
         }
         return START_STICKY;
@@ -57,16 +56,16 @@ public class CommandExecutorService extends Service {
 
     private void handleIntent(Intent intent) {
         Log.d(TAG, "Command Executor Service triggered");
-        if(intent == null)
+        if (intent == null)
             return;
         String commandStr = intent.getStringExtra(INTENT_COMMAND_STRING_PARAM);
-        if(commandStr == null || commandStr.isEmpty())
+        if (commandStr == null || commandStr.isEmpty())
             return;
 
         String communication_type = intent.getStringExtra(INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM);
         String sender = intent.getStringExtra(INTENT_OUTGOING_COMMUNICATION_SENDER_ADDRESS_PARAM);
 
-        OutgoingCommunicationFactory outgoingCommunicationFactory = new OutgoingCommunicationFactory((ThreeHeadedMonkeyApplication)getApplication());
+        OutgoingCommunicationFactory outgoingCommunicationFactory = new OutgoingCommunicationFactory((ThreeHeadedMonkeyApplication) getApplication());
         OutgoingCommunication communication = outgoingCommunicationFactory.createByType(communication_type, sender);
 
 
@@ -74,9 +73,9 @@ public class CommandExecutorService extends Service {
         ThreeHeadedMonkeyApplication application = (ThreeHeadedMonkeyApplication) getApplication();
         List<Command> commands = application.commandPrototypeManager.getCommandsForString(commandStr);
         Log.d(TAG, "Executing " + commands.size() + " commands");
-        for(Command command : commands) {
+        for (Command command : commands) {
             command.setCommandString(commandStr);
-            if(communication != null)
+            if (communication != null)
                 command.setOutgoingCommunication(communication);
             executor.execute(command);
         }

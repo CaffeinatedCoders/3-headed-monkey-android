@@ -42,5 +42,13 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="alarm">ALARM</string>
+    <string name="choose_format">Choose format</string>
+    <string name="external_storage_not_available">External storage is not available</string>
+
+    <string-array name="location_history_export_choices">
+        <item>csv</item>
+        <item>gpx</item>
+        <item>kml</item>
+    </string-array>
 
 </resources>
