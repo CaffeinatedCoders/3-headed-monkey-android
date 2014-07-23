@@ -16,14 +16,6 @@
     <string name="active_phonenumbers">Active Phonenumbers</string>
     <string name="action_add">Add</string>
     <string name="action_delete">Delete</string>
-    <string name="phonenumberssettings_add_dialog_error_not_all_values_set">Error: Some values are empty!</string>
-    <string name="phonenumberssettings_add_dialog_error_invalid_phonenumber">Error: Not a valid phone number!</string>
-    <string name="phonenumberssettings_add_dialog_error_name_already_exists">Error: This name already exists!</string>
-    <string name="phonenumberssettings_add_dialog_title">Add new Number</string>
-    <string name="phonenumberssettings_add_dialog_inputname_hint">Name</string>
-    <string name="phonenumberssettings_add_dialog_inputnumber_hint">Number</string>
-    <string name="phonenumberssettings_add_dialog_yes">Yes</string>
-    <string name="phonenumberssettings_add_dialog_no">No</string>
     <string name="settings_category_title_about">About</string>
     <string name="settings_preference_version_param">Version %1$s</string>
     <string name="settings_preference_dialer_number">Dialer Code</string>
@@ -33,4 +25,29 @@
     <string name="setting_title_root_settings_backup">Root Settings Backup</string>
     <string name="sms_notification_text_preference_title">Sms Notification Text</string>
     <string name="sms_notification_default_text">Sorry, I can\'t come to the phone right now. I\'ll call you back later</string>
+
+    <!-- phone number settings -->
+    phone_numbers_settings_add_dialog_label_name
+    <string-array name="phone_number_settings_select_import_dialog">
+        <item>Import phone number from contacts</item>
+        <item>Add new phone number</item>
+    </string-array>
+    <string name="phonenumberssettings_add_dialog_error_not_all_values_set">Error: Some values are empty!</string>
+    <string name="phonenumberssettings_add_dialog_error_invalid_phonenumber">Error: Not a valid phone number!</string>
+    <string name="phonenumberssettings_add_dialog_error_name_already_exists">Error: This name already exists!</string>
+    <string name="phonenumberssettings_add_dialog_title">Add new Number</string>
+    <string name="phonenumberssettings_add_dialog_inputname_hint">Name</string>
+    <string name="phonenumberssettings_add_dialog_inputnumber_hint">Number</string>
+    <string name="phonenumberssettings_add_dialog_yes">Yes</string>
+    <string name="phonenumberssettings_add_dialog_no">No</string>
+    <string name="phone_numbers_settings_add_dialog_label_name">Name</string>
+    <string name="phone_numbers_settings_add_dialog_label_number">Number</string>
+    <string name="phone_numbers_settings_add_dialog_error_message_not_all_values_set">Not all Values set</string>
+    <string name="phone_numbers_settings_add_dialog_error_message_associated_name_already_exists">Name already exists</string>
+    <string name="phone_numbers_settings_add_dialog_error_message_not_a_valid_phone_number">Not a valid phone number</string>
+    <string name="phone_numbers_settings_add_dialog_title">New Phone Number</string>
+    <string name="phone_numbers_settings_add_dialog_button_yes">Yes</string>
+    <string name="phone_numbers_settings_add_dialog_button_no">No</string>
+    <string name="alert_dialog_ok">Ok</string>
+
 </resources>
