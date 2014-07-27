@@ -29,17 +29,9 @@
     <!-- phone number settings -->
     phone_numbers_settings_add_dialog_label_name
     <string-array name="phone_number_settings_select_import_dialog">
-        <item>Import phone number from contacts</item>
-        <item>Add new phone number</item>
+        <item>Import from contacts</item>
+        <item>Add new number</item>
     </string-array>
-    <string name="phonenumberssettings_add_dialog_error_not_all_values_set">Error: Some values are empty!</string>
-    <string name="phonenumberssettings_add_dialog_error_invalid_phonenumber">Error: Not a valid phone number!</string>
-    <string name="phonenumberssettings_add_dialog_error_name_already_exists">Error: This name already exists!</string>
-    <string name="phonenumberssettings_add_dialog_title">Add new Number</string>
-    <string name="phonenumberssettings_add_dialog_inputname_hint">Name</string>
-    <string name="phonenumberssettings_add_dialog_inputnumber_hint">Number</string>
-    <string name="phonenumberssettings_add_dialog_yes">Yes</string>
-    <string name="phonenumberssettings_add_dialog_no">No</string>
     <string name="phone_numbers_settings_add_dialog_label_name">Name</string>
     <string name="phone_numbers_settings_add_dialog_label_number">Number</string>
     <string name="phone_numbers_settings_add_dialog_error_message_not_all_values_set">Not all Values set</string>
@@ -48,6 +40,6 @@
     <string name="phone_numbers_settings_add_dialog_title">New Phone Number</string>
     <string name="phone_numbers_settings_add_dialog_button_yes">Yes</string>
     <string name="phone_numbers_settings_add_dialog_button_no">No</string>
-    <string name="alert_dialog_ok">Ok</string>
+    <string name="phone_numbers_settings_add_dialog_import_select_title">Import from</string>
 
 </resources>

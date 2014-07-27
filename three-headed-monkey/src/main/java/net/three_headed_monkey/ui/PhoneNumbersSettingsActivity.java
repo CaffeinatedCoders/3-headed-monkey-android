@@ -11,50 +11,54 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.InputType;
-import android.util.Log;
-import android.view.*;
-import android.widget.*;
 import android.telephony.PhoneNumberUtils;
+import android.text.InputType;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import net.three_headed_monkey.R;
-
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication_;
 import net.three_headed_monkey.data.PhoneNumberInfo;
-import net.three_headed_monkey.ui.adapter.PhoneNumberInfoListAdapter;
 import net.three_headed_monkey.ui.adapter.PhoneNumberInfoListAdapter_;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PhoneNumbersSettingsActivity extends Activity {
-    public static final int PICK_CONTACT_REQUEST = 0;
 
-    TextView phoneNumberTextView;
+    private static final int PICK_CONTACT_REQUEST = 0;
 
-    ListView phoneNumberListView;
+    private ListView phoneNumbersListView;
 
-    PhoneNumberInfoListAdapter_ adapter;
+    private PhoneNumberInfoListAdapter_ phoneNumberInfoListAdapter;
 
-    ThreeHeadedMonkeyApplication application;
+    private ThreeHeadedMonkeyApplication threeHeadedMonkeyApplication;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.phonenumbers_settings_activity);
-        phoneNumberListView = (ListView) findViewById(R.id.phonenumbers_list);
-        phoneNumberTextView = (TextView) findViewById(R.id.text_phonenumber);
-        adapter = PhoneNumberInfoListAdapter_.getInstance_(this);
-        application = (ThreeHeadedMonkeyApplication) getApplication();
+
+        setContentView(R.layout.phone_numbers_settings_activity);
+        phoneNumbersListView = (ListView) findViewById(R.id.phone_numbers_settings_list_view);
+        phoneNumberInfoListAdapter = PhoneNumberInfoListAdapter_.getInstance_(this);
+        threeHeadedMonkeyApplication = (ThreeHeadedMonkeyApplication) getApplication();
 
         this.bindAdapter();
     }
 
     void bindAdapter() {
-        phoneNumberListView.setAdapter(adapter);
-        phoneNumberListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        phoneNumberListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+        phoneNumbersListView.setAdapter(phoneNumberInfoListAdapter);
+        phoneNumbersListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        phoneNumbersListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position,
@@ -65,10 +69,10 @@ public class PhoneNumbersSettingsActivity extends Activity {
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_delete:
-                        long[] positions = phoneNumberListView.getCheckedItemIds();
+                        long[] positions = phoneNumbersListView.getCheckedItemIds();
                         Arrays.sort(positions);
                         for (int currentPositionIndex = positions.length - 1; currentPositionIndex >= 0; currentPositionIndex--) {
-                            application.phoneNumberSettings.removePhoneNumber(adapter.getItem((int) positions[currentPositionIndex]));
+                            threeHeadedMonkeyApplication.phoneNumberSettings.removePhoneNumber(phoneNumberInfoListAdapter.getItem((int) positions[currentPositionIndex]));
                         }
                         mode.finish();
                         return true;
@@ -95,7 +99,6 @@ public class PhoneNumbersSettingsActivity extends Activity {
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -107,7 +110,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                addNewPhoneNumber();
+                launchAddNewPhoneNumberDialogWizard();
                 return true;
             case R.id.action_delete:
 
@@ -116,18 +119,14 @@ public class PhoneNumbersSettingsActivity extends Activity {
         }
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-            Log.i("PhoneNumbersSettingsActivity", "1");
+        if (requestCode == PICK_CONTACT_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                Log.i("PhoneNumbersSettingsActivity", "1");
                 Uri contactData = data.getData();
                 Cursor cursor = getContentResolver().query(contactData, null, null, null, null);
                 if (cursor.moveToFirst()) {
-                    Log.i("PhoneNumbersSettingsActivity", "1");
-                    final String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    final String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY));
                     String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 
                     Bundle args = new Bundle();
@@ -135,29 +134,23 @@ public class PhoneNumbersSettingsActivity extends Activity {
                     args.putString("contactId", contactId);
                     SelectNumberFromContactsFragment f = SelectNumberFromContactsFragment.newInstance();
                     f.setArguments(args);
-                    getFragmentManager().executePendingTransactions();
                     f.show(getFragmentManager(), "select");
 
-                    Log.i("PhoneNumbersSettingsActivity", "1");
                 }
 
-                Log.i("PhoneNumbersSettingsActivity", "1");
-
             }
+        }
     }
 
-
-    private String addNewPhoneNumber() {
-        DialogFragment newFragment = SelectImportMethodDialogFragment.newInstance();
+    private void launchAddNewPhoneNumberDialogWizard() {
+        DialogFragment newFragment = SelectNewPhoneNumberAddMethodDialogFragment.newInstance();
         newFragment.show(getFragmentManager(), "dialog");
-        return null;
     }
 
-    public static class SelectImportMethodDialogFragment extends DialogFragment {
+    public static class SelectNewPhoneNumberAddMethodDialogFragment extends DialogFragment {
 
-        public static SelectImportMethodDialogFragment newInstance() {
-            SelectImportMethodDialogFragment selectImportMethodDialogFragment = new SelectImportMethodDialogFragment();
-            return selectImportMethodDialogFragment;
+        public static SelectNewPhoneNumberAddMethodDialogFragment newInstance() {
+            return new SelectNewPhoneNumberAddMethodDialogFragment();
         }
 
         @Override
@@ -171,9 +164,8 @@ public class PhoneNumbersSettingsActivity extends Activity {
                     if (which == 0) {
                         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
                         getActivity().startActivityForResult(intent, PICK_CONTACT_REQUEST);
-                        //SelectNumberFromContactsFragment.newInstance().show(fragmentTransaction, "select");
                     } else if (which == 1) {
-                        AddNewNumberDialogFragment.newInstance().show(fragmentTransaction, "add");
+                        AddNewPhoneNumberDialogFragment.newInstance().show(fragmentTransaction, "add");
                     }
                 }
             });
@@ -182,10 +174,10 @@ public class PhoneNumbersSettingsActivity extends Activity {
         }
     }
 
-    public static class AddNewNumberDialogFragment extends DialogFragment {
+    public static class AddNewPhoneNumberDialogFragment extends DialogFragment {
 
-        public static AddNewNumberDialogFragment newInstance() {
-            return new AddNewNumberDialogFragment();
+        public static AddNewPhoneNumberDialogFragment newInstance() {
+            return new AddNewPhoneNumberDialogFragment();
         }
 
         @Override
@@ -217,74 +209,99 @@ public class PhoneNumbersSettingsActivity extends Activity {
             addNewPhoneNumberDialog.setTitle(R.string.phone_numbers_settings_add_dialog_title);
             addNewPhoneNumberDialog.setCancelable(false);
             addNewPhoneNumberDialog.setPositiveButton(R.string.phone_numbers_settings_add_dialog_button_yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int Buttton) {
-                    String possibleNewPhonenumber = inputNumber.getText().toString();
+                public void onClick(DialogInterface dialog, int Button) {
+                    String possibleNewPhoneNumber = inputNumber.getText().toString();
                     String possibleNewName = inputName.getText().toString();
-                    if (possibleNewPhonenumber == null || possibleNewName == null) {
+                    if (possibleNewPhoneNumber == null || possibleNewName == null) {
                         Toast.makeText(getActivity(), R.string.phone_numbers_settings_add_dialog_error_message_not_all_values_set, Toast.LENGTH_SHORT).show();
-                    } else if (((ThreeHeadedMonkeyApplication_) getActivity().getApplication()).phoneNumberSettings.nameExists(possibleNewName)) {
-                        Toast.makeText(getActivity(), R.string.phone_numbers_settings_add_dialog_error_message_associated_name_already_exists, Toast.LENGTH_SHORT).show();
-                    } else if (!PhoneNumberUtils.isGlobalPhoneNumber(possibleNewPhonenumber)) {
+                    } else if (!PhoneNumberUtils.isGlobalPhoneNumber(possibleNewPhoneNumber)) {
                         Toast.makeText(getActivity(), R.string.phone_numbers_settings_add_dialog_error_message_not_a_valid_phone_number, Toast.LENGTH_SHORT).show();
                     } else {
-                        PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(possibleNewPhonenumber), possibleNewName);
+                        PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(possibleNewPhoneNumber), possibleNewName);
                         ((ThreeHeadedMonkeyApplication_) getActivity().getApplication()).phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
                         getFragmentManager().executePendingTransactions();
                     }
                 }
 
             });
-            final AlertDialog alertDialog = addNewPhoneNumberDialog.create();
 
-            return alertDialog;
+            return addNewPhoneNumberDialog.create();
         }
     }
 
     public static class SelectNumberFromContactsFragment extends DialogFragment {
 
         public static SelectNumberFromContactsFragment newInstance() {
-            SelectNumberFromContactsFragment selectNumberFromContactsFragment = new SelectNumberFromContactsFragment();
-            return selectNumberFromContactsFragment;
+            return new SelectNumberFromContactsFragment();
         }
+
+        public ArrayList<Integer> selectedPhoneNumbers;
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
+            selectedPhoneNumbers = new ArrayList<Integer>();
+
             final String contactName = getArguments().getString("contactName");
             final String contactId = getArguments().getString("contactId");
             final Cursor phones = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
             final AlertDialog.Builder selectImportPhoneNumberDialog = new AlertDialog.Builder(getActivity());
-            selectImportPhoneNumberDialog.setTitle("Test");
-            selectImportPhoneNumberDialog.setSingleChoiceItems(phones,
-                    -1,
+
+            String title = getString(R.string.phone_numbers_settings_add_dialog_import_select_title);
+            selectImportPhoneNumberDialog.setTitle(title + " " + contactName);
+            selectImportPhoneNumberDialog.setMultiChoiceItems(phones,
                     ContactsContract.CommonDataKinds.Phone.NUMBER,
-                    new DialogInterface.OnClickListener() {
+                    ContactsContract.CommonDataKinds.Phone.NUMBER,
+                    new DialogInterface.OnMultiChoiceClickListener() {
 
-                        public void onClick(DialogInterface dialog, int which) {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 
-                            phones.moveToPosition(which);
-                            String possibleNewPhonenumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)).replace(" ", "");
-                            Log.i("PhoneNumbersSettingsActivity", possibleNewPhonenumber);
-                            if (possibleNewPhonenumber == null || contactName == null) {
-                                Toast.makeText(getActivity().getApplicationContext(), R.string.phone_numbers_settings_add_dialog_error_message_not_all_values_set, Toast.LENGTH_SHORT).show();
-                            } else if (((ThreeHeadedMonkeyApplication_) getActivity().getApplication()).phoneNumberSettings.nameExists(contactName)) {
-                                Toast.makeText(getActivity().getApplicationContext(), R.string.phone_numbers_settings_add_dialog_error_message_associated_name_already_exists, Toast.LENGTH_SHORT).show();
-                            } else if (!PhoneNumberUtils.isGlobalPhoneNumber(possibleNewPhonenumber)) {
-                                Toast.makeText(getActivity().getApplicationContext(), R.string.phone_numbers_settings_add_dialog_error_message_not_a_valid_phone_number, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Log.i("PhoneNumbersSettingsActivity", "lets add something");
-                                PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(possibleNewPhonenumber), contactName);
-                                //((ThreeHeadedMonkeyApplication_)((Dialog)dialog).getContext().getApplicationContext()).phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
-                                ((ThreeHeadedMonkeyApplication_) getActivity().getApplication()).phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
-                                getFragmentManager().executePendingTransactions();
+                            if (isChecked) {
+                                String possibleNewPhoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)).replace(" ", "");
+                                if (possibleNewPhoneNumber == null || contactName == null) {
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.phone_numbers_settings_add_dialog_error_message_not_all_values_set, Toast.LENGTH_SHORT).show();
+                                    ((AlertDialog) dialog).getListView().setItemChecked(which, false);
+                                } else if (!PhoneNumberUtils.isGlobalPhoneNumber(possibleNewPhoneNumber)) {
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.phone_numbers_settings_add_dialog_error_message_not_a_valid_phone_number, Toast.LENGTH_SHORT).show();
+                                    ((AlertDialog) dialog).getListView().setItemChecked(which, false);
+                                } else {
+                                    selectedPhoneNumbers.add(which);
+                                }
                             }
+                            else {
+                                if(selectedPhoneNumbers.contains(which)) selectedPhoneNumbers.remove(which);
+                            }
+
                         }
 
                     }
             );
-            final AlertDialog alertDialog = selectImportPhoneNumberDialog.create();
-            return alertDialog;
+            selectImportPhoneNumberDialog.setPositiveButton(R.string.phone_numbers_settings_add_dialog_button_yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    for(int numberId : selectedPhoneNumbers) {
+                        phones.moveToPosition(selectedPhoneNumbers.get(numberId));
+                        String newPhoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)).replace(" ", "");
+                        int newPhoneNumberTypeId = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+                        CharSequence possibleNewPhoneNumberType = ContactsContract.CommonDataKinds.Phone.getTypeLabel(getResources(), newPhoneNumberTypeId, "");
+                        PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(newPhoneNumber), contactName + " (" + possibleNewPhoneNumberType + ")");
+                        ((ThreeHeadedMonkeyApplication_) getActivity().getApplication()).phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
+                        PhoneNumbersSettingsActivity activity = (PhoneNumbersSettingsActivity) getActivity();
+                        activity.phoneNumberInfoListAdapter.notifyDataSetChanged();
+                        getFragmentManager().executePendingTransactions();
+                    }
+                }
+            });
+            selectImportPhoneNumberDialog.setNegativeButton(R.string.phone_numbers_settings_add_dialog_button_no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) { }
+
+            });
+
+
+            return selectImportPhoneNumberDialog.create();
         }
     }
 
