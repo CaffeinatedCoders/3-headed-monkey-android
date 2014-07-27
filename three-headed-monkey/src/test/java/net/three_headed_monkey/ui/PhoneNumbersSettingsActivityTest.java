@@ -1,42 +1,24 @@
 package net.three_headed_monkey.ui;
 
-import android.content.Context;
+import android.app.Activity;
 import android.widget.Button;
 import android.widget.ListView;
-import org.androidannotations.annotations.BeforeTextChange;
-import net.three_headed_monkey.custom_shadows.ShadowTelephonyManager;
-import net.three_headed_monkey.ui.PhoneNumbersSettingsActivity;
-import org.junit.*;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.runner.RunWith;
-
-import android.app.Activity;
-import android.telephony.TelephonyManager;
 import android.widget.TextView;
 
 import net.three_headed_monkey.R;
+import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
+import net.three_headed_monkey.test_utils.TestBase;
 
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static org.robolectric.Robolectric.application;
-import static org.robolectric.Robolectric.newInstanceOf;
-import static org.robolectric.Robolectric.shadowOf;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
-
-import net.three_headed_monkey.test_utils.*;
 
 @RunWith(RobolectricGradleTestRunner.class)
-public class PhoneNumbersSettingsActivityTest {
+public class PhoneNumbersSettingsActivityTest extends TestBase {
     private TextView text_serial_number;
     private TextView text_country_code;
     private TextView text_operator;
@@ -48,14 +30,15 @@ public class PhoneNumbersSettingsActivityTest {
     private ListView phonenumbers_list;
 
     @Before
-    public void setUp(){
-        activity = Robolectric.buildActivity(PhoneNumbersSettingsActivity_.class).create().get();
-        phonenumbers_list = (ListView) activity.findViewById(R.id.phonenumbers_list);
+    public void setUp() throws Exception {
+        super.setUp();
+        activity = Robolectric.buildActivity(PhoneNumbersSettingsActivity.class).create().get();
+        phonenumbers_list = (ListView) activity.findViewById(R.id.phone_numbers_settings_list_view);
         button_add_phonenumber = (Button) activity.findViewById(R.id.action_add);
     }
 
     @Test
-    public void testAdd(){
+    public void testAdd() {
         assertThat(phonenumbers_list.getCount(), equalTo(0));
     }
 

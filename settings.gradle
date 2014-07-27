@@ -1,1 +1,1 @@
-include ':three-headed-monkey'
+include ':three-headed-monkey', ':three-headed-monkey-sms-command-sender'

@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" >
+
+    <ScrollView android:id="@+id/textAreaScroller"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_x="0px"
+        android:layout_y="25px"
+        android:scrollbars="vertical">
+        <TextView
+            android:id="@+id/text_shell"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:autoLink="web"
+            android:textIsSelectable="true"
+            android:layout_marginTop="22dp" />
+    </ScrollView>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/edit_phone_number"
+        android:hint="@string/edit_phone_number_desc"
+        android:contentDescription="@string/edit_phone_number_desc"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_commands"
+            android:spinnerMode="dropdown"
+            android:entries="@array/command_names"
+            />
+
+        <Button
+            android:id="@+id/button_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

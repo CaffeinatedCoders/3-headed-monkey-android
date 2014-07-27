@@ -1,0 +1,22 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_alarm_activity_container"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/alarm_background"
+    tools:context="net.three_headed_monkey.ui.AlarmCommandActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+    <TextView android:id="@+id/text_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        android:textColor="@color/alarm_text"
+        android:textStyle="bold"
+        android:textSize="70sp"
+        android:gravity="center"
+        android:text="@string/alarm" />
+
+</FrameLayout>

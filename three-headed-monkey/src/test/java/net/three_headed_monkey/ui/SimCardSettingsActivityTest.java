@@ -1,42 +1,34 @@
 package net.three_headed_monkey.ui;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.widget.Button;
 import android.widget.ListView;
-import net.three_headed_monkey.custom_shadows.ShadowTelephonyManager;
-import org.junit.*;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.runner.RunWith;
-
-import android.app.Activity;
-import android.telephony.TelephonyManager;
 import android.widget.TextView;
 
 import net.three_headed_monkey.R;
+import net.three_headed_monkey.custom_shadows.ShadowTelephonyManager;
+import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
+import net.three_headed_monkey.test_utils.TestBase;
 
-
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.robolectric.Robolectric.application;
-import static org.robolectric.Robolectric.newInstanceOf;
-import static org.robolectric.Robolectric.shadowOf;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
-
-import net.three_headed_monkey.test_utils.*;
+import static org.robolectric.Robolectric.shadowOf;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(shadows=net.three_headed_monkey.custom_shadows.ShadowTelephonyManager.class)
-public class SimCardSettingsActivityTest {
+@Config(shadows = net.three_headed_monkey.custom_shadows.ShadowTelephonyManager.class)
+public class SimCardSettingsActivityTest extends TestBase {
     private TelephonyManager telephonyManager;
     private ShadowTelephonyManager shadowTelephonyManager;
 
@@ -52,7 +44,8 @@ public class SimCardSettingsActivityTest {
     private TextView text_currently_authorized;
 
     @Before
-    public void setUp(){
+    public void setUp() throws Exception {
+        super.setUp();
         telephonyManager = (TelephonyManager) application.getSystemService(Context.TELEPHONY_SERVICE);
         shadowTelephonyManager = (ShadowTelephonyManager) shadowOf(telephonyManager);
         shadowTelephonyManager.setSimOperatorName(OPERATOR);
@@ -70,14 +63,14 @@ public class SimCardSettingsActivityTest {
     }
 
     @Test
-    public void testSimInfoShownOnActivityStart(){
+    public void testSimInfoShownOnActivityStart() {
         assertThat(text_country_code.getText().toString(), equalTo(COUNTRY_CODE));
         assertThat(text_operator.getText().toString(), equalTo(OPERATOR));
         assertThat(text_serial_number.getText().toString(), equalTo(SERIAL_NUMBER));
     }
 
     @Test
-    public void testAuthorizeSim(){
+    public void testAuthorizeSim() {
         assertThat(text_currently_authorized.getText().toString(), equalTo("No"));
         assertThat(authorized_simcards_list.getCount(), equalTo(0));
 

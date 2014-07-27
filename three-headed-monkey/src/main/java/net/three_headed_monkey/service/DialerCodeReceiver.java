@@ -16,8 +16,8 @@ public class DialerCodeReceiver extends BroadcastReceiver {
 
             String dialerCode = PreferenceManager.getDefaultSharedPreferences(context).getString("pref_text_dialer_number", "");
             System.err.println("================ " + dialerCode);
-            if(phoneNumber.equals(dialerCode)) {
-                Intent intent1 = new Intent(context , MainActivity_.class);
+            if (phoneNumber.equals(dialerCode)) {
+                Intent intent1 = new Intent(context, MainActivity_.class);
                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent1);
                 setResultData(null);

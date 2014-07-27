@@ -8,26 +8,33 @@
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="net.three_headed_monkey.ThreeHeadedMonkeyApplication_"
+        android:name=".ThreeHeadedMonkeyApplication_"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="net.three_headed_monkey.ui.MainActivity_"
+            android:name=".ui.MainActivity_"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="net.three_headed_monkey.ui.SimCardSettingsActivity_"
+            android:name=".ui.SimCardSettingsActivity_"
             android:label="SimCard Settings" />
         <activity
-            android:name="net.three_headed_monkey.ui.LauncherActivity"
+            android:name=".ui.LauncherActivity"
             android:label="@string/launcher_label" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,10 +44,11 @@
         </activity>
         <activity
             android:name="net.three_headed_monkey.ui.PhoneNumbersSettingsActivity"
+
             android:label="PhoneNumber Settings" />
 
         <receiver
-            android:name="net.three_headed_monkey.service.DialerCodeReceiver"
+            android:name=".service.DialerCodeReceiver"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
@@ -49,7 +57,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="net.three_headed_monkey.service.BootReceiver"
+            android:name=".service.BootReceiver"
             android:enabled="true"
             android:exported="false" >
             <intent-filter>
@@ -58,7 +66,60 @@
         </receiver>
 
         <service
-            android:name="net.three_headed_monkey.service.SimCardCheckService"
+            android:name=".service.SimCardCheckService"
+            android:exported="false" >
+        </service>
+        <service
+            android:name=".service.CommandExecutorService"
+            android:exported="false" >
+        </service>
+
+        <activity
+            android:name=".ui.CommandShellActivity_"
+            android:label="@string/title_activity_command_shell" >
+        </activity>
+        <activity
+            android:name=".ui.SupportedFeaturesActivity_"
+            android:label="@string/title_activity_supported_features" >
+        </activity>
+
+        <receiver
+            android:name=".service.DataSmsReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.DATA_SMS_RECEIVED" />
+
+                <data
+                    android:host="*"
+                    android:port="4273"
+                    android:scheme="sms" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.DataSmsReceivedService"
+            android:exported="false" >
+        </service>
+
+        <activity
+            android:name=".ui.AlarmCommandActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+
+        <receiver
+            android:name=".service.PassiveLocationUpdatesReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="net.three_headed_monkey.intent.action.PASSIVE_LOCATION_UPDATE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.PassiveLocationUpdatesReceivedService"
             android:exported="false" >
         </service>
     </application>

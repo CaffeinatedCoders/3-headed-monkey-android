@@ -73,6 +73,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
                         Arrays.sort(positions);
                         for (int currentPositionIndex = positions.length - 1; currentPositionIndex >= 0; currentPositionIndex--) {
                             threeHeadedMonkeyApplication.phoneNumberSettings.removePhoneNumber(phoneNumberInfoListAdapter.getItem((int) positions[currentPositionIndex]));
+
                         }
                         mode.finish();
                         return true;
@@ -221,6 +222,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
                         ((ThreeHeadedMonkeyApplication_) getActivity().getApplication()).phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
                         getFragmentManager().executePendingTransactions();
                     }
+
                 }
 
             });
@@ -269,9 +271,9 @@ public class PhoneNumbersSettingsActivity extends Activity {
                                 } else {
                                     selectedPhoneNumbers.add(which);
                                 }
-                            }
-                            else {
-                                if(selectedPhoneNumbers.contains(which)) selectedPhoneNumbers.remove(which);
+                            } else {
+                                if (selectedPhoneNumbers.contains(which))
+                                    selectedPhoneNumbers.remove(which);
                             }
 
                         }
@@ -281,7 +283,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
             selectImportPhoneNumberDialog.setPositiveButton(R.string.phone_numbers_settings_add_dialog_button_yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
-                    for(int numberId : selectedPhoneNumbers) {
+                    for (int numberId : selectedPhoneNumbers) {
                         phones.moveToPosition(selectedPhoneNumbers.get(numberId));
                         String newPhoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)).replace(" ", "");
                         int newPhoneNumberTypeId = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
@@ -296,7 +298,8 @@ public class PhoneNumbersSettingsActivity extends Activity {
             });
             selectImportPhoneNumberDialog.setNegativeButton(R.string.phone_numbers_settings_add_dialog_button_no, new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) { }
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
 
             });
 

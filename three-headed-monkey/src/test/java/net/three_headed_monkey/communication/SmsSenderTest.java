@@ -1,38 +1,35 @@
 package net.three_headed_monkey.communication;
 
 import android.content.Intent;
-import android.telephony.SmsManager;
 import android.content.SharedPreferences;
-import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
+import android.telephony.SmsManager;
+
 import net.three_headed_monkey.data.PhoneNumberInfo;
+import net.three_headed_monkey.service.SimCardCheckService;
+import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
+import net.three_headed_monkey.test_utils.TestBase;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
-
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.ShadowSmsManager;
 import org.robolectric.shadows.ShadowPreferenceManager;
+import org.robolectric.shadows.ShadowSmsManager;
 
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 import static org.robolectric.Robolectric.shadowOf;
-
-import net.three_headed_monkey.service.SimCardCheckService;
-import net.three_headed_monkey.test_utils.*;
-
-import dalvik.annotation.TestTargetClass;
 
 
 @RunWith(RobolectricGradleTestRunner.class)
-public class SmsSenderTest {
+public class SmsSenderTest extends TestBase {
     SmsSender smsSender;
     ShadowSmsManager shadowSmsManager;
-    ThreeHeadedMonkeyApplication application;
 
     @Before
-    public void setUp(){
-        application = (ThreeHeadedMonkeyApplication) Robolectric.application;
+    public void setUp() throws Exception {
+        super.setUp();
         smsSender = SmsSender_.getInstance_(application);
         shadowSmsManager = shadowOf(SmsManager.getDefault());
         application.phoneNumberSettings.removeAll();
@@ -41,7 +38,7 @@ public class SmsSenderTest {
     }
 
     @Test
-    public void testSendSmsToSpecificNumber(){
+    public void testSendSmsToSpecificNumber() {
         String number = "+424242";
         String text = "your phone is stolen!!111!1";
 
@@ -67,7 +64,7 @@ public class SmsSenderTest {
 
         ShadowSmsManager.TextSmsParams last_msg = shadowSmsManager.getLastSentTextMessageParams();
 
-        assertThat(last_msg.getDestinationAddress(), anyOf( equalTo(phoneNumberInfo1.phoneNumber), equalTo(phoneNumberInfo2.phoneNumber) ));
+        assertThat(last_msg.getDestinationAddress(), anyOf(equalTo(phoneNumberInfo1.phoneNumber), equalTo(phoneNumberInfo2.phoneNumber)));
     }
 
     @Test
