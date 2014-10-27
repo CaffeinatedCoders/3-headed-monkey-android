@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Baseurl"
+                android:id="@+id/text_baseurl"
+                android:textSize="18dp"
+                android:textColor="@android:color/primary_text_dark"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="Subtext lorem ipsum blah blah blah"
+                android:textSize="12dp"
+                android:textColor="@android:color/secondary_text_dark"/>
+    </LinearLayout>
+
+    <ImageButton android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:drawable/ic_menu_delete"/>
+</LinearLayout>

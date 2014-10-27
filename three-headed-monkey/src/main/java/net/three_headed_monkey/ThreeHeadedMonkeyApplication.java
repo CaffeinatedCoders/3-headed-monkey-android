@@ -10,6 +10,7 @@ import android.util.Log;
 
 import net.three_headed_monkey.commands.CommandPrototypeManager;
 import net.three_headed_monkey.data.PhoneNumberSettings;
+import net.three_headed_monkey.data.ServiceSettings;
 import net.three_headed_monkey.data.SimCardSettings;
 import net.three_headed_monkey.service.PassiveLocationUpdatesReceiver;
 import net.three_headed_monkey.utils.RootUtils;
@@ -34,6 +35,7 @@ public class ThreeHeadedMonkeyApplication extends Application {
     public SimCardSettings simCardSettings;
     public PhoneNumberSettings phoneNumberSettings;
     public CommandPrototypeManager commandPrototypeManager;
+    public ServiceSettings serviceSettings;
 
     @SystemService
     LocationManager locationManager;
@@ -45,10 +47,11 @@ public class ThreeHeadedMonkeyApplication extends Application {
         phoneNumberSettings = new PhoneNumberSettings(this);
         commandPrototypeManager = new CommandPrototypeManager(this);
         commandPrototypeManager.initPrototypes();
+        serviceSettings = new ServiceSettings(this);
 
         load();
 
-        if ((new File(RootUtils.SETTINGS_BACKUP_FILENAME)).exists() && simCardSettings.getAll().isEmpty()) {
+        if ((new File(RootUtils.SETTINGS_BACKUP_FILENAME)).exists() && simCardSettings.getAll().isEmpty() && phoneNumberSettings.getAll().isEmpty() && serviceSettings.getAll().isEmpty()) {
             try {
                 restoreSettingsFromBackup();
             } catch (Exception e) {
@@ -110,6 +113,7 @@ public class ThreeHeadedMonkeyApplication extends Application {
     public void load() {
         simCardSettings.load();
         phoneNumberSettings.loadSettings();
+        serviceSettings.load();
     }
 
     public void registerPassiveLocationUpdates() {
