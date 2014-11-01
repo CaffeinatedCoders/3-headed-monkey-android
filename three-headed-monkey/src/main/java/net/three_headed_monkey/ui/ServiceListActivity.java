@@ -9,16 +9,11 @@ import android.view.MenuItem;
 
 import net.three_headed_monkey.R;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
-import net.three_headed_monkey.data.ServiceInfo;
 import net.three_headed_monkey.ui.adapter.ServiceAdapter;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @EActivity(R.layout.activity_service_list)
 public class ServiceListActivity extends Activity {
@@ -31,7 +26,7 @@ public class ServiceListActivity extends Activity {
 
 
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
+    public RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

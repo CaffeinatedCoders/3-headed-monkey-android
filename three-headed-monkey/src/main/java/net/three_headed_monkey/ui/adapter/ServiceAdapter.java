@@ -7,15 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import net.three_headed_monkey.R;
 import net.three_headed_monkey.data.ServiceInfo;
 import net.three_headed_monkey.data.ServiceSettings;
-
-import java.util.List;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHolder> {
 
@@ -24,12 +21,14 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
         public TextView text_baseurl;
         public ImageButton btn_delete;
         private Context context;
+
         public ViewHolder(View layout, Context context) {
             super(layout);
             this.context = context;
-            this.text_baseurl = (TextView)layout.findViewById(R.id.text_baseurl);
-            this.btn_delete = (ImageButton)layout.findViewById(R.id.btn_delete);
+            this.text_baseurl = (TextView) layout.findViewById(R.id.text_baseurl);
+            this.btn_delete = (ImageButton) layout.findViewById(R.id.btn_delete);
         }
+
         public void setViews(ServiceInfo serviceInfo) {
             this.serviceInfo = serviceInfo;
             text_baseurl.setText(serviceInfo.baseUrl);

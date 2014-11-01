@@ -69,16 +69,16 @@ public class ServiceAddActivity extends Activity {
     ThreeHeadedMonkeyApplication application;
 
 
-    private ServiceInfo current_info;
+    public ServiceInfo current_info;
 
     public enum State {
         INITIAL, EDIT_CHANGED, CHECKING, INITIAL_CHECK_OK, ERROR, OK_TO_SAVE
     }
 
-    private State current_state = State.INITIAL;
+    public State current_state = State.INITIAL;
 
-    private String current_error_message;
-    private String current_success_message;
+    public String current_error_message;
+    public String current_success_message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class ServiceAddActivity extends Activity {
         PackageManager packageManager = getPackageManager();
         List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
         boolean isIntentSafe = activities.size() > 0;
-        if(isIntentSafe) {
+        if (isIntentSafe) {
             startActivityForResult(intent, 0);
         } else {
             createScannerNeededDialog().show();
@@ -109,18 +109,18 @@ public class ServiceAddActivity extends Activity {
 
     @Click(R.id.btn_check_or_save)
     public void checkOrSaveClicked() {
-        if(current_state == State.OK_TO_SAVE) {
+        if (current_state == State.OK_TO_SAVE) {
             application.serviceSettings.add(current_info);
             finish();
             return;
         }
-        if(current_state == State.INITIAL || current_state == State.EDIT_CHANGED || current_state == State.ERROR) {
+        if (current_state == State.INITIAL || current_state == State.EDIT_CHANGED || current_state == State.ERROR) {
             current_state = State.CHECKING;
             updateViewsForState();
             startConnectionCheck();
             return;
         }
-        if(current_state == State.INITIAL_CHECK_OK) {
+        if (current_state == State.INITIAL_CHECK_OK) {
             current_state = State.CHECKING;
             updateViewsForState();
             startApiCheck();
@@ -135,7 +135,8 @@ public class ServiceAddActivity extends Activity {
             URL url = current_info.getBaseUrl();
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setSSLSocketFactory(socketFactory);
-            connection.getInputStream().close();
+            connection.connect();
+//            connection.getInputStream().close();
 
             Certificate[] certificates = connection.getServerCertificates();
 
@@ -160,8 +161,9 @@ public class ServiceAddActivity extends Activity {
             URL url = current_info.getDeviceApiV1Url();
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setSSLSocketFactory(socketFactory);
+            connection.connect();
 
-            if(connection.getResponseCode() != HttpsURLConnection.HTTP_OK) {
+            if (connection.getResponseCode() != HttpsURLConnection.HTTP_OK) {
                 current_state = State.ERROR;
                 current_error_message = "Can't connect to api, please check the device key. Reponse code: " + connection.getResponseCode();
             } else {
@@ -180,11 +182,14 @@ public class ServiceAddActivity extends Activity {
     @AfterTextChange({R.id.edit_base_url, R.id.edit_device_key, R.id.edit_base_url_port})
     public void serviceEditTextsChanged(TextView v, Editable text) {
         switch (v.getId()) {
-            case R.id.edit_base_url: current_info.baseUrl = text.toString();
+            case R.id.edit_base_url:
+                current_info.baseUrl = text.toString();
                 break;
-            case R.id.edit_base_url_port: current_info.baseUrlPort = Integer.parseInt(text.toString());
+            case R.id.edit_base_url_port:
+                current_info.baseUrlPort = Integer.parseInt(text.toString());
                 break;
-            case R.id.edit_device_key: current_info.deviceKey = text.toString();
+            case R.id.edit_device_key:
+                current_info.deviceKey = text.toString();
                 break;
         }
         current_state = State.EDIT_CHANGED;
@@ -193,44 +198,44 @@ public class ServiceAddActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != RESULT_OK)
+        if (resultCode != RESULT_OK)
             return;
         String content = data.getStringExtra("SCAN_RESULT");
-        if(content == null || content.isEmpty())
+        if (content == null || content.isEmpty())
             return;
         current_info = ServiceInfo.createFromJson(content);
         edit_base_url.setText(current_info.baseUrl);
         edit_base_url_port.setText(String.valueOf(current_info.baseUrlPort));
         edit_device_key.setText(current_info.deviceKey);
 
-        Toast.makeText(this, "base_url="+current_info.baseUrl+"\ndevice_key="+current_info.deviceKey, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "base_url=" + current_info.baseUrl + "\ndevice_key=" + current_info.deviceKey, Toast.LENGTH_LONG).show();
         openEditSettings();
     }
 
     @AfterViews
     @UiThread
     protected void updateViewsForState() {
-        if(current_state != State.INITIAL && details_container.getVisibility() == View.GONE) {
+        if (current_state != State.INITIAL && details_container.getVisibility() == View.GONE) {
             Animation animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
             details_container.startAnimation(animation);
             details_container.setVisibility(View.VISIBLE);
             btn_manually_edit_settings.setVisibility(View.GONE);
         }
 
-        if(current_state == State.INITIAL) {
+        if (current_state == State.INITIAL) {
             details_container.setVisibility(View.GONE);
         }
 
-        if(current_state == State.INITIAL || current_state == State.EDIT_CHANGED) {
+        if (current_state == State.INITIAL || current_state == State.EDIT_CHANGED) {
             progress_indicator.setVisibility(View.GONE);
             text_status_message.setVisibility(View.GONE);
         }
 
-        if(current_state == State.EDIT_CHANGED) {
+        if (current_state == State.EDIT_CHANGED) {
             btn_check_or_save.setText(R.string.check);
         }
 
-        if(current_state == State.CHECKING) {
+        if (current_state == State.CHECKING) {
             progress_indicator.setVisibility(View.VISIBLE);
             text_status_message.setVisibility(View.VISIBLE);
             text_status_message.setText("Checking...");
@@ -239,7 +244,7 @@ public class ServiceAddActivity extends Activity {
             btn_scan_qrcode.setEnabled(false);
         }
 
-        if(current_state == State.INITIAL_CHECK_OK) {
+        if (current_state == State.INITIAL_CHECK_OK) {
             text_status_message.setText(Html.fromHtml("<font color=green>Connection successful</font>, please check that the following code is equal to what is shown on the webpage before clicking next: " + current_info.certHash));
             btn_check_or_save.setText("Next");
             progress_indicator.setVisibility(View.GONE);
@@ -249,7 +254,7 @@ public class ServiceAddActivity extends Activity {
             btn_scan_qrcode.setEnabled(true);
         }
 
-        if(current_state == State.ERROR || current_state == State.OK_TO_SAVE) {
+        if (current_state == State.ERROR || current_state == State.OK_TO_SAVE) {
             progress_indicator.setVisibility(View.GONE);
             text_status_message.setVisibility(View.VISIBLE);
             setEditFieldsEnabled(true);
@@ -257,12 +262,12 @@ public class ServiceAddActivity extends Activity {
             btn_scan_qrcode.setEnabled(true);
         }
 
-        if(current_state == State.ERROR) {
+        if (current_state == State.ERROR) {
             text_status_message.setText(Html.fromHtml("<font color=red>ERROR</font>: " + current_error_message));
             btn_check_or_save.setText(R.string.check);
         }
 
-        if(current_state == State.OK_TO_SAVE) {
+        if (current_state == State.OK_TO_SAVE) {
             text_status_message.setText(Html.fromHtml("<font color=green>Everything ok</font>, you can now save this config"));
             btn_check_or_save.setText(R.string.save);
         }

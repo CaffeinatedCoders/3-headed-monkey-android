@@ -232,7 +232,7 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
         } else if (key.equals("pref_btn_export_location_history")) {
             onExportLocationHistoryClicked();
             return true;
-        } else if(key.equals("pref_btn_remote_services")) {
+        } else if (key.equals("pref_btn_remote_services")) {
             ServiceListActivity_.intent(getActivity()).start();
             return true;
         }

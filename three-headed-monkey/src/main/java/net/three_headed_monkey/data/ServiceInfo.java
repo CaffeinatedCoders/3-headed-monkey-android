@@ -20,8 +20,10 @@ public class ServiceInfo {
 
     public ServiceInfo() {}
 
-    public ServiceInfo(String baseUrl) {
+    public ServiceInfo(String baseUrl, int port, String deviceKey) {
         this.baseUrl = baseUrl;
+        this.baseUrlPort = port;
+        this.deviceKey = deviceKey;
     }
 
     @Override
