@@ -1,20 +1,24 @@
 buildscript {
     repositories {
         mavenCentral()
-        mavenLocal()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.3'
-//        classpath 'com.github.jcandksolutions.gradle:android-unit-test:1.0.+'
-        classpath 'org.robolectric:robolectric-gradle-plugin:0.11.+'
-        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+'
+        classpath 'com.android.tools.build:gradle:0.14.2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'org.robolectric:robolectric-gradle-plugin:0.13.+'
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.+'
     }
 }
 
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
 apply plugin: 'android-sdk-manager'
-apply plugin: 'android'
-apply plugin: 'android-apt'
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'robolectric'
 
 
@@ -42,7 +46,7 @@ android {
     }
 
     compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    buildToolsVersion "20.0.0"
 
     defaultConfig {
         minSdkVersion 14
@@ -84,14 +88,7 @@ robolectric {
     maxHeapSize = "2048m"
 }
 
-//apply plugin: 'android-unit-test'
-
-repositories {
-    mavenCentral()
-}
-
-ext.androidAnnotationsVersion = '3.0.+';
-
+def androidAnnotationsVersion = '3.2';
 
 dependencies {
 //==================== Android Annotations =========
@@ -146,9 +143,6 @@ apt {
     arguments {
         androidManifestFile variant.processResources.manifestFile
         resourcePackageName android.defaultConfig.applicationId
-        // You can set optional annotation processing options here, like these commented options:
-        // logLevel 'INFO'
-        // logFile '/var/log/aa.log'
     }
 }
 
@@ -166,18 +160,7 @@ project.ext['module.iml.file'] = "three-headed-monkey.iml"
 apply from: 'https://raw.github.com/sababado/gradle-android-add-dir/master/gradle-android-add-dir.gradle'
 
 
-//android.applicationVariants.all { variant ->
-//    variant.addJavaSourceFoldersToModel file("src/test/java")
-//}
-
-
-//apply plugin: 'idea'
-//
-//idea {
-//    module {
-//        testSourceDirs += file('src/test/java')
-//        testOutputDir = file('build/test-classes/debug')
-//        jdkName = null
-//    }
-//}
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2'
+}
 
