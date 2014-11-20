@@ -51,4 +51,14 @@
         <item>kml</item>
     </string-array>
 
+    <string name="password">Password</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="wrong_password">Wrong Password!</string>
+    <string name="set_password">Password</string>
+    <string name="set_password_confirm">Password Confirm</string>
+    <string name="set_password_error">Passwords dont match!</string>
+    <string name="set_password_title">Set Password</string>
+    <string name="set_password_old">Old Password</string>
+
 </resources>

@@ -15,6 +15,9 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import net.three_headed_monkey.BuildConfig;
@@ -43,6 +46,7 @@ import eu.chainfire.libsuperuser.Shell;
 public class PrefsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static final String TAG = "PrefsFragment";
+    private static final String SHARED_PREFERENCES_PASSWORD_KEY = "__PASSWORD__" ;
 
     Preference pref_btn_version;
     public EditTextPreference pref_text_dialer_number;
@@ -51,6 +55,9 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
     Preference pref_btn_trigger_sim_check;
 
     Boolean su_available = false;
+
+    AlertDialog dialogNew;
+    AlertDialog dialogChange;
 
     @App
     ThreeHeadedMonkeyApplication application;
@@ -95,6 +102,35 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
 
         pref_btn_trigger_sim_check = findPreference("pref_btn_trigger_sim_check");
 
+        final AlertDialog.Builder alertDialogBuilderNew = new AlertDialog.Builder(this.getActivity());
+        final AlertDialog.Builder alertDialogBuilderChange = new AlertDialog.Builder(this.getActivity());
+        LayoutInflater layoutInflater = this.getActivity().getLayoutInflater();
+        alertDialogBuilderNew.setView(layoutInflater.inflate(R.layout.dialog_application_lock_set_password, null))
+                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialogInterface, int i) {
+                     }
+                 })
+                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialogInterface, int i) {
+                     }
+                 });
+
+        alertDialogBuilderChange.setView(layoutInflater.inflate(R.layout.dialog_application_lock_change_password, null))
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .setTitle(R.string.set_password_title);
+        dialogNew = alertDialogBuilderNew.create();
+        dialogChange = alertDialogBuilderChange.create();
     }
 
     @Override
@@ -231,9 +267,57 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
             return true;
         } else if (key.equals("pref_btn_export_location_history")) {
             onExportLocationHistoryClicked();
-        }
+        } else if (key.equals("pref_btn_application_password")) {
+            String password = getPasswordFromSharedPreferences();
 
+            dialogNew.show();
+            ((EditText) dialogNew.findViewById(R.id.set_password)).setText("");
+            ((EditText) dialogNew.findViewById(R.id.set_password_repeat)).setText("");
+            EditText editTextOld = (EditText) dialogChange.findViewById(R.id.old_password);
+            if (password == null) {
+                editTextOld.setFocusable(false);
+                editTextOld.setEnabled(false);
+            }
+            else {
+                editTextOld.setText("");
+            }
+            dialogNew.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                     EditText editText = (EditText) dialogNew.findViewById(R.id.set_password);
+                     EditText editTextConfirm = (EditText) dialogNew.findViewById(R.id.set_password_repeat);
+                     EditText editTextOld = (EditText) dialogChange.findViewById(R.id.old_password);
+                     if (!editText.getText().toString().isEmpty() && !editTextConfirm.getText().toString().isEmpty() && editText.getText().toString().equals(editTextConfirm.getText().toString())) {
+                         setPasswordFromSharedPreferences(editText.getText().toString());
+                         dialogNew.dismiss();
+                     } else {
+                         Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.set_password_error, Toast.LENGTH_LONG);
+                         toast.show();
+                     }
+                 }
+
+            });
+        }
         return false;
     }
 
+    private String getPasswordFromSharedPreferences() {
+        String password = null;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        try {
+            password = sharedPreferences.getString(SHARED_PREFERENCES_PASSWORD_KEY, null);
+            return password;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void setPasswordFromSharedPreferences(String password) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(SHARED_PREFERENCES_PASSWORD_KEY, password);
+        editor.commit();
+    }
 }
+

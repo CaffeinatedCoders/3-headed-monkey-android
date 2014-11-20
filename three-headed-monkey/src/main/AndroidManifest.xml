@@ -35,6 +35,11 @@
         <activity
             android:name=".ui.LauncherActivity"
             android:label="@string/launcher_label" >
+
+        </activity>
+        <activity
+            android:name=".ui.ApplicationLockActivity"
+            android:label="@string/launcher_label" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
