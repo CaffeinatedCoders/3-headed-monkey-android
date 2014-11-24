@@ -1,12 +1,13 @@
 buildscript {
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:0.14.2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-        classpath 'org.robolectric:robolectric-gradle-plugin:0.13.+'
+        classpath 'org.robolectric:robolectric-gradle-plugin:0.12+'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.+'
     }
 }
@@ -77,6 +78,11 @@ android {
         abortOnError false
     }
 
+    sourceSets {
+        androidTest {
+            setRoot('src/androidTest/java')
+        }
+    }
 }
 
 robolectric {
@@ -95,7 +101,7 @@ dependencies {
     apt "org.androidannotations:androidannotations:${androidAnnotationsVersion}"
     compile "org.androidannotations:androidannotations-api:${androidAnnotationsVersion}"
 //===================================================
-    compile "com.google.code.gson:gson:2.2.4"
+    compile "com.google.code.gson:gson:2.3.1"
     compile "com.android.support:support-v4:19.0.+"
     compile 'org.apache.directory.studio:org.apache.commons.codec:1.8'
     compile 'org.apache.directory.studio:org.apache.commons.lang:2.6'
@@ -106,7 +112,7 @@ dependencies {
     androidTestCompile('junit:junit:4.11') {
         exclude module: 'hamcrest-core'
     }
-    androidTestCompile('org.robolectric:robolectric:2.3') {
+    androidTestCompile('org.robolectric:robolectric:2.4') {
         exclude module: 'classworlds'
         exclude module: 'maven-artifact'
         exclude module: 'maven-artifact-manager'
@@ -125,7 +131,7 @@ dependencies {
         exclude module: 'wagon-http-shared'
         exclude module: 'wagon-provider-api'
     }
-    androidTestCompile 'com.squareup:fest-android:1.0.+'
+    androidTestCompile 'com.squareup:fest-android:1.0.8'
 //==================== Instrument Tests ==============
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:4.3.+'
     androidTestCompile files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
@@ -161,6 +167,6 @@ apply from: 'https://raw.github.com/sababado/gradle-android-add-dir/master/gradl
 
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2'
+    gradleVersion = '2.1'
 }
 
