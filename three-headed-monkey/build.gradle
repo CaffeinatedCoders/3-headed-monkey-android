@@ -78,11 +78,6 @@ android {
         abortOnError false
     }
 
-    sourceSets {
-        androidTest {
-            setRoot('src/androidTest/java')
-        }
-    }
 }
 
 robolectric {
@@ -164,10 +159,3 @@ task createFlashableZip(type: Zip) {
 project.ext['src.java.dir'] = ['src/test/java']
 project.ext['module.iml.file'] = "three-headed-monkey.iml"
 apply from: 'https://raw.github.com/sababado/gradle-android-add-dir/master/gradle-android-add-dir.gradle'
-
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.2'
-    distributionUrl = "http://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
-}
-
