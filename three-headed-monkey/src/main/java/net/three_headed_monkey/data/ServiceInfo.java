@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.Map;
 
 public class ServiceInfo {
@@ -17,6 +18,8 @@ public class ServiceInfo {
     public int baseUrlPort;
     public String deviceKey;
     public String certHash;
+
+    public long lastLocationHistoryUpdate = 0;
 
     public ServiceInfo() {}
 
