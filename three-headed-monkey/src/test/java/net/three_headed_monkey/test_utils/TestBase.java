@@ -5,6 +5,7 @@ import android.location.LocationManager;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 
+import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowLocationManager;
@@ -23,5 +24,6 @@ public abstract class TestBase {
         shadowLocationManager = Robolectric.shadowOf(locationManager);
         shadowLocationManager.setProviderEnabled(LocationManager.PASSIVE_PROVIDER, true);
 
+        MockitoAnnotations.initMocks(this);
     }
 }

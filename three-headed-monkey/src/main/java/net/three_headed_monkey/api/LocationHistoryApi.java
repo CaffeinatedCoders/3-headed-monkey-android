@@ -24,17 +24,19 @@ import java.util.Date;
 import java.util.List;
 
 public class LocationHistoryApi extends BaseApiV1 {
-    private ThreeHeadedMonkeyApplication application;
     private static final String LOCATION_POST_URL = "/locations";
+
+    private ThreeHeadedMonkeyApplication application;
+    private LocationHistoryDatabase database;
 
     public LocationHistoryApi(ServiceInfo serviceInfo, ThreeHeadedMonkeyApplication application) {
         super(serviceInfo);
         this.application = application;
+        this.database = new LocationHistoryDatabase(application);
     }
 
     public Response updateLocationHistory() throws IOException {
-        LocationHistoryDatabase db = new LocationHistoryDatabase(application);
-        List<Location> locations = db.getLocationsNewerThan(serviceInfo.lastLocationHistoryUpdate);
+        List<Location> locations = database.getLocationsNewerThan(serviceInfo.lastLocationHistoryUpdate);
 
 
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -54,7 +56,7 @@ public class LocationHistoryApi extends BaseApiV1 {
         return response;
     }
 
-    private class LocationJsonSerializer implements JsonSerializer<Location> {
+    public class LocationJsonSerializer implements JsonSerializer<Location> {
         @Override
         public JsonElement serialize(Location src, Type typeOfSrc, JsonSerializationContext context) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
