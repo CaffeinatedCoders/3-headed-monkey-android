@@ -39,7 +39,7 @@ public class ApplicationLockActivity extends Activity {
             this.finish();
         }
         else {
-            AlertDialog.Builder builder = alertDialogBuilder.setView(layoutInflater.inflate(R.layout.dialog_application_lock, null))
+            alertDialogBuilder.setView(layoutInflater.inflate(R.layout.dialog_application_lock, null))
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -50,7 +50,14 @@ public class ApplicationLockActivity extends Activity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                         }
-                    });
+                    })
+                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            ApplicationLockActivity.this.finish();
+                        }
+
+        });
             super.onCreate(savedInstanceState);
             final AlertDialog dialog = alertDialogBuilder.create();
 
@@ -58,14 +65,14 @@ public class ApplicationLockActivity extends Activity {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EditText editText = (EditText) dialog.findViewById(R.id.password);
+                    EditText editText = (EditText) dialog.findViewById(R.id.dialog_application_lock_login_password);
                     if (editText.getText().toString().equals(getPasswordFromSharedPreferences())) {
                         startActivity(intent);
                         dialog.dismiss();
                         finish();
 
                     } else {
-                        Toast toast = Toast.makeText(getApplicationContext(), R.string.wrong_password, Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getApplicationContext(), R.string.dialog_application_lock_login_error_wrong_password, Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 }
