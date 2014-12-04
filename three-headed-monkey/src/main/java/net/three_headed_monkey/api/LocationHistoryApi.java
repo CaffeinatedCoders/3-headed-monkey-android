@@ -35,6 +35,11 @@ public class LocationHistoryApi extends BaseApiV1 {
         this.database = new LocationHistoryDatabase(application);
     }
 
+    public int getNotYetUploadedLocationCount() {
+        List<Location> locations = database.getLocationsNewerThan(serviceInfo.lastLocationHistoryUpdate);
+        return locations.size();
+    }
+
     public Response updateLocationHistory() throws IOException {
         List<Location> locations = database.getLocationsNewerThan(serviceInfo.lastLocationHistoryUpdate);
 
