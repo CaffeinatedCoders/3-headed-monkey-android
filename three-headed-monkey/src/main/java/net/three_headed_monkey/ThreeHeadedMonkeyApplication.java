@@ -13,6 +13,7 @@ import net.three_headed_monkey.data.PhoneNumberSettings;
 import net.three_headed_monkey.data.ServiceSettings;
 import net.three_headed_monkey.data.SimCardSettings;
 import net.three_headed_monkey.service.PassiveLocationUpdatesReceiver;
+import net.three_headed_monkey.service.PeriodicWorkReceiver;
 import net.three_headed_monkey.utils.RootUtils;
 import net.three_headed_monkey.utils.SystemSettings;
 
@@ -64,6 +65,8 @@ public class ThreeHeadedMonkeyApplication extends Application {
         systemSettings.applyAll();
 
         registerPassiveLocationUpdates();
+        // make sure PeriodicWorkReceiver is registered in case of force close
+        PeriodicWorkReceiver.registerPeriodicWorkReceiver(this);
 
     }
 

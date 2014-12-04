@@ -51,7 +51,7 @@ public class LocationHistoryApi extends BaseApiV1 {
         JsonObject jRoot = new JsonObject();
         jRoot.add("location", jLocations);
         String json = jRoot.toString();
-        Log.d(TAG, json);
+//        Log.d(TAG, json);
 
         Response response = doPostRequest(LOCATION_POST_URL, json);
         if(response.isSuccessful()) {

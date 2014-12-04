@@ -15,6 +15,7 @@ import java.util.List;
 
 public class UpdateLocationHistoryCommand extends Command {
     public static final String TAG = "UpdateLocationHistoryCommand";
+    public static final String COMMAND_STRING = "UpdateLocationHistory";
 
     public UpdateLocationHistoryCommand(ThreeHeadedMonkeyApplication application) {
         super(application);
@@ -47,7 +48,7 @@ public class UpdateLocationHistoryCommand extends Command {
 
     @Override
     protected boolean respondsToCommand(String command) {
-        return command.equalsIgnoreCase("UpdateLocationHistory") || command.equalsIgnoreCase("ulh");
+        return command.equalsIgnoreCase(COMMAND_STRING) || command.equalsIgnoreCase("ulh");
     }
 
     @Override
