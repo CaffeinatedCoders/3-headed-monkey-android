@@ -5,9 +5,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.14.2'
+        classpath 'com.android.tools.build:gradle:1.0.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-        classpath 'org.robolectric:robolectric-gradle-plugin:0.12+'
+        classpath 'org.robolectric:robolectric-gradle-plugin:0.14.+'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.+'
     }
 }
@@ -65,6 +65,19 @@ android {
         }
     }
 
+    sourceSets {
+        androidTest {
+            java {
+                srcDirs += "src/test/java"
+            }
+
+            resources {
+                srcDirs += "src/test/resources"
+            }
+
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file(getRootDir().toString() + "/.debug-keystore")
@@ -76,6 +89,10 @@ android {
 
     lintOptions {
         abortOnError false
+    }
+
+    dexOptions {
+        jumboMode = true
     }
 
 }
@@ -153,7 +170,7 @@ if(project.hasProperty("jenkins")) {
 
 apt {
     arguments {
-        androidManifestFile variant.processResources.manifestFile
+        androidManifestFile variant.outputs[0].processResources.manifestFile
         resourcePackageName android.defaultConfig.applicationId
     }
 }
