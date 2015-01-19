@@ -177,15 +177,15 @@ apt {
     }
 }
 
-task createFlashableZip(type: Zip) {
-    from "build-files/flashable-zip"
-    from("build/apk/three-headed-monkey-release-unsigned.apk") {
-        into "system/app"
-    }
-    baseName "three-headed-monkey-release"
-}
+//task createFlashableZip(type: Zip) {
+//    from "build-files/flashable-zip"
+//    from("build/apk/three-headed-monkey-release-unsigned.apk") {
+//        into "system/app"
+//    }
+//    baseName "three-headed-monkey-release"
+//}
 
 
-project.ext['src.java.dir'] = ['src/test/java']
-project.ext['module.iml.file'] = "three-headed-monkey.iml"
-apply from: 'https://raw.github.com/sababado/gradle-android-add-dir/master/gradle-android-add-dir.gradle'
+//project.ext['src.java.dir'] = ['src/test/java']
+//project.ext['module.iml.file'] = "three-headed-monkey.iml"
+//apply from: 'https://raw.github.com/sababado/gradle-android-add-dir/master/gradle-android-add-dir.gradle'
