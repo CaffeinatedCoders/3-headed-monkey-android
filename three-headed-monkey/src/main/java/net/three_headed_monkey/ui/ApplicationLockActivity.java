@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -18,7 +19,7 @@ import net.three_headed_monkey.R;
 public class ApplicationLockActivity extends Activity {
 
     private static final String TAG = "ApplicationLockActivity";
-    private static final String SHARED_PREFERENCES_PASSWORD_KEY = "__PASSWORD__" ;
+    private static final String SHARED_PREFERENCES_PASSWORD_KEY = "__PASSWORD__";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +35,10 @@ public class ApplicationLockActivity extends Activity {
 
         String password = getPasswordFromSharedPreferences();
 
-        if(password == null) {
+        if (password == null) {
             startActivity(intent);
             this.finish();
-        }
-        else {
+        } else {
             alertDialogBuilder.setView(layoutInflater.inflate(R.layout.dialog_application_lock, null))
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
@@ -56,8 +56,8 @@ public class ApplicationLockActivity extends Activity {
                         public void onCancel(DialogInterface dialog) {
                             ApplicationLockActivity.this.finish();
                         }
+                    });
 
-        });
             super.onCreate(savedInstanceState);
             final AlertDialog dialog = alertDialogBuilder.create();
 
@@ -81,6 +81,7 @@ public class ApplicationLockActivity extends Activity {
     }
 
     private String getPasswordFromSharedPreferences() {
+        Log.d(TAG, "Request Password from Preferences.");
         String password = null;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         try {
