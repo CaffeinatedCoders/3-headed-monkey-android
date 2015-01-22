@@ -12,5 +12,6 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Intent intentservice = new Intent(context, SimCardCheckService.class);
         context.startService(intentservice);
+        PeriodicWorkReceiver.registerPeriodicWorkReceiver(context);
     }
 }

@@ -2,13 +2,24 @@
 <resources>
     <style name="DetailsView" />
     <style name="DetailsView.TableRow">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">2dip</item>
+        <item name="android:layout_marginRight">10dp</item>
     </style>
     <style name="DetailsView.Value">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:paddingLeft">30dip</item>
         <item name="android:textColor">@color/DetailsViewValueColor</item>
+    </style>
+    <style name="DetailsView.Edit">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_marginLeft">30dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="Divider">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
     </style>
 </resources>

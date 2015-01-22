@@ -60,4 +60,23 @@ public class LocationHistoryDatabaseTest extends TestBase {
         assertThat(locations, hasItems(location1, location2, location3, location4));
     }
 
+    @Test
+    public void testGetLocationsNewerThan() {
+        Location location1 = createLocation(1);
+        location1.setTime(2);
+        Location location2 = createLocation(2);
+        location2.setTime(4);
+        Location location3 = createLocation(3);
+        location3.setTime(6);
+        Location location4 = createLocation(4);
+        location4.setTime(8);
+        lhdb.insert(location1);
+        lhdb.insert(location2);
+        lhdb.insert(location3);
+        lhdb.insert(location4);
+
+        List<Location> locations = lhdb.getLocationsNewerThan(5);
+        assertThat(locations.size(), equalTo(2));
+        assertThat(locations, hasItems(location3, location4));
+    }
 }
