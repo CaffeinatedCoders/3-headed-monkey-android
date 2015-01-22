@@ -253,6 +253,7 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
             return true;
         } else if (key.equals("pref_btn_export_location_history")) {
             onExportLocationHistoryClicked();
+            return true;
         } else if (key.equals("pref_btn_application_password")) {
             dialogChange.show();
 
@@ -271,31 +272,35 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
                 editTextOldPassword.setText("");
                 editTextOldPassword.requestFocus();
             }
+        } else if (key.equals("pref_btn_remote_services")) {
+            ServiceListActivity_.intent(getActivity()).start();
+            return true;
+        }
 
-            dialogChange.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String currentPassword = getPasswordFromSharedPreferences();
-                    EditText editTextNewPassword = (EditText) dialogChange.findViewById(R.id.dialog_application_lock_change_password_new_password);
-                    EditText editTextNewPasswordConfirm = (EditText) dialogChange.findViewById(R.id.dialog_application_lock_change_password_new_password_repeat);
-                    EditText editTextOldPassword = (EditText) dialogChange.findViewById(R.id.dialog_application_lock_change_password_old_password);
+        dialogChange.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String currentPassword = getPasswordFromSharedPreferences();
+                EditText editTextNewPassword = (EditText) dialogChange.findViewById(R.id.dialog_application_lock_change_password_new_password);
+                EditText editTextNewPasswordConfirm = (EditText) dialogChange.findViewById(R.id.dialog_application_lock_change_password_new_password_repeat);
+                EditText editTextOldPassword = (EditText) dialogChange.findViewById(R.id.dialog_application_lock_change_password_old_password);
 
-                    if (currentPassword == null || editTextOldPassword.getText().toString().equals(currentPassword)) {
-                        if (editTextNewPassword.getText().toString().equals(editTextNewPasswordConfirm.getText().toString())) {
-                            setPasswordFromSharedPreferences(editTextNewPassword.getText().toString().isEmpty() ? null : editTextNewPassword.getText().toString());
-                            dialogChange.dismiss();
-                            editTextNewPassword.requestFocus();
-                        } else {
-                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.dialog_application_lock_change_password_error_password_match, Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
+                if (currentPassword == null || editTextOldPassword.getText().toString().equals(currentPassword)) {
+                    if (editTextNewPassword.getText().toString().equals(editTextNewPasswordConfirm.getText().toString())) {
+                        setPasswordFromSharedPreferences(editTextNewPassword.getText().toString().isEmpty() ? null : editTextNewPassword.getText().toString());
+                        dialogChange.dismiss();
+                        editTextNewPassword.requestFocus();
                     } else {
-                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.dialog_application_lock_change_password_error_old_password, Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.dialog_application_lock_change_password_error_password_match, Toast.LENGTH_SHORT);
                         toast.show();
                     }
+                } else {
+                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.dialog_application_lock_change_password_error_old_password, Toast.LENGTH_SHORT);
+                    toast.show();
                 }
-            });
-        }
+            }
+        });
+
         return false;
     }
 

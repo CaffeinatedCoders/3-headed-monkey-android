@@ -2,16 +2,20 @@ package net.three_headed_monkey;
 
 import android.app.Application;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import net.three_headed_monkey.commands.CommandPrototypeManager;
 import net.three_headed_monkey.data.PhoneNumberSettings;
+import net.three_headed_monkey.data.ServiceSettings;
 import net.three_headed_monkey.data.SimCardSettings;
 import net.three_headed_monkey.service.PassiveLocationUpdatesReceiver;
+import net.three_headed_monkey.service.PeriodicWorkReceiver;
 import net.three_headed_monkey.utils.RootUtils;
 import net.three_headed_monkey.utils.SystemSettings;
 
@@ -34,6 +38,7 @@ public class ThreeHeadedMonkeyApplication extends Application {
     public SimCardSettings simCardSettings;
     public PhoneNumberSettings phoneNumberSettings;
     public CommandPrototypeManager commandPrototypeManager;
+    public ServiceSettings serviceSettings;
 
     @SystemService
     LocationManager locationManager;
@@ -45,10 +50,11 @@ public class ThreeHeadedMonkeyApplication extends Application {
         phoneNumberSettings = new PhoneNumberSettings(this);
         commandPrototypeManager = new CommandPrototypeManager(this);
         commandPrototypeManager.initPrototypes();
+        serviceSettings = new ServiceSettings(this);
 
         load();
 
-        if ((new File(RootUtils.SETTINGS_BACKUP_FILENAME)).exists() && simCardSettings.getAll().isEmpty()) {
+        if ((new File(RootUtils.SETTINGS_BACKUP_FILENAME)).exists() && simCardSettings.getAll().isEmpty() && phoneNumberSettings.getAll().isEmpty() && serviceSettings.getAll().isEmpty()) {
             try {
                 restoreSettingsFromBackup();
             } catch (Exception e) {
@@ -61,6 +67,8 @@ public class ThreeHeadedMonkeyApplication extends Application {
         systemSettings.applyAll();
 
         registerPassiveLocationUpdates();
+        // make sure PeriodicWorkReceiver is registered in case of force close
+        PeriodicWorkReceiver.registerPeriodicWorkReceiver(this);
 
     }
 
@@ -110,6 +118,7 @@ public class ThreeHeadedMonkeyApplication extends Application {
     public void load() {
         simCardSettings.load();
         phoneNumberSettings.loadSettings();
+        serviceSettings.load();
     }
 
     public void registerPassiveLocationUpdates() {
@@ -122,4 +131,9 @@ public class ThreeHeadedMonkeyApplication extends Application {
 
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 }

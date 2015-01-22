@@ -110,6 +110,19 @@ public class LocationHistoryDatabase extends SQLiteOpenHelper {
         return locations;
     }
 
+    public List<Location> getLocationsNewerThan(long time) {
+        List<Location> locations = new ArrayList<Location>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, null, KEY_TIME + ">?", new String[]{String.valueOf(time)}, null, null, KEY_TIME + " asc");
+        while (cursor.moveToNext()) {
+            LocationContainer locC = cursorToLocation(cursor);
+            if (locC != null && locC.location != null) {
+                locations.add(locC.location);
+            }
+        }
+        return locations;
+    }
+
     private LocationContainer cursorToLocation(Cursor cursor) {
         if (cursor.getCount() == 0)
             return null;
