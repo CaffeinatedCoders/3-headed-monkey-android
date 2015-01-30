@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class PendingCommandsFromApiManager {
@@ -25,8 +26,8 @@ public class PendingCommandsFromApiManager {
         this.context = context;
     }
 
-    public synchronized void add(PendingCommandFromApi command) {
-        pendingCommands.add(command);
+    public synchronized void addAll(List<PendingCommandFromApi> commands) {
+        pendingCommands.addAll(commands);
         save();
     }
 
@@ -50,6 +51,16 @@ public class PendingCommandsFromApiManager {
         PendingCommandFromApi pc = pendingCommands.get(index);
         pc.finished = true;
         save();
+    }
+
+    public synchronized void removeAllFinishedCommandsNotIn(List<PendingCommandFromApi> commands) {
+        Iterator<PendingCommandFromApi> it = pendingCommands.iterator();
+        while (it.hasNext()) {
+            PendingCommandFromApi command = it.next();
+            if(command.finished && !commands.contains(command)) {
+                it.remove();
+            }
+        }
     }
 
     public void save() {

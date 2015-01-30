@@ -12,6 +12,9 @@ import net.three_headed_monkey.data.ServiceInfo;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class PendingCommandsApi extends BaseApiV1 {
@@ -42,7 +45,10 @@ public class PendingCommandsApi extends BaseApiV1 {
     }
 
     public void setCommandFinished(int id) throws Exception {
-        Response response = doRequest(COMMANDS_BASE_URL + "/" + id, "", RequestType.PUT);
+        Calendar cal = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+        String params = "{\"pendingcommand\":{\"completed_at\":\"" + dateFormat.format(cal.getTime()) + "\"}}";
+        Response response = doRequest(COMMANDS_BASE_URL + "/" + id, params, RequestType.PUT);
         if(!response.isSuccessful()) {
             throw new Exception("Service returned error: " + response.code());
         }

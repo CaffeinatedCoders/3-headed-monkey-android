@@ -39,7 +39,9 @@ public class PullCommandsCommand extends Command {
                     continue;
                 }
                 List<PendingCommandFromApi> alreadyPendingCommands = application.pendingCommandsFromApiManager.getAll();
+                application.pendingCommandsFromApiManager.removeAllFinishedCommandsNotIn(commands);
                 commands.removeAll(alreadyPendingCommands);
+                application.pendingCommandsFromApiManager.addAll(commands);
                 for(PendingCommandFromApi command : commands) {
                     Intent command_intent = new Intent(application, CommandExecutorService.class);
                     command_intent.putExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM, command.command);
