@@ -17,6 +17,7 @@ import java.util.List;
 
 public class PullCommandsCommand extends Command {
     public static final String TAG = "PullCommandsCommand";
+    public static final String COMMAND_STRING = "PullCommands";
 
     public PullCommandsCommand(ThreeHeadedMonkeyApplication application) {
         super(application);
@@ -58,11 +59,11 @@ public class PullCommandsCommand extends Command {
 
     @Override
     protected boolean respondsToCommand(String command) {
-        return command.equalsIgnoreCase("PullCommands");
+        return command.equalsIgnoreCase(COMMAND_STRING);
     }
 
     @Override
     protected String getShortUsageText() {
-        return "PullCommands - Loads command from services and runs them";
+        return COMMAND_STRING + " - Loads command from services and runs them";
     }
 }

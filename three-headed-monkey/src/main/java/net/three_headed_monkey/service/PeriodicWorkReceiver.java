@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
 
+import net.three_headed_monkey.commands.PullCommandsCommand;
 import net.three_headed_monkey.commands.UpdateLocationHistoryCommand;
 import net.three_headed_monkey.communication.OutgoingCommandCommunicationFactory;
 
@@ -19,14 +20,21 @@ public class PeriodicWorkReceiver extends BroadcastReceiver {
 
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, Intent in) {
         Log.v(TAG, "PeriodicWorkReceiver called");
+        Intent intent;
+
+        // Pull commands from Api
+        intent = new Intent(context, PullCommandsCommand.class);
+        intent.putExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM, PullCommandsCommand.COMMAND_STRING);
+        intent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM, OutgoingCommandCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_BROADCAST);
+        context.startService(intent);
 
         // Execute UpdateLocationHistoryCommand
-        Intent commandIntent = new Intent(context, CommandExecutorService.class);
-        commandIntent.putExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM, UpdateLocationHistoryCommand.COMMAND_STRING);
-        commandIntent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM, OutgoingCommandCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_BROADCAST);
-        context.startService(commandIntent);
+        intent = new Intent(context, CommandExecutorService.class);
+        intent.putExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM, UpdateLocationHistoryCommand.COMMAND_STRING);
+        intent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM, OutgoingCommandCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_BROADCAST);
+        context.startService(intent);
 
     }
 
