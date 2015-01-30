@@ -25,7 +25,7 @@ public class PeriodicWorkReceiver extends BroadcastReceiver {
         Intent intent;
 
         // Pull commands from Api
-        intent = new Intent(context, PullCommandsCommand.class);
+        intent = new Intent(context, CommandExecutorService.class);
         intent.putExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM, PullCommandsCommand.COMMAND_STRING);
         intent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM, OutgoingCommandCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_BROADCAST);
         context.startService(intent);
