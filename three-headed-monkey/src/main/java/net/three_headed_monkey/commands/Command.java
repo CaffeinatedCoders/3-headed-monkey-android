@@ -3,7 +3,7 @@ package net.three_headed_monkey.commands;
 import android.util.Log;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
-import net.three_headed_monkey.communication.OutgoingCommunication;
+import net.three_headed_monkey.communication.OutgoingCommandCommunication;
 
 
 public abstract class Command implements Cloneable, Runnable {
@@ -13,7 +13,7 @@ public abstract class Command implements Cloneable, Runnable {
 
     protected boolean isConfirmed = false;
 
-    protected OutgoingCommunication outgoingCommunication = null;
+    protected OutgoingCommandCommunication outgoingCommandCommunication = null;
 
     protected String commandString = null;
 
@@ -33,8 +33,11 @@ public abstract class Command implements Cloneable, Runnable {
             //@TODO Confirmation logic
             return;
         }
-        if (respondsToCommand(getCommandString()))
+        if (respondsToCommand(getCommandString())) {
             doExecute(getCommandString());
+            if(outgoingCommandCommunication != null)
+                outgoingCommandCommunication.notifyCommandFinished();
+        }
     }
 
     @Override
@@ -49,12 +52,12 @@ public abstract class Command implements Cloneable, Runnable {
         return clone;
     }
 
-    public OutgoingCommunication getOutgoingCommunication() {
-        return outgoingCommunication;
+    public OutgoingCommandCommunication getOutgoingCommandCommunication() {
+        return outgoingCommandCommunication;
     }
 
-    public void setOutgoingCommunication(OutgoingCommunication outgoingCommunication) {
-        this.outgoingCommunication = outgoingCommunication;
+    public void setOutgoingCommandCommunication(OutgoingCommandCommunication outgoingCommandCommunication) {
+        this.outgoingCommandCommunication = outgoingCommandCommunication;
     }
 
     public String getCommandString() {
@@ -80,9 +83,9 @@ public abstract class Command implements Cloneable, Runnable {
 
 
     public void sendResponse(String text) {
-        if (getOutgoingCommunication() == null)
+        if (getOutgoingCommandCommunication() == null)
             return;
-        getOutgoingCommunication().sendMessage(text);
+        getOutgoingCommandCommunication().sendMessage(text);
     }
 
     protected abstract void doExecute(String command);

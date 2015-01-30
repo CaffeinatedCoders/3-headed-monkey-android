@@ -2,7 +2,7 @@ package net.three_headed_monkey.service;
 
 import android.content.Intent;
 
-import net.three_headed_monkey.communication.OutgoingCommunicationFactory;
+import net.three_headed_monkey.communication.OutgoingCommandCommunicationFactory;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
 import net.three_headed_monkey.test_utils.TestBase;
@@ -47,7 +47,7 @@ public class DataSmsReceivedServiceTest extends TestBase {
         Intent startedIntent = shadowApplication.peekNextStartedService();
         assertThat(startedIntent, notNullValue());
         assertThat(startedIntent.getStringExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM), equalTo("getPhoneState"));
-        assertThat(startedIntent.getStringExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM), equalTo(OutgoingCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_DATASMS));
+        assertThat(startedIntent.getStringExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM), equalTo(OutgoingCommandCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_DATASMS));
         assertThat(startedIntent.getStringExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_SENDER_ADDRESS_PARAM), equalTo("+000000000000"));
     }
 }

@@ -1,9 +1,7 @@
 package net.three_headed_monkey.api;
 
 
-import android.content.Context;
 import android.location.Location;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -53,7 +51,7 @@ public class LocationHistoryApi extends BaseApiV1 {
         String json = jRoot.toString();
 //        Log.d(TAG, json);
 
-        Response response = doPostRequest(LOCATION_POST_URL, json);
+        Response response = doRequest(LOCATION_POST_URL, json, RequestType.POST);
         if(response.isSuccessful()) {
             serviceInfo.lastLocationHistoryUpdate = locations.get(locations.size()-1).getTime();
             application.serviceSettings.save();

@@ -7,8 +7,8 @@ import android.util.Log;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.commands.Command;
-import net.three_headed_monkey.communication.OutgoingCommunication;
-import net.three_headed_monkey.communication.OutgoingCommunicationFactory;
+import net.three_headed_monkey.communication.OutgoingCommandCommunication;
+import net.three_headed_monkey.communication.OutgoingCommandCommunicationFactory;
 
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -65,8 +65,8 @@ public class CommandExecutorService extends Service {
         String communication_type = intent.getStringExtra(INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM);
         String sender = intent.getStringExtra(INTENT_OUTGOING_COMMUNICATION_SENDER_ADDRESS_PARAM);
 
-        OutgoingCommunicationFactory outgoingCommunicationFactory = new OutgoingCommunicationFactory((ThreeHeadedMonkeyApplication) getApplication());
-        OutgoingCommunication communication = outgoingCommunicationFactory.createByType(communication_type, sender);
+        OutgoingCommandCommunicationFactory outgoingCommandCommunicationFactory = new OutgoingCommandCommunicationFactory((ThreeHeadedMonkeyApplication) getApplication());
+        OutgoingCommandCommunication communication = outgoingCommandCommunicationFactory.createByType(communication_type, sender);
 
 
         Log.d(TAG, "Command Executor Service called with command string: " + commandStr + " and communication type " + communication_type);
@@ -76,7 +76,7 @@ public class CommandExecutorService extends Service {
         for (Command command : commands) {
             command.setCommandString(commandStr);
             if (communication != null)
-                command.setOutgoingCommunication(communication);
+                command.setOutgoingCommandCommunication(communication);
             executor.execute(command);
         }
     }

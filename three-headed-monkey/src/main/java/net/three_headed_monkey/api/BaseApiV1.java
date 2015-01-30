@@ -2,7 +2,6 @@ package net.three_headed_monkey.api;
 
 import android.util.Log;
 
-import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -22,25 +21,22 @@ public class BaseApiV1 extends BaseApi {
 
     @Override
     public Response doGetRequest(String relativeUrl) throws IOException {
-        OkHttpClient client = new OkHttpClient();
-        client.setSslSocketFactory(X509TrustSingleManager.getTrustSingleFactory(serviceInfo.certHash));
-        String url = serviceInfo.getDeviceApiV1Url() + relativeUrl;
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        return client.newCall(request).execute();
+        return doRequest(relativeUrl, "", RequestType.GET);
     }
 
     @Override
-    public Response doPostRequest(String relativeUrl, String parameters) throws IOException {
+    public Response doRequest(String relativeUrl, String parameters, RequestType requestType) throws IOException {
         OkHttpClient client = new OkHttpClient();
         client.setSslSocketFactory(X509TrustSingleManager.getTrustSingleFactory(serviceInfo.certHash));
         String url = serviceInfo.getDeviceApiV1Url() + relativeUrl;
-        RequestBody body = RequestBody.create(JSON, parameters);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
+        Request.Builder builder = new Request.Builder().url(url);
+        switch (requestType) {
+            case GET: builder.get(); break;
+            case DELETE: builder.delete(); break;
+            case POST: builder.post(RequestBody.create(JSON, parameters)); break;
+            case PUT: builder.put(RequestBody.create(JSON, parameters)); break;
+        }
+        Request request = builder.build();
         return client.newCall(request).execute();
     }
 

@@ -11,6 +11,7 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import net.three_headed_monkey.commands.CommandPrototypeManager;
+import net.three_headed_monkey.data.PendingCommandsFromApiManager;
 import net.three_headed_monkey.data.PhoneNumberSettings;
 import net.three_headed_monkey.data.ServiceSettings;
 import net.three_headed_monkey.data.SimCardSettings;
@@ -39,6 +40,7 @@ public class ThreeHeadedMonkeyApplication extends Application {
     public PhoneNumberSettings phoneNumberSettings;
     public CommandPrototypeManager commandPrototypeManager;
     public ServiceSettings serviceSettings;
+    public PendingCommandsFromApiManager pendingCommandsFromApiManager;
 
     @SystemService
     LocationManager locationManager;
@@ -51,6 +53,7 @@ public class ThreeHeadedMonkeyApplication extends Application {
         commandPrototypeManager = new CommandPrototypeManager(this);
         commandPrototypeManager.initPrototypes();
         serviceSettings = new ServiceSettings(this);
+        pendingCommandsFromApiManager = new PendingCommandsFromApiManager(this);
 
         load();
 
@@ -119,6 +122,7 @@ public class ThreeHeadedMonkeyApplication extends Application {
         simCardSettings.load();
         phoneNumberSettings.loadSettings();
         serviceSettings.load();
+        pendingCommandsFromApiManager.load();
     }
 
     public void registerPassiveLocationUpdates() {

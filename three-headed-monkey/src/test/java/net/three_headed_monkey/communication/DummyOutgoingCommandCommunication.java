@@ -1,15 +1,20 @@
 package net.three_headed_monkey.communication;
 
-public class DummyOutgoingCommunication extends OutgoingCommunication {
+public class DummyOutgoingCommandCommunication extends OutgoingCommandCommunication {
     private String lastMessage = null;
 
-    public DummyOutgoingCommunication() {
+    public DummyOutgoingCommandCommunication() {
         super(null);
     }
 
     @Override
     public void sendMessage(String text) {
         lastMessage = text;
+    }
+
+    @Override
+    public void notifyCommandFinished() {
+
     }
 
     public String getLastMessage() {

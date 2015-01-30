@@ -4,7 +4,7 @@ import android.content.Context;
 import android.telephony.TelephonyManager;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
-import net.three_headed_monkey.communication.DummyOutgoingCommunication;
+import net.three_headed_monkey.communication.DummyOutgoingCommandCommunication;
 import net.three_headed_monkey.custom_shadows.ShadowTelephonyManager;
 import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
 import net.three_headed_monkey.test_utils.TestBase;
@@ -30,7 +30,7 @@ public class GetPhoneStateCommandTest extends TestBase {
     private static final String DEVICE_ID = "imei";
     private static final String SUBSCRIBER_ID = "imsi";
 
-    DummyOutgoingCommunication outgoingCommunication;
+    DummyOutgoingCommandCommunication outgoingCommunication;
     GetPhoneStateCommand command;
 
     private TelephonyManager telephonyManager;
@@ -48,11 +48,11 @@ public class GetPhoneStateCommandTest extends TestBase {
         shadowTelephonyManager.setDeviceId(DEVICE_ID);
         shadowTelephonyManager.setSubscriberId(SUBSCRIBER_ID);
 
-        outgoingCommunication = new DummyOutgoingCommunication();
+        outgoingCommunication = new DummyOutgoingCommandCommunication();
         command = new GetPhoneStateCommand((ThreeHeadedMonkeyApplication) application);
         command.setCommandString("getPhoneState");
         command.setPrototype(false);
-        command.setOutgoingCommunication(outgoingCommunication);
+        command.setOutgoingCommandCommunication(outgoingCommunication);
     }
 
     @Test

@@ -7,13 +7,13 @@ import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 
 import java.io.UnsupportedEncodingException;
 
-public class OutgoingDataSmsCommunication extends OutgoingCommunication {
-    public static final String TAG = "OutgoingDataSmsCommunication";
+public class OutgoingDataSmsCommandCommunication extends OutgoingCommandCommunication {
+    public static final String TAG = "OutgoingDataSmsCommandCommunication";
     private static final short TARGET_PORT = 7342;
 
     private String address;
 
-    public OutgoingDataSmsCommunication(ThreeHeadedMonkeyApplication application, String address) {
+    public OutgoingDataSmsCommandCommunication(ThreeHeadedMonkeyApplication application, String address) {
         super(application);
         this.address = address;
     }
@@ -29,5 +29,11 @@ public class OutgoingDataSmsCommunication extends OutgoingCommunication {
         } catch (UnsupportedEncodingException e) {
             Log.e(TAG, "Failed to send datasms", e);
         }
+    }
+
+    @Override
+    public void notifyCommandFinished() {
+        //unused
+        //@TODO, should we maybe send a notification sms?
     }
 }

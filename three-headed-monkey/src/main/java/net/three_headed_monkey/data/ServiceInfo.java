@@ -36,7 +36,9 @@ public class ServiceInfo {
         if (!o.getClass().equals(ServiceInfo.class))
             return false;
         ServiceInfo serviceInfo = (ServiceInfo) o;
-        return serviceInfo.baseUrl.equals(baseUrl);
+        return serviceInfo.baseUrl.equals(baseUrl)
+                && serviceInfo.baseUrlPort == baseUrlPort
+                && serviceInfo.deviceKey.equals(deviceKey);
     }
 
     public URL getBaseUrl() throws MalformedURLException {

@@ -7,7 +7,7 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
-import net.three_headed_monkey.communication.OutgoingCommunicationFactory;
+import net.three_headed_monkey.communication.OutgoingCommandCommunicationFactory;
 import net.three_headed_monkey.data.PhoneNumberInfo;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class DataSmsReceivedService extends IntentService {
 
                 Intent command_intent = new Intent(this, CommandExecutorService.class);
                 command_intent.putExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM, message);
-                command_intent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM, OutgoingCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_DATASMS);
+                command_intent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM, OutgoingCommandCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_DATASMS);
                 command_intent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_SENDER_ADDRESS_PARAM, sender);
 
                 startService(command_intent);

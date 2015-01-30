@@ -11,6 +11,10 @@ public abstract class BaseApi {
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
 
+    public enum RequestType {
+        GET, POST, PUT, DELETE
+    }
+
 
     protected ServiceInfo serviceInfo;
 
@@ -27,9 +31,10 @@ public abstract class BaseApi {
     /**
      *
      * @param relativeUrl
-     * @param parameters json formatted string of post parameter
+     * @param parameters json formatted string parameters, not used for GET or DELETE requests
+     * @param requestType
      * @return
      * @throws IOException
      */
-    public abstract Response doPostRequest(String relativeUrl, String parameters) throws IOException;
+    public abstract Response doRequest(String relativeUrl, String parameters, RequestType requestType) throws IOException;
 }

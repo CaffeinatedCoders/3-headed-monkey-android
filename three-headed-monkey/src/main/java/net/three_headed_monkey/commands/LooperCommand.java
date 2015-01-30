@@ -52,6 +52,8 @@ abstract public class LooperCommand extends Command {
         try {
             looper_thread.join();
             Log.d(TAG, "LooperThread finished");
+            if(outgoingCommandCommunication != null)
+                outgoingCommandCommunication.notifyCommandFinished();
         } catch (InterruptedException e) {
             Log.e(TAG, "LooperThread has been interrupted", e);
         }

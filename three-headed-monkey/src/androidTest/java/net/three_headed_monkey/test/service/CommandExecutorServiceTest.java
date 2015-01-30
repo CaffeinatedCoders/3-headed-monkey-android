@@ -1,8 +1,6 @@
 package net.three_headed_monkey.test.service;
 
 import android.content.Intent;
-import android.test.AndroidTestCase;
-import android.test.ApplicationTestCase;
 import android.test.ServiceTestCase;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
@@ -10,14 +8,14 @@ import net.three_headed_monkey.commands.Command;
 import net.three_headed_monkey.commands.CommandPrototypeManager;
 import net.three_headed_monkey.commands.HelpCommand;
 import net.three_headed_monkey.commands.LogCommand;
-import net.three_headed_monkey.communication.OutgoingCommunication;
+import net.three_headed_monkey.communication.OutgoingCommandCommunication;
 import net.three_headed_monkey.service.CommandExecutorService;
 
 
 public class CommandExecutorServiceTest extends ServiceTestCase<CommandExecutorService> {
 
     ThreeHeadedMonkeyApplication application;
-    DummyCommunication dummyCommunication = null;
+    DummyCommandCommunication dummyCommunication = null;
 
     public CommandExecutorServiceTest() {
         super(CommandExecutorService.class);
@@ -60,23 +58,28 @@ public class CommandExecutorServiceTest extends ServiceTestCase<CommandExecutorS
      */
     private void initDummyCommand() {
         application.commandPrototypeManager = new CommandPrototypeManager(application);
-        dummyCommunication = new DummyCommunication(application);
+        dummyCommunication = new DummyCommandCommunication(application);
 //        application.commandPrototypeManager.initPrototypes();
         application.commandPrototypeManager.getPrototypeCommandList().add(new LogCommand(application));
         application.commandPrototypeManager.getPrototypeCommandList().add(new DummyCommand(application));
         application.commandPrototypeManager.getPrototypeCommandList().add(new HelpCommand(application));
     }
 
-    class DummyCommunication extends OutgoingCommunication {
+    class DummyCommandCommunication extends OutgoingCommandCommunication {
         public String lastMessage = null;
 
-        public DummyCommunication(ThreeHeadedMonkeyApplication application) {
+        public DummyCommandCommunication(ThreeHeadedMonkeyApplication application) {
             super(application);
         }
 
         @Override
         public void sendMessage(String text) {
             lastMessage = text;
+        }
+
+        @Override
+        public void notifyCommandFinished() {
+
         }
     }
 
@@ -87,7 +90,7 @@ public class CommandExecutorServiceTest extends ServiceTestCase<CommandExecutorS
         }
 
         @Override
-        public OutgoingCommunication getOutgoingCommunication() {
+        public OutgoingCommandCommunication getOutgoingCommandCommunication() {
             return dummyCommunication;
         }
 

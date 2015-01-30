@@ -10,7 +10,7 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import net.three_headed_monkey.commands.UpdateLocationHistoryCommand;
-import net.three_headed_monkey.communication.OutgoingCommunicationFactory;
+import net.three_headed_monkey.communication.OutgoingCommandCommunicationFactory;
 
 public class PeriodicWorkReceiver extends BroadcastReceiver {
     public static final String TAG="PeriodicWorkReceiver";
@@ -25,7 +25,7 @@ public class PeriodicWorkReceiver extends BroadcastReceiver {
         // Execute UpdateLocationHistoryCommand
         Intent commandIntent = new Intent(context, CommandExecutorService.class);
         commandIntent.putExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM, UpdateLocationHistoryCommand.COMMAND_STRING);
-        commandIntent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM, OutgoingCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_BROADCAST);
+        commandIntent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM, OutgoingCommandCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_BROADCAST);
         context.startService(commandIntent);
 
     }

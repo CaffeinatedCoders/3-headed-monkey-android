@@ -4,7 +4,7 @@ import android.location.Location;
 import android.location.LocationManager;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
-import net.three_headed_monkey.communication.DummyOutgoingCommunication;
+import net.three_headed_monkey.communication.DummyOutgoingCommandCommunication;
 import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
 import net.three_headed_monkey.test_utils.TestBase;
 
@@ -20,19 +20,19 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(RobolectricGradleTestRunner.class)
 public class FindGpsLocationCommandTest extends TestBase {
-    DummyOutgoingCommunication outgoingCommunication;
+    DummyOutgoingCommandCommunication outgoingCommunication;
     FindGpsLocationCommand command;
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
         shadowLocationManager.setProviderEnabled(LocationManager.GPS_PROVIDER, true);
-        outgoingCommunication = new DummyOutgoingCommunication();
+        outgoingCommunication = new DummyOutgoingCommandCommunication();
         command = new FindGpsLocationCommand((ThreeHeadedMonkeyApplication) application);
         command.TIMEOUT_SECONDS = 10;
         command.setCommandString("findGpsLocation");
         command.setPrototype(false);
-        command.setOutgoingCommunication(outgoingCommunication);
+        command.setOutgoingCommandCommunication(outgoingCommunication);
 
     }
 
