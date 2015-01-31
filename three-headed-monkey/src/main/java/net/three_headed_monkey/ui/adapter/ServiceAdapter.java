@@ -19,6 +19,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ServiceInfo serviceInfo;
         public TextView text_baseurl;
+        public TextView text_details;
         public ImageButton btn_delete;
         private Context context;
 
@@ -26,12 +27,14 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ViewHold
             super(layout);
             this.context = context;
             this.text_baseurl = (TextView) layout.findViewById(R.id.text_baseurl);
+            this.text_details = (TextView) layout.findViewById(R.id.text_details);
             this.btn_delete = (ImageButton) layout.findViewById(R.id.btn_delete);
         }
 
         public void setViews(ServiceInfo serviceInfo) {
             this.serviceInfo = serviceInfo;
             text_baseurl.setText(serviceInfo.baseUrl);
+            text_details.setText("GCM sender: " + serviceInfo.gcm_sender_id);
         }
 
     }

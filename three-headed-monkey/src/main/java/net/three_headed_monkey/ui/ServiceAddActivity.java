@@ -24,9 +24,13 @@ import android.widget.Toast;
 
 import net.three_headed_monkey.R;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
+import net.three_headed_monkey.commands.PullCommandsCommand;
+import net.three_headed_monkey.commands.UpdateGcmRegistrationsCommand;
+import net.three_headed_monkey.communication.OutgoingCommandCommunicationFactory;
 import net.three_headed_monkey.communication.utils.X509TrustEverythingManager;
 import net.three_headed_monkey.communication.utils.X509TrustSingleManager;
 import net.three_headed_monkey.data.ServiceInfo;
+import net.three_headed_monkey.service.CommandExecutorService;
 
 import org.androidannotations.annotations.AfterTextChange;
 import org.androidannotations.annotations.AfterViews;
@@ -111,6 +115,10 @@ public class ServiceAddActivity extends Activity {
     public void checkOrSaveClicked() {
         if (current_state == State.OK_TO_SAVE) {
             application.serviceSettings.add(current_info);
+            Intent intent = new Intent(this, CommandExecutorService.class);
+            intent.putExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM, UpdateGcmRegistrationsCommand.COMMAND_STRING);
+            intent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM, OutgoingCommandCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_BROADCAST);
+            startService(intent);
             finish();
             return;
         }

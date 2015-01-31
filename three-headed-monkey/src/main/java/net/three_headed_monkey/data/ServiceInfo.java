@@ -18,6 +18,7 @@ public class ServiceInfo {
     public int baseUrlPort;
     public String deviceKey;
     public String certHash;
+    public String gcm_sender_id;
 
     public long lastLocationHistoryUpdate = 0;
 
