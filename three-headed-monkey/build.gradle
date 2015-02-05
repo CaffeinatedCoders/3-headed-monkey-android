@@ -92,6 +92,11 @@ android {
         abortOnError false
     }
 
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "3g"
+    }
+
 //    dexOptions {
 //        jumboMode = true
 //    }
