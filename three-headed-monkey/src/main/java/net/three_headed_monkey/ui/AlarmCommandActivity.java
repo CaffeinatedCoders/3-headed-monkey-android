@@ -7,6 +7,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.util.Log;
+import android.view.WindowManager;
 
 import net.three_headed_monkey.R;
 
@@ -16,6 +18,7 @@ import org.androidannotations.annotations.EActivity;
 
 @EActivity(R.layout.activity_alarm_command_activity)
 public class AlarmCommandActivity extends Activity {
+    public static final String TAG = "AlarmCommandActivity";
 
     //public for testing
     public MediaPlayer mediaPlayer;
@@ -23,16 +26,22 @@ public class AlarmCommandActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                        | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                        | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        startAlarm();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        startAlarm();
     }
 
     @Background
     public void startAlarm() {
+        Log.d(TAG, "Starting alarm");
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         if (audioManager != null) {
             audioManager.setStreamVolume(
@@ -47,17 +56,29 @@ public class AlarmCommandActivity extends Activity {
         mediaPlayer.start();
     }
 
-    @Override
-    protected void onPause() {
+    public void stopAlarm() {
+        Log.d(TAG, "Stopping alarm");
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
+            mediaPlayer = null;
         }
+    }
+
+    @Override
+    protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopAlarm();
+        super.onDestroy();
     }
 
     @Click(R.id.layout_alarm_activity_container)
     public void closeActivity() {
+        stopAlarm();
         finish();
     }
 

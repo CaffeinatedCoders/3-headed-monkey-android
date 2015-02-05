@@ -111,7 +111,11 @@
         <activity
             android:name=".ui.AlarmCommandActivity_"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:clearTaskOnLaunch="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:noHistory="true" >
         </activity>
 
         <receiver
