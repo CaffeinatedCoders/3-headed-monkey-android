@@ -110,12 +110,12 @@
 
         <activity
             android:name=".ui.AlarmCommandActivity_"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
 
         <receiver
@@ -155,7 +155,8 @@
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="net.three_headed_monkey"/>
+
+                <category android:name="net.three_headed_monkey" />
             </intent-filter>
         </receiver>
 
@@ -163,6 +164,14 @@
             android:name=".service.GcmReceiverService"
             android:exported="false" >
         </service>
+
+        <receiver
+            android:name=".service.AppReplacedReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
