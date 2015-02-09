@@ -2,6 +2,7 @@ package net.three_headed_monkey.commands;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -10,6 +11,8 @@ import android.provider.Settings;
 import android.util.Log;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
+import net.three_headed_monkey.communication.OutgoingCommandCommunicationFactory;
+import net.three_headed_monkey.service.CommandExecutorService;
 import net.three_headed_monkey.utils.SecureSettingsUtils;
 
 import java.text.SimpleDateFormat;
@@ -64,6 +67,15 @@ public class FindGpsLocationCommand extends LooperCommand implements LocationLis
             secureSettingsUtils.setLocationMode(oldLocationMode);
             Log.d(TAG, "GPS setting restored");
         }
+
+        // If we found a location, send them all to the webservices
+        if(lastLocation != null){
+            Intent intent = new Intent(application, CommandExecutorService.class);
+            intent.putExtra(CommandExecutorService.INTENT_COMMAND_STRING_PARAM, UpdateLocationHistoryCommand.COMMAND_STRING);
+            intent.putExtra(CommandExecutorService.INTENT_OUTGOING_COMMUNICATION_TYPE_PARAM, OutgoingCommandCommunicationFactory.OUTGOING_COMMUNICATION_TYPE_BROADCAST);
+            application.startService(intent);
+        }
+
         super.onBeforeQuit();
     }
 

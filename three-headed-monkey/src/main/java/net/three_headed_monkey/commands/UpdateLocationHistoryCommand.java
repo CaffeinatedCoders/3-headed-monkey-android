@@ -29,7 +29,7 @@ public class UpdateLocationHistoryCommand extends Command {
             LocationHistoryApi locationHistoryApi = new LocationHistoryApi(serviceInfo, application);
             try {
                 if(locationHistoryApi.getNotYetUploadedLocationCount() == 0) {
-                    Log.v(TAG, "No new locations to upload to " + serviceInfo.getBaseUrl());
+                    Log.v(TAG, "No new locations to upload to " + serviceInfo.getBaseUrl() + " since " + serviceInfo.lastLocationHistoryUpdate);
                     continue;
                 }
                 if(!locationHistoryApi.checkApiAvailable()) {
