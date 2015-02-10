@@ -22,6 +22,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
 
     <permission
         android:name="net.three_headed_monkey.permission.C2D_MESSAGE"
@@ -109,7 +114,7 @@
         </service>
 
         <activity
-            android:name=".ui.AlarmCommandActivity_"
+            android:name=".ui.command_activities.AlarmCommandActivity_"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
@@ -172,6 +177,7 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>

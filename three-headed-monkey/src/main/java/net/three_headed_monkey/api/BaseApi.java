@@ -6,6 +6,7 @@ import com.squareup.okhttp.Response;
 import net.three_headed_monkey.data.ServiceInfo;
 
 import java.io.IOException;
+import java.util.Map;
 
 public abstract class BaseApi {
     public static final MediaType JSON
@@ -37,4 +38,6 @@ public abstract class BaseApi {
      * @throws IOException
      */
     public abstract Response doRequest(String relativeUrl, String parameters, RequestType requestType) throws IOException;
+
+    public abstract Response doRequest(String relativeUrl, Map<String, String> parameters, RequestType requestType, String file_parameter_name, String file_name, MediaType file_content_type, byte[] file_content) throws IOException;
 }

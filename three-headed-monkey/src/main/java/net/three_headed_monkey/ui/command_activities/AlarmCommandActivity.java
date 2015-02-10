@@ -1,4 +1,4 @@
-package net.three_headed_monkey.ui;
+package net.three_headed_monkey.ui.command_activities;
 
 
 import android.app.Activity;

@@ -3,7 +3,8 @@ package net.three_headed_monkey.commands;
 import android.content.Intent;
 
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
-import net.three_headed_monkey.ui.AlarmCommandActivity_;
+import net.three_headed_monkey.ui.command_activities.AlarmCommandActivity_;
+
 
 public class AlarmCommand extends Command {
     public AlarmCommand(ThreeHeadedMonkeyApplication application) {

@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Camera;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
@@ -34,7 +35,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 @EApplication
-public class ThreeHeadedMonkeyApplication extends Application {
+public class ThreeHeadedMonkeyApplication extends Application implements Camera.PictureCallback {
     public static final String TAG = "ThreeHeadedMonkeyApplication";
     public SimCardSettings simCardSettings;
     public PhoneNumberSettings phoneNumberSettings;
@@ -139,5 +140,10 @@ public class ThreeHeadedMonkeyApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    @Override
+    public void onPictureTaken(byte[] bytes, Camera camera) {
+        Log.i(TAG, "onPictureTaken called, size: " + bytes.length);
     }
 }

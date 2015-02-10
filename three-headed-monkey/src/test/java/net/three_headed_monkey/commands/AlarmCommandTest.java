@@ -5,7 +5,7 @@ import android.media.MediaPlayer;
 import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
 import net.three_headed_monkey.test_utils.TestBase;
-import net.three_headed_monkey.ui.AlarmCommandActivity;
+import net.three_headed_monkey.ui.command_activities.AlarmCommandActivity;
 import net.three_headed_monkey.ui.AlarmCommandActivity_;
 
 import org.junit.Before;

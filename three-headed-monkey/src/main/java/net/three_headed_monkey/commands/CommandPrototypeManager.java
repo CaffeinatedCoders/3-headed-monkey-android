@@ -48,6 +48,7 @@ public class CommandPrototypeManager {
         commands.add(new UpdateLocationHistoryCommand(application));
         commands.add(new PullCommandsCommand(application));
         commands.add(new UpdateGcmRegistrationsCommand(application));
+        commands.add(new TakePictureCommand(application));
     }
 
 }
