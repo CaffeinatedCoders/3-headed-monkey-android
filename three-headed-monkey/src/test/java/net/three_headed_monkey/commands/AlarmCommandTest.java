@@ -27,7 +27,7 @@ public class AlarmCommandTest extends TestBase {
 
     @Test
     public void commandShouldStartActivity() {
-        AlarmCommand command = new AlarmCommand((ThreeHeadedMonkeyApplication) application);
+        AlarmCommand command = new AlarmCommand(application);
         command.setCommandString("alarm");
         command.setPrototype(false);
         command.run();

@@ -1,5 +1,6 @@
 package net.three_headed_monkey.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.widget.TextView;
 
@@ -9,6 +10,7 @@ import net.three_headed_monkey.utils.SecureSettingsUtils;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_supported_features)
 public class SupportedFeaturesActivity extends Activity {
     @ViewById

@@ -12,8 +12,6 @@ public class LocationCsvExporter {
     public LocationCsvExporter() {
     }
 
-    ;
-
     public String export(List<Location> locations) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String result = "Latitude,Longitude,Altitude,Accuracy,Provider,Time\n";

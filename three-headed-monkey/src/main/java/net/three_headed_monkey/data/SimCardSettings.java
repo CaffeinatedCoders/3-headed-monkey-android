@@ -73,9 +73,7 @@ public class SimCardSettings {
 
     public boolean currentSimCardAuthorized() {
         SimCardInfo current = SimCardInfo.createFromSimCard(context);
-        if (current == null)
-            return false;
-        return authorized_sim_cards.contains(current);
+        return current != null && authorized_sim_cards.contains(current);
     }
 
 

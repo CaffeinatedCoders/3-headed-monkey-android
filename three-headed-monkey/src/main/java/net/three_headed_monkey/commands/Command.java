@@ -38,7 +38,7 @@ public abstract class Command implements Cloneable, Runnable {
     }
 
     @Override
-    protected Object clone() {
+    protected Object clone() throws CloneNotSupportedException {
         Command clone = null;
         try {
             clone = (Command) super.clone();
