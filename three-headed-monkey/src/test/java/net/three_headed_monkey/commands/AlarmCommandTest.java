@@ -6,7 +6,7 @@ import net.three_headed_monkey.ThreeHeadedMonkeyApplication;
 import net.three_headed_monkey.test_utils.RobolectricGradleTestRunner;
 import net.three_headed_monkey.test_utils.TestBase;
 import net.three_headed_monkey.ui.command_activities.AlarmCommandActivity;
-import net.three_headed_monkey.ui.AlarmCommandActivity_;
+import net.three_headed_monkey.ui.command_activities.AlarmCommandActivity_;
 
 import org.junit.Before;
 import org.junit.Test;

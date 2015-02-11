@@ -19,6 +19,7 @@ import net.three_headed_monkey.test_utils.TestBase;
 import org.androidannotations.api.BackgroundExecutor;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -69,8 +70,7 @@ public class ServiceAddActivityTest extends TestBase {
         BackgroundExecutor.setExecutor(BackgroundExecutor.DEFAULT_EXECUTOR);
         try {
             server.shutdown();
-        } catch (IOException e) {
-        }
+        } catch (Exception e){}
     }
 
     @Test
