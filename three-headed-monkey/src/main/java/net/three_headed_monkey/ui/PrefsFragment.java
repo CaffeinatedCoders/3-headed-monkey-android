@@ -237,8 +237,10 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
         if (key.equals("pref_btn_sim_card_settings")) {
             SimCardSettingsActivity_.intent(getActivity()).start();
             return true;
-        } else if (key.equals("pref_btn_phone_numbers_settings")) {
-            PhoneNumbersSettingsActivity_.intent(getActivity()).start();
+        } else if(key.equals("pref_btn_phone_numbers_settings")) {
+            Intent intentservice = new Intent(context, PhoneNumbersSettingsActivity.class);
+            context.startActivity(intentservice);
+
             return true;
         } else if (key.equals("pref_btn_trigger_sim_check")) {
             Intent intentservice = new Intent(context, SimCardCheckService.class);

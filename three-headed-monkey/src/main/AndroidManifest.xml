@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -48,7 +49,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.three_headed_monkey.ui.PhoneNumbersSettingsActivity_"
+            android:name="net.three_headed_monkey.ui.PhoneNumbersSettingsActivity"
             android:label="PhoneNumber Settings" />
 
         <receiver
