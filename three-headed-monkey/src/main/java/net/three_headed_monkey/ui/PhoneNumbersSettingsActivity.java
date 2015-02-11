@@ -220,6 +220,7 @@ public class PhoneNumbersSettingsActivity extends Activity {
                     } else {
                         PhoneNumberInfo phoneNumberInfo = new PhoneNumberInfo(PhoneNumberUtils.formatNumber(possibleNewPhoneNumber), possibleNewName);
                         ((ThreeHeadedMonkeyApplication_) getActivity().getApplication()).phoneNumberSettings.addPhoneNumber(phoneNumberInfo);
+                        ((PhoneNumbersSettingsActivity)getActivity()).phoneNumberInfoListAdapter.notifyDataSetChanged();
                         getFragmentManager().executePendingTransactions();
                     }
 
@@ -306,6 +307,10 @@ public class PhoneNumbersSettingsActivity extends Activity {
 
             return selectImportPhoneNumberDialog.create();
         }
+    }
+
+    public PhoneNumberInfoListAdapter_ getPhoneNumberInfoListAdapter() {
+        return this.phoneNumberInfoListAdapter;
     }
 
 }
