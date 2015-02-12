@@ -31,6 +31,7 @@ public class MainActivityTest extends BaseActivityInstrumentationTestCase<MainAc
         solo.clickOnText("OK");
         solo.waitForDialogToClose(5);
         assertTrue("Dialer Code description should contain new number", prefsFragment.pref_text_dialer_number.getSummary().toString().contains("***1234567890###"));
+        assertFalse(false);
     }
 
 

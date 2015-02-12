@@ -1,5 +1,6 @@
 package net.three_headed_monkey.smscommandsender;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,6 +24,7 @@ import org.androidannotations.annotations.ViewById;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_main)
 public class MainActivity extends Activity {
     public static final String TAG = "MainActivity";

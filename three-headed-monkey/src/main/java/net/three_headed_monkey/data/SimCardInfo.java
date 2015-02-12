@@ -11,8 +11,6 @@ public class SimCardInfo {
     private SimCardInfo() {
     }
 
-    ;
-
     public static SimCardInfo createFromSimCard(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         int simState = tm.getSimState();

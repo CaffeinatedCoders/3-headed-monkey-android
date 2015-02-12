@@ -28,7 +28,7 @@ public class FindGpsLocationCommandTest extends TestBase {
         super.setUp();
         shadowLocationManager.setProviderEnabled(LocationManager.GPS_PROVIDER, true);
         outgoingCommunication = new DummyOutgoingCommandCommunication();
-        command = new FindGpsLocationCommand((ThreeHeadedMonkeyApplication) application);
+        command = new FindGpsLocationCommand(application);
         command.TIMEOUT_SECONDS = 10;
         command.setCommandString("findGpsLocation");
         command.setPrototype(false);

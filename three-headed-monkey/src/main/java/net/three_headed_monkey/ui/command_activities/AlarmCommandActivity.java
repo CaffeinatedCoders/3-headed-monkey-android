@@ -1,6 +1,7 @@
 package net.three_headed_monkey.ui.command_activities;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
@@ -16,6 +17,7 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_alarm_command_activity)
 public class AlarmCommandActivity extends Activity {
     public static final String TAG = "AlarmCommandActivity";

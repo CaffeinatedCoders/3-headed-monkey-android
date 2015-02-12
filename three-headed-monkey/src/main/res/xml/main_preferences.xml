@@ -61,6 +61,8 @@
         <Preference android:title="Supported Features"
             android:key="pref_btn_supported_features" />
 
+        <Preference android:title="Application Password"
+            android:key="pref_btn_application_password" />
     </PreferenceCategory>
 
     <PreferenceCategory

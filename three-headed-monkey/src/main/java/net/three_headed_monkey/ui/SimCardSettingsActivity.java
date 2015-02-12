@@ -1,5 +1,6 @@
 package net.three_headed_monkey.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Trace;
 import org.androidannotations.annotations.ViewById;
 
+@SuppressLint("Registered")
 @EActivity(R.layout.simcard_settings_activity)
 public class SimCardSettingsActivity extends Activity {
 

@@ -1,5 +1,6 @@
 package net.three_headed_monkey.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_service_list)
 public class ServiceListActivity extends Activity {
 

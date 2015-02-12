@@ -49,7 +49,8 @@ public class GetPhoneStateCommandTest extends TestBase {
         shadowTelephonyManager.setSubscriberId(SUBSCRIBER_ID);
 
         outgoingCommunication = new DummyOutgoingCommandCommunication();
-        command = new GetPhoneStateCommand((ThreeHeadedMonkeyApplication) application);
+        command = new GetPhoneStateCommand(application);
+
         command.setCommandString("getPhoneState");
         command.setPrototype(false);
         command.setOutgoingCommandCommunication(outgoingCommunication);

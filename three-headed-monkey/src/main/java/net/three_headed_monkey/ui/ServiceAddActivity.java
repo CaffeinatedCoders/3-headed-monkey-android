@@ -1,5 +1,6 @@
 package net.three_headed_monkey.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -50,6 +51,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
 
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_service_add)
 public class ServiceAddActivity extends Activity {
     public static final String TAG = "ServiceAddActivity";

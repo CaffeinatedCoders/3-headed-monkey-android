@@ -138,8 +138,8 @@ public class ThreeHeadedMonkeyApplication extends Application implements Camera.
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
         MultiDex.install(this);
+        super.attachBaseContext(base);
     }
 
     @Override
