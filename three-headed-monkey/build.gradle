@@ -56,7 +56,7 @@ android {
         versionCode getVersionCode()
         versionName getVersionName()
         testApplicationId "net.three_headed_monkey.test"
-        testInstrumentationRunner "pl.polidea.instrumentation.PolideaInstrumentationTestRunner"
+        testInstrumentationRunner 'net.three_headed_monky.test/MultiDexPolideaInstrumentationTestRunner'
         multiDexEnabled = true
     }
 
