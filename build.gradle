@@ -10,6 +10,11 @@ subprojects {
             project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
         }
     }
+    afterEvaluate { Project project ->
+        if(project.hasProperty("android")) {
+            project.apply from: "$rootProject.projectDir/gradle/adb_tasks.gradle"
+        }
+    }
 }
 
 task wrapper(type: Wrapper) {
