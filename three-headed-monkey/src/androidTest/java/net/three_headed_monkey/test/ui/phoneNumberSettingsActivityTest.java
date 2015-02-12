@@ -91,19 +91,6 @@ public class phoneNumberSettingsActivityTest extends BaseActivityInstrumentation
         assertEquals(0, listView.getAdapter().getCount());
     }
 
-    @MediumTest
-    public void testImportPhoneNumbers() throws InterruptedException {
-        ListView listView = (ListView) solo.getView(R.id.phone_numbers_settings_list_view);
-
-        solo.clickOnActionBarItem(R.id.action_add);
-        solo.waitForDialogToOpen();
-        solo.clickInList(2);
-        solo.waitForDialogToOpen();
-        solo.clickOnView(solo.getView(android.R.id.button1));
-        solo.waitForDialogToClose();
-        assertEquals(0, listView.getAdapter().getCount());
-    }
-
     @Override
     protected void tearDown() throws Exception {
 
