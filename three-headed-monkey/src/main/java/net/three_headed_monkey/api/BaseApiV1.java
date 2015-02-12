@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class BaseApiV1 extends BaseApi {
     public static final String TAG="BaseApiV1";
@@ -73,6 +74,7 @@ public class BaseApiV1 extends BaseApi {
     protected OkHttpClient getHttpClient() {
         OkHttpClient client = new OkHttpClient();
         client.setSslSocketFactory(X509TrustSingleManager.getTrustSingleFactory(serviceInfo.certHash));
+        client.setConnectTimeout(7, TimeUnit.SECONDS);
         return client;
     }
 

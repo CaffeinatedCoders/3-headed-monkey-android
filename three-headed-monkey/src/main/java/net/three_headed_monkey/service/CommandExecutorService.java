@@ -79,6 +79,7 @@ public class CommandExecutorService extends Service {
                 command.setOutgoingCommandCommunication(communication);
             executor.execute(command);
         }
+        Log.d(TAG, "Currently " + executor.getActiveCount() + " running commands, " + executor.getQueue().size() + " in queue");
     }
 }
 
