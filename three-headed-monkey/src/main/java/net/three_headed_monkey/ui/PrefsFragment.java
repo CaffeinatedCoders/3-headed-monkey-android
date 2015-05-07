@@ -53,7 +53,7 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
     public EditTextPreference pref_text_dialer_number;
     CheckBoxPreference pref_bool_root_settings_backup;
 
-    Preference pref_btn_trigger_sim_check;
+    Preference pref_btn_trigger_sim_check, pref_btn_application_password;
 
     Boolean su_available = false;
 
@@ -90,6 +90,9 @@ public class PrefsFragment extends PreferenceFragment implements Preference.OnPr
         }
 
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+
+        pref_btn_application_password = findPreference("pref_btn_application_password");
+        pref_btn_application_password.setEnabled(BuildConfig.FEATURE_PASSWORD_LOCK_ENABLED);
 
         pref_btn_version = findPreference("pref_btn_version");
         pref_text_dialer_number = (EditTextPreference) findPreference("pref_text_dialer_number");

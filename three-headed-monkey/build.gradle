@@ -61,6 +61,17 @@ android {
         testApplicationId "net.three_headed_monkey.test"
         testInstrumentationRunner 'net.three_headed_monkey.test.MultiDexPolideaInstrumentationTestRunner'
         multiDexEnabled = true
+
+        buildConfigField "boolean", "FEATURE_PASSWORD_LOCK_ENABLED", "true"
+    }
+
+    productFlavors {
+        core {
+
+        }
+        no_launcher {
+            buildConfigField "boolean", "FEATURE_PASSWORD_LOCK_ENABLED", "false"
+        }
     }
 
     buildTypes {
